@@ -29,7 +29,7 @@ It seem that to create a simple dropdown one need to create 3 files
 
 and a table:
 
-''' sql
+``` sql
 DROP TABLE IF EXISTS `glpi_peripheralmodels`;
 CREATE TABLE `glpi_peripheralmodels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -52,9 +52,25 @@ CREATE TABLE `glpi_peripheralmodels` (
   KEY `date_creation` (`date_creation`),
   KEY `product_number` (`product_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-'''
+```
 
-I still have to investigate the **CommonTreeDropdown** usage
+ **CommonTreeDropdown** class enable and structured tree, (e.g. softwarecategory.class.php)
+
+
+``` sql
+CREATE TABLE `glpi_softwarecategories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comment` text COLLATE utf8_unicode_ci,
+  `softwarecategories_id` int(11) NOT NULL DEFAULT '0',
+  `completename` text COLLATE utf8_unicode_ci,
+  `level` int(11) NOT NULL DEFAULT '0',
+  `ancestors_cache` longtext COLLATE utf8_unicode_ci,
+  `sons_cache` longtext COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `softwarecategories_id` (`softwarecategories_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+```
 
 ## asset
 
@@ -63,7 +79,7 @@ It seems that to create an assest 3 files are required:
 - 2 files in the "front" folder:to instanciate the serach list (e.g. peripheral.php) and to define the edit form (e.g. peripheral.form.php)
 
 plus a table:
-'''
+``` sql
 DROP TABLE IF EXISTS `glpi_peripherals`;
 CREATE TABLE `glpi_peripherals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -115,7 +131,7 @@ CREATE TABLE `glpi_peripherals` (
   KEY `date_creation` (`date_creation`),
   KEY `is_recursive` (`is_recursive`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-'''
+```
 
 
 ## item
@@ -125,7 +141,7 @@ It seems that to create an assest 4 files are required:
 - 2 files in the "front" folder:to instanciate the dropdown (e.g. peripheral.php) and to define the edit form (e.g. peripheral.form.php)
 
 plus a table:
-'''
+``` sql
 DROP TABLE IF EXISTS `glpi_devicebatteries`;
 CREATE TABLE `glpi_devicebatteries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -150,7 +166,7 @@ CREATE TABLE `glpi_devicebatteries` (
   KEY `devicebatterymodels_id` (`devicebatterymodels_id`),
   KEY `devicebatterytypes_id` (`devicebatterytypes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-'''
+```
 
 
 ## profile

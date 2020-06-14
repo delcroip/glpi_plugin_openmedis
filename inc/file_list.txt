@@ -2,8 +2,10 @@ medical_device.class --> Medical device (asset)
 medical_devicemodel.class
 medical_devicetype.class
 devicemedical.class --> medcial Item
-devicemedicaltype.class --> medcial Item type
+devicemedicalcategory.class --> medcial Item type
 devicemedicalmodel.class ----> medcial Item Model
 item_devicemedical.class --> link between medical device and medical item
 menu.class.php --> to add a medical device module
 profile.class --> to add right on the profile page
+Archive (replaced by category treedropdown )
+devicemedicaltype.class --> medcial Item type
