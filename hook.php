@@ -208,10 +208,10 @@ function plugin_racks_uninstall() {
 function plugin_racks_postinit() {
    global $PLUGIN_HOOKS, $ORDER_TYPES;
 
-   $PLUGIN_HOOKS['item_purge']['racks'] = [];
+   $PLUGIN_HOOKS['item_purge']['open_medis'] = [];
 
    foreach (PluginRacksRack::getTypes(true) as $type) {
-      $PLUGIN_HOOKS['item_purge']['racks'][$type]
+      $PLUGIN_HOOKS['item_purge']['open_medis'][$type]
          = ['PluginRacksRack_Item','cleanForItem'];
       CommonGLPI::registerStandardTab($type, 'PluginRacksRack_Item');
    }
@@ -276,10 +276,10 @@ function plugin_racks_getDatabaseRelations() {
 function plugin_racks_getDropdown() {
    $plugin = new Plugin();
    if ($plugin->isActivated("racks")) {
-      return ['PluginRacksRoomLocation' => _n('Place', 'Places', 2, 'racks'),
+      return ['PluginRacksRoomLocation' => _n('Place', 'Places', 2, 'open_medis'),
                    'PluginRacksRackModel'    => __('Model'),
-                   'PluginRacksConnection'   => __('Power supply connection', 'racks'),
-                   'PluginRacksOtherModel'   => __('Others equipments', 'racks'),
+                   'PluginRacksConnection'   => __('Power supply connection', 'open_medis'),
+                   'PluginRacksOtherModel'   => __('Others equipments', 'open_medis'),
                    'PluginRacksRackType'     => _n('Type', 'Types', 2),
                    'PluginRacksRackState'    => _n('Status', 'Statuses', 2)];
    } else {
@@ -295,7 +295,7 @@ function plugin_racks_getAddSearchOptions($itemtype) {
          $sopt[4460]['table']         = 'glpi_plugin_racks_racks';
          $sopt[4460]['field']         = 'name';
          $sopt[4460]['name']          = _n('Rack enclosure',
-                                           'Rack enclosures', 2, 'racks')
+                                           'Rack enclosures', 2, 'open_medis')
                                         . " - ". __('Name');
          $sopt[4460]['forcegroupby']  = '1';
          $sopt[4460]['datatype']      = 'itemlink';

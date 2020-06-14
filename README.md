@@ -4,22 +4,22 @@ This module enable you to create and manage your Medical device
 > * Medical device details (in addition to std gélpi device) : install date, Nomencalure.
 
 
-## Taduction
+## Traduction
 
 This plugin will be managed on transiflex or lokalise
 
 
 ## development
 
-I create this module because I wanted to phase out a medical Item asset management system (openMEDIS) to built the new version on the power of glpi
+I created this module because I wanted to phase out a medical Item asset management system (openMEDIS) to built the new version on the power of glpi
 
-This is my first GLPI module, I found diffictult to start because even the example are not straight forward.
+This is my first GLPI module, I found it diffictult to start because the example is not straight forward.
 
 I will try to add comment to clarify the code, here my current understanding:
 
-To build the assset (Medical device) I duplciate the peripherical code and db (Shown as "Device" in glpi)
+To build the assset (Medical device) I duplciated the peripherical code and db (Shown as "ASSET > Device" in glpi)
 
-To build the new asset Item (asset -> component in GLPI) I duplicate the devicebattery code and db
+To build the new asset Item (ASSET > ASSET X > Component in GLPI) I duplicate the devicebattery code and db
 
 ## Dropdown
 

@@ -39,7 +39,7 @@ class PluginOpenMedisProfile extends Profile {
 
       if ($item->getType()=='Profile'
          && $item->getField('interface')!='helpdesk') {
-         return PluginOpenMedisRack::getTypeName(2);
+         return PluginOpenMedisMedicalDevice::getTypeName(2);
       }
       return '';
    }
