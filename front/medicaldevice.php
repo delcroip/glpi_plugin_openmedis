@@ -30,15 +30,12 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
-}
+include ('../inc/includes.php');
 
-/// Class PeripheralModel
-class PeripheralModel extends CommonDCModelDropdown {
+Session::checkRight("medicaldevice", READ);
 
-   static function getTypeName($nb = 0) {
-      return _n('Peripheral model', 'Peripheral models', $nb);
-   }
+Html::header(MedicalDevice::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "medicaldevice");
 
-}
+Search::show('MedicalDevice');
+
+Html::footer();

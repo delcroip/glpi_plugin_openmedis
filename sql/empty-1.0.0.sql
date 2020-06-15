@@ -3,35 +3,35 @@
   -- `Name` varchar(255) NOT NULL,
   -- `AccessoryType` varchar(255) NOT NULL,
   -- `ManufacturerID` int(10) NOT NULL,
-  -- `SupplierID` int(10) NOT NULL,
+  -- `SupplierID` int(10) NOT NULL, --> go to management info
   -- `PartNumber` varchar(255) NOT NULL,
   -- `Price` varchar(10) NOT NULL,
   -- PRIMARY KEY (`AccessoryID`)
 -- ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
-DROP TABLE IF EXISTS `glpi_devicebatteries`;
-CREATE TABLE `glpi_devicebatteries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `designation` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment` text COLLATE utf8_unicode_ci,
-  `manufacturers_id` int(11) NOT NULL DEFAULT '0',
-  `voltage` int(11) DEFAULT NULL,
-  `capacity` int(11) DEFAULT NULL,
-  `devicebatterytypes_id` int(11) NOT NULL DEFAULT '0',
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessory`;
+CREATE TABLE `glpi_plugin_openmedis_medicalaccessory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, --AccessoryID
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, --former designation
+  `comment` text COLLATE utf8_unicode_ci, 
+  `manufacturers_id` int(11) NOT NULL DEFAULT '0',--ManufacturerID
+  `part_number` ivarchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ -- `capacity` int(11) DEFAULT NULL,
+  `medicalaccessorytypes_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-  `devicebatterymodels_id` int(11) DEFAULT NULL,
+  `medicalaccessorymodels_id` int(11) DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   `date_creation` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `designation` (`designation`),
+  KEY `name` (`name`),
   KEY `manufacturers_id` (`manufacturers_id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`),
   KEY `date_mod` (`date_mod`),
   KEY `date_creation` (`date_creation`),
-  KEY `devicebatterymodels_id` (`devicebatterymodels_id`),
-  KEY `devicebatterytypes_id` (`devicebatterytypes_id`)
+  KEY `medicalaccessorymodels_id` (`medicalaccessorymodels_id`),
+  KEY `medicalaccessorytypes_id` (`medicalaccessorytypes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -45,18 +45,19 @@ CREATE TABLE `glpi_devicebatteries` (
 ---  PRIMARY KEY (`AssetCategoryID`)
 ---) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Type of asset - first UMNDS digit' AUTO_INCREMENT=17 ;
 
-
-CREATE TABLE `glpi_softwarecategories` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicaldevicecategory`;
+CREATE TABLE `glpi_plugin_openmedis_medicaldevicecategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ref` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
-  `softwarecategories_id` int(11) NOT NULL DEFAULT '0',
+  `medicaldevicecategory_id` int(11) NOT NULL DEFAULT '0',
   `completename` text COLLATE utf8_unicode_ci,
   `level` int(11) NOT NULL DEFAULT '0',
   `ancestors_cache` longtext COLLATE utf8_unicode_ci,
   `sons_cache` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
-  KEY `softwarecategories_id` (`softwarecategories_id`)
+  KEY `medicaldevicecategory_id` (`medicaldevicecategory_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `assetgenericname`
@@ -74,8 +75,8 @@ CREATE TABLE `glpi_softwarecategories` (
 --) COMMENT='The medical device nomenclature and the five-digit number associated with each medical device are part of ECRI Institutes Universal Medical Device Nomenclature System (UMDNS), a widely employed international classification system for information indexing and retrieval. The five-digit number is the authorized ECRI Institutes Universal Medical Device Code (UMDC).' 
 -- ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=100001 ;
 
-DROP TABLE IF EXISTS `glpi_peripheralmodels`;
-CREATE TABLE `glpi_peripheralmodels` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicaldevicemodels`;
+CREATE TABLE `glpi_plugin_openmedis_medicaldevicemodels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
@@ -116,16 +117,6 @@ CREATE TABLE `glpi_peripheralmodels` (
 --  PRIMARY KEY (`AssetUtilizationID`)
 --) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
-DROP TABLE IF EXISTS `glpi_plugin_racks_rackstates`;
-CREATE TABLE `glpi_plugin_racks_rackstates` (
-   `id` int(11) NOT NULL auto_increment,
-   `entities_id` int(11) NOT NULL default '0',
-   `is_recursive` tinyint(1) NOT NULL default '0',
-   `name` varchar(255) collate utf8_unicode_ci default NULL,
-   `comment` text collate utf8_unicode_ci,
-   PRIMARY KEY  (`id`),
-   KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Table structure for table `consumables`
 --  --> std
@@ -178,11 +169,11 @@ CREATE TABLE `glpi_plugin_racks_rackstates` (
   -- KEY `EmployeeID` (`EmployeeID`),
   -- KEY `AgentID` (`AgentID`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-DROP TABLE IF EXISTS `glpi_peripherals`;
-CREATE TABLE `glpi_peripherals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicaldevice`;
+CREATE TABLE `glpi_plugin_openmedis_medicaldevice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, --assetid
   `entities_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, --AssetFullName
   `date_mod` datetime DEFAULT NULL,
   `contact` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contact_num` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -192,8 +183,8 @@ CREATE TABLE `glpi_peripherals` (
   `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locations_id` int(11) NOT NULL DEFAULT '0',
-  `peripheraltypes_id` int(11) NOT NULL DEFAULT '0',
-  `peripheralmodels_id` int(11) NOT NULL DEFAULT '0',
+  `medicaldevicetypes_id` int(11) NOT NULL DEFAULT '0',
+  `medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
   `brand` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `is_global` tinyint(1) NOT NULL DEFAULT '0',
@@ -216,10 +207,10 @@ CREATE TABLE `glpi_peripherals` (
   KEY `groups_id` (`groups_id`),
   KEY `users_id` (`users_id`),
   KEY `locations_id` (`locations_id`),
-  KEY `peripheralmodels_id` (`peripheralmodels_id`),
+  KEY `medicaldevicemodels_id` (`medicaldevicemodels_id`),
   KEY `states_id` (`states_id`),
   KEY `users_id_tech` (`users_id_tech`),
-  KEY `peripheraltypes_id` (`peripheraltypes_id`),
+  KEY `medicaldevicetypes_id` (`medicaldevicetypes_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `date_mod` (`date_mod`),
   KEY `groups_id_tech` (`groups_id_tech`),

@@ -30,7 +30,15 @@
  * ---------------------------------------------------------------------
  */
 
-include ('../inc/includes.php');
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access this file directly");
+}
 
-$dropdown = new PeripheralModel();
-include (GLPI_ROOT . "/front/dropdown.common.php");
+class MedicalAccessoryType extends CommonDeviceType {
+
+
+   static function getTypeName($nb = 0) {
+      return _n('Medical accessory type', 'Medical accessories types', $nb);
+   }
+
+}

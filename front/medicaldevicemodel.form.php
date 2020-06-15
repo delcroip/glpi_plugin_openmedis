@@ -32,10 +32,5 @@
 
 include ('../inc/includes.php');
 
-Session::checkRight("peripheral", READ);
-
-Html::header(Peripheral::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "peripheral");
-
-Search::show('Peripheral');
-
-Html::footer();
+$dropdown = new MedicalDeviceModel();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");

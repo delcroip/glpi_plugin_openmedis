@@ -34,11 +34,19 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class DeviceBatteryType extends CommonDeviceType {
+/// Class MedicalDeviceCategory
+class MedicalDeviceCategory extends CommonTreeDropdown {
+
+   public $can_be_translated = true;
 
 
    static function getTypeName($nb = 0) {
-      return _n('Battery type', 'Battery types', $nb);
+      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb);
+   }
+
+
+   function cleanDBonPurge() {
+      Rule::cleanForItemAction($this);
    }
 
 }

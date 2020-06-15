@@ -30,17 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
+include ('../inc/includes.php');
 
-/// Class DeviceBatteryModel
-class DeviceBatteryModel extends CommonDeviceModel {
-
-   var $additional_fields_for_dictionnary = ['manufacturer'];
-
-
-   static function getTypeName($nb = 0) {
-      return _n('Device battery model', 'Device batteries models', $nb);
-   }
-}
+$item_device = new Item_MedicalAccessory();
+include (GLPI_ROOT . "/front/item_device.common.form.php");

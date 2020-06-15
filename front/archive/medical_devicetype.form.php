@@ -32,5 +32,5 @@
 
 include ('../inc/includes.php');
 
-$dropdown = new PeripheralType();
+$dropdown = new MedicalDeviceType();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");

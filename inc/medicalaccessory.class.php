@@ -34,12 +34,12 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class DeviceBattery extends CommonDevice {
+class MedicalAccessory extends CommonDevice {
 
-   static protected $forward_entity_to = ['Item_DeviceBattery', 'Infocom'];
+   static protected $forward_entity_to = ['Item_MedicalAccessory', 'Infocom'];
 
    static function getTypeName($nb = 0) {
-      return _n('Battery', 'Batteries', $nb);
+      return _n('Medical accessory', 'Medical accessories', $nb);
    }
 
 
@@ -48,21 +48,19 @@ class DeviceBattery extends CommonDevice {
          parent::getAdditionalFields(),
          [
             [
-               'name'  => 'devicebatterytypes_id',
+               'name'  => 'medicalaccessorytypes_id',
                'label' => __('Type'),
                'type'  => 'dropdownValue'
             ],
             [
-               'name'   => 'capacity',
-               'label'  => __('Capacity'),
-               'type'   => 'text',
-               'unit'   => __('mWh')
+               'name'  => 'medicalaccessorymodels_id',
+               'label' => __('Model'),
+               'type'  => 'dropdownValue'
             ],
             [
-               'name'   => 'voltage',
-               'label'  => __('Voltage'),
-               'type'   => 'text',
-               'unit'   => __('mV')
+               'name'   => 'part_number',
+               'label'  => __('Part Number'),
+               'type'   => 'text'
             ]
          ]
       );
@@ -75,24 +73,23 @@ class DeviceBattery extends CommonDevice {
       $tab[] = [
          'id'                 => '11',
          'table'              => $this->getTable(),
-         'field'              => 'capacity',
-         'name'               => __('Capacity'),
+         'field'              => 'part_number',
+         'name'               => __('Part Number'),
          'datatype'           => 'string',
          'autocomplete'       => true,
       ];
 
       $tab[] = [
          'id'                 => '12',
-         'table'              => $this->getTable(),
-         'field'              => 'voltage',
-         'name'               => __('Voltage'),
-         'datatype'           => 'string',
-         'autocomplete'       => true,
+         'table'              => 'glpi_plugin_openmedis_medicalaccessorymodels',
+         'field'              => 'name',
+         'name'               => __('Model'),
+         'datatype'           => 'dropdown'
       ];
 
       $tab[] = [
          'id'                 => '13',
-         'table'              => 'glpi_devicebatterytypes',
+         'table'              => 'glpi_plugin_openmedis_medicalaccessorytypes',
          'field'              => 'name',
          'name'               => __('Type'),
          'datatype'           => 'dropdown'
@@ -112,9 +109,9 @@ class DeviceBattery extends CommonDevice {
       }
 
       Manufacturer::getHTMLTableHeader(__CLASS__, $base, $super, $father, $options);
-      $base->addHeader('devicebattery_type', __('Type'), $super, $father);
-      $base->addHeader('voltage', sprintf('%1$s (%2$s)', __('Voltage'), __('mV')), $super, $father);
-      $base->addHeader('capacity', sprintf('%1$s (%2$s)', __('Capacity'), __('mWh')), $super, $father);
+      $base->addHeader('medicalaccessory_type', __('Type'), $super, $father);
+      $base->addHeader('medicalaccessory_model', __('Model'), $super, $father);
+      $base->addHeader('part_number', sprintf('%1$s', __('Part Number')), $super, $father);
    }
 
    function getHTMLTableCellForItem(HTMLTableRow $row = null, CommonDBTM $item = null,
@@ -128,27 +125,28 @@ class DeviceBattery extends CommonDevice {
 
       Manufacturer::getHTMLTableCellsForItem($row, $this, null, $options);
 
-      if ($this->fields["devicebatterytypes_id"]) {
+      if ($this->fields["medicalaccessorytypes_id"]) {
          $row->addCell(
-            $row->getHeaderByName('devicebattery_type'),
-            Dropdown::getDropdownName("glpi_devicebatterytypes",
-            $this->fields["devicebatterytypes_id"]),
+            $row->getHeaderByName('medicalaccessory_type'),
+            Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorytypes",
+            $this->fields["medicalaccessorytypes_id"]),
             $father
          );
       }
 
-      if ($this->fields["voltage"]) {
+      if ($this->fields["medicalaccessorymodels_id"]) {
          $row->addCell(
-            $row->getHeaderByName('voltage'),
-            $this->fields['voltage'],
+            $row->getHeaderByName('medicalaccessory_model'),
+            Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorymodels",
+            $this->fields["medicalaccessorymodels_id"]),
             $father
          );
       }
 
-      if ($this->fields["capacity"]) {
+      if ($this->fields["part_number"]) {
          $row->addCell(
-            $row->getHeaderByName('capacity'),
-            $this->fields['capacity'],
+            $row->getHeaderByName('part_number'),
+            $this->fields['part_number'],
             $father
          );
       }
@@ -160,9 +158,9 @@ class DeviceBattery extends CommonDevice {
 
       return [
          'designation'           => 'equal',
-         'devicebatterytypes_id' => 'equal',
+         'medicalaccessorytypes_id' => 'equal',
          'manufacturers_id'      => 'equal',
-         'capacity'              => 'delta:10',
+         'medicalaccessorymodels_id' => 'equal',
          'voltage'               => 'delta:10'
       ];
    }

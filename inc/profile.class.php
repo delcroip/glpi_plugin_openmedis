@@ -2,28 +2,28 @@
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
- open_medis plugin for GLPI
- Copyright (C) 2014-2016 by the open_medis Development Team.
+ openmedis plugin for GLPI
+ Copyright (C) 2014-2016 by the openmedis Development Team.
 
- https://github.com/InfotelGLPI/open_medis
+ https://github.com/InfotelGLPI/openmedis
  -------------------------------------------------------------------------
 
  LICENSE
 
- This file is part of open_medis.
+ This file is part of openmedis.
 
- open_medis is free software; you can redistribute it and/or modify
+ openmedis is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
- open_medis is distributed in the hope that it will be useful,
+ openmedis is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with open_medis. If not, see <http://www.gnu.org/licenses/>.
+ along with openmedis. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
 
@@ -51,9 +51,9 @@ class PluginOpenMedisProfile extends Profile {
       if ($item->getType() == 'Profile') {
          $prof = new self();
          self::addDefaultProfileInfos($item->getField('id'),
-                                      ['plugin_open_medis'                 => 0,
-                                             'plugin_open_medis_model'          => 0,
-                                             'plugin_open_medis_open_ticket'    => 0]);
+                                      ['plugin_openmedis'                 => 0,
+                                             'plugin_openmedis_model'          => 0,
+                                             'plugin_openmedis_open_ticket'    => 0]);
          $prof->showForm($item->getField('id'));
       }
       return true;
@@ -89,12 +89,12 @@ class PluginOpenMedisProfile extends Profile {
       echo "<table class='tab_cadre_fixehov'>";
       echo "<tr class='tab_bg_1'><th colspan='4'>".__('Helpdesk')."</th></tr>\n";
 
-      $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_open_medis_open_ticket']);
+      $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_openmedis_open_ticket']);
       echo "<tr class='tab_bg_2'>";
       echo "<td width='20%'>".__('Associable items to a ticket')."</td>";
       echo "<td colspan='5'>";
-      Html::showCheckbox(['name'    => '_plugin_open_medis_open_ticket',
-                               'checked' => $effective_rights['plugin_open_medis_open_ticket']]);
+      Html::showCheckbox(['name'    => '_plugin_openmedis_open_ticket',
+                               'checked' => $effective_rights['plugin_openmedis_open_ticket']]);
       echo "</td></tr>\n";
       echo "</table>";
 
@@ -113,23 +113,23 @@ class PluginOpenMedisProfile extends Profile {
    static function getAllRights($all = false) {
       $rights = [
           ['itemtype'  => 'PluginOpenMedisMedicalDevice',
-                'label'     => _n('Medical Device', 'Medical Devices', 2, 'open_medis'),
-                'field'     => 'plugin_open_medis'
+                'label'     => _n('Medical Device', 'Medical Devices', 2, 'openmedis'),
+                'field'     => 'plugin_openmedis'
           ],
           ['itemtype'  => 'PluginOpenMedisModel',
-                'label'     => _n('openMedis Model', 'openMedis models', 2, 'open_medis'),
-                'field'     => 'plugin_open_medis_model'
+                'label'     => _n('openMedis Model', 'openMedis models', 2, 'openmedis'),
+                'field'     => 'plugin_openmedis_model'
           ],
           ['itemtype'  => 'PluginOpenMedisType',
-                'label'     => _n('openMedis Type', 'openMedis Type', 2, 'open_medis'),
-                'field'     => 'plugin_open_medis_type'
+                'label'     => _n('openMedis Type', 'openMedis Type', 2, 'openmedis'),
+                'field'     => 'plugin_openmedis_type'
           ],
       ];
 
       if ($all) {
          $rights[] = ['itemtype' => 'PluginOpenMedisMedicalDevice',
                            'label'    =>  __('Associable items to a ticket'),
-                           'field'    => 'plugin_open_medis_open_ticket'];
+                           'field'    => 'plugin_openmedis_open_ticket'];
       }
 
       return $rights;
@@ -166,17 +166,17 @@ class PluginOpenMedisProfile extends Profile {
    static function migrateOneProfile($profiles_id) {
       global $DB;
       //Cannot launch migration if there's nothing to migrate...
-      if (!$DB->tableExists('glpi_plugin_open_medis_profiles')) {
+      if (!$DB->tableExists('glpi_plugin_openmedis_profiles')) {
          return true;
       }
 
-      foreach ($DB->request('glpi_plugin_open_medis_profiles',
+      foreach ($DB->request('glpi_plugin_openmedis_profiles',
                             "`profiles_id`='$profiles_id'") as $profile_data) {
 
-         $matching = ['open_medis'    => 'plugin_open_medis',
-                           'model'   => 'plugin_open_medis_model',
-						   'type'   => 'plugin_open_medis_type',
-                           'open_ticket' => 'plugin_open_medis_open_ticket'];
+         $matching = ['openmedis'    => 'plugin_openmedis',
+                           'model'   => 'plugin_openmedis_model',
+						   'type'   => 'plugin_openmedis_type',
+                           'open_ticket' => 'plugin_openmedis_open_ticket'];
          $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
          foreach ($matching as $old => $new) {
             if (!isset($current_rights[$old])) {
@@ -212,17 +212,17 @@ class PluginOpenMedisProfile extends Profile {
       foreach ($DB->request("SELECT *
                            FROM `glpi_profilerights` 
                            WHERE `profiles_id`='".$_SESSION['glpiactiveprofile']['id']."' 
-                              AND `name` LIKE '%plugin_open_medis%'") as $prof) {
+                              AND `name` LIKE '%plugin_openmedis%'") as $prof) {
          $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
       }
    }
 
    static function createFirstAccess($profiles_id) {
       self::addDefaultProfileInfos($profiles_id,
-                                   ['plugin_open_medis'             => ALLSTANDARDRIGHT,
-                                         'plugin_open_medis_model'       => ALLSTANDARDRIGHT,
-										 'plugin_open_medis_type'       => ALLSTANDARDRIGHT,
-                                         'plugin_open_medis_open_ticket' => 1], true);
+                                   ['plugin_openmedis'             => ALLSTANDARDRIGHT,
+                                         'plugin_openmedis_model'       => ALLSTANDARDRIGHT,
+										 'plugin_openmedis_type'       => ALLSTANDARDRIGHT,
+                                         'plugin_openmedis_open_ticket' => 1], true);
 
    }
 

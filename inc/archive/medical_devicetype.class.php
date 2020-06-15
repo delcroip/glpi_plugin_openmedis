@@ -34,8 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-/// Class PeripheralType
-class PeripheralType extends CommonDropdown {
+/// Class MedicalDeviceType
+class MedicalDeviceType extends CommonDropdown {
 
 
    static function getTypeName($nb = 0) {

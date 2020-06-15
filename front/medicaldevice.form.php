@@ -34,7 +34,7 @@ use Glpi\Event;
 
 include ('../inc/includes.php');
 
-Session::checkRight("peripheral", READ);
+Session::checkRight("medicaldevice", READ);
 
 if (empty($_GET["id"])) {
    $_GET["id"] = "";
@@ -43,69 +43,69 @@ if (!isset($_GET["withtemplate"])) {
    $_GET["withtemplate"] = "";
 }
 
-$peripheral = new Peripheral();
+$medicaldevice = new MedicalDevice();
 
 if (isset($_POST["add"])) {
-   $peripheral->check(-1, CREATE, $_POST);
+   $medicaldevice->check(-1, CREATE, $_POST);
 
-   if ($newID = $peripheral->add($_POST)) {
-      Event::log($newID, "peripherals", 4, "inventory",
+   if ($newID = $medicaldevice->add($_POST)) {
+      Event::log($newID, "medicaldevices", 4, "inventory",
                  sprintf(__('%1$s adds the item %2$s'), $_SESSION["glpiname"], $_POST["name"]));
       if ($_SESSION['glpibackcreated']) {
-         Html::redirect($peripheral->getLinkURL());
+         Html::redirect($medicaldevice->getLinkURL());
       }
    }
    Html::back();
 
 } else if (isset($_POST["delete"])) {
-   $peripheral->check($_POST["id"], DELETE);
-   $peripheral->delete($_POST);
+   $medicaldevice->check($_POST["id"], DELETE);
+   $medicaldevice->delete($_POST);
 
-   Event::log($_POST["id"], "peripherals", 4, "inventory",
+   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s deletes an item'), $_SESSION["glpiname"]));
-   $peripheral->redirectToList();
+   $medicaldevice->redirectToList();
 
 } else if (isset($_POST["restore"])) {
-   $peripheral->check($_POST["id"], DELETE);
+   $medicaldevice->check($_POST["id"], DELETE);
 
-   $peripheral->restore($_POST);
-   Event::log($_POST["id"], "peripherals", 4, "inventory",
+   $medicaldevice->restore($_POST);
+   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s restores an item'), $_SESSION["glpiname"]));
-   $peripheral->redirectToList();
+   $medicaldevice->redirectToList();
 
 } else if (isset($_POST["purge"])) {
-   $peripheral->check($_POST["id"], PURGE);
+   $medicaldevice->check($_POST["id"], PURGE);
 
-   $peripheral->delete($_POST, 1);
-   Event::log($_POST["id"], "peripherals", 4, "inventory",
+   $medicaldevice->delete($_POST, 1);
+   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s purges an item'), $_SESSION["glpiname"]));
-   $peripheral->redirectToList();
+   $medicaldevice->redirectToList();
 
 } else if (isset($_POST["update"])) {
-   $peripheral->check($_POST["id"], UPDATE);
+   $medicaldevice->check($_POST["id"], UPDATE);
 
-   $peripheral->update($_POST);
-   Event::log($_POST["id"], "peripherals", 4, "inventory",
+   $medicaldevice->update($_POST);
+   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s updates an item'), $_SESSION["glpiname"]));
    Html::back();
 
 } else if (isset($_POST["unglobalize"])) {
-   $peripheral->check($_POST["id"], UPDATE);
+   $medicaldevice->check($_POST["id"], UPDATE);
 
-   Computer_Item::unglobalizeItem($peripheral);
-   Event::log($_POST["id"], "peripherals", 4, "inventory",
+   Computer_Item::unglobalizeItem($medicaldevice);
+   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
                //TRANS: %s is the user login
                sprintf(__('%s sets unitary management'), $_SESSION["glpiname"]));
 
-   Html::redirect($peripheral->getFormURLWithID($_POST["id"]));
+   Html::redirect($medicaldevice->getFormURLWithID($_POST["id"]));
 
 } else {
-   Html::header(Peripheral::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "peripheral");
-   $peripheral->display(['id'           => $_GET["id"],
+   Html::header(MedicalDevice::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "medicaldevice");
+   $medicaldevice->display(['id'           => $_GET["id"],
                               'withtemplate' => $_GET["withtemplate"]]);
    Html::footer();
 }

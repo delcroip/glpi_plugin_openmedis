@@ -34,33 +34,11 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-/**
- * Relation between item and devices
-**/
-class Item_DeviceBattery extends Item_Devices {
+/// Class MedicalDeviceModel
+class MedicalDeviceModel extends CommonDCModelDropdown {
 
-   static public $itemtype_2 = 'DeviceBattery';
-   static public $items_id_2 = 'devicebatteries_id';
-
-   static protected $notable = false;
-
-
-   /**
-    * @since 0.85
-    **/
-   static function getSpecificities($specif = '') {
-      return [
-         'serial'             => parent::getSpecificities('serial'),
-         'otherserial'        => parent::getSpecificities('otherserial'),
-         'locations_id'       => parent::getSpecificities('locations_id'),
-         'states_id'          => parent::getSpecificities('states_id'),
-         'manufacturing_date' => [
-            'long name' => __('Manufacturing date'),
-            'short name' => __('Date'),
-            'size'       => 10,
-            'id'         => 20,
-            'autocomplete' => true,
-         ]
-      ];
+   static function getTypeName($nb = 0) {
+      return _n('Medical Device model', 'Medical Devices models', $nb);
    }
+
 }

@@ -19,19 +19,19 @@ I will try to add comment to clarify the code, here my current understanding:
 
 To build the assset (Medical device) I duplciated the peripherical code and db (Shown as "ASSET > Device" in glpi)
 
-To build the new asset Item (ASSET > ASSET X > Component in GLPI) I duplicate the devicebattery code and db
+To build the new asset Item (ASSET > ASSET X > Component in GLPI) I duplicate the medicalaccessory code and db
 
 ## Dropdown
 
 It seem that to create a simple dropdown one need to create 3 files
-- 1 in the "inc" folder to define the class a subclass of  **CommonDropdown** (e.g peripheralmodel.class.php)
-- 2 in the "front" folder: to instanciate the dropdown (e.g. peripheralmodel.php) and to define the edit form (e.g. peripheralmodel.form.php)
+- 1 in the "inc" folder to define the class a subclass of  **CommonDropdown** (e.g medicaldevicemodel.class.php)
+- 2 in the "front" folder: to instanciate the dropdown (e.g. medicaldevicemodel.php) and to define the edit form (e.g. medicaldevicemodel.form.php)
 
 and a table:
 
 ``` sql
-DROP TABLE IF EXISTS `glpi_peripheralmodels`;
-CREATE TABLE `glpi_peripheralmodels` (
+DROP TABLE IF EXISTS `glpi_medicaldevicemodels`;
+CREATE TABLE `glpi_medicaldevicemodels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
@@ -76,12 +76,12 @@ CREATE TABLE `glpi_softwarecategories` (
 
 It seems that to create an assest 3 files are required:
 - 1 class file in the "inc" folder a subclass of  **CommonDBTM**
-- 2 files in the "front" folder:to instanciate the serach list (e.g. peripheral.php) and to define the edit form (e.g. peripheral.form.php)
+- 2 files in the "front" folder:to instanciate the serach list (e.g. medicaldevice.php) and to define the edit form (e.g. medicaldevice.form.php)
 
 plus a table:
 ``` sql
-DROP TABLE IF EXISTS `glpi_peripherals`;
-CREATE TABLE `glpi_peripherals` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medical_devices`;
+CREATE TABLE `glpi_plugin_openmedis_medical_devices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -94,8 +94,8 @@ CREATE TABLE `glpi_peripherals` (
   `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locations_id` int(11) NOT NULL DEFAULT '0',
-  `peripheraltypes_id` int(11) NOT NULL DEFAULT '0',
-  `peripheralmodels_id` int(11) NOT NULL DEFAULT '0',
+  `medicaldevicetypes_id` int(11) NOT NULL DEFAULT '0',
+  `medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
   `brand` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `is_global` tinyint(1) NOT NULL DEFAULT '0',
@@ -118,10 +118,10 @@ CREATE TABLE `glpi_peripherals` (
   KEY `groups_id` (`groups_id`),
   KEY `users_id` (`users_id`),
   KEY `locations_id` (`locations_id`),
-  KEY `peripheralmodels_id` (`peripheralmodels_id`),
+  KEY `medicaldevicemodels_id` (`medicaldevicemodels_id`),
   KEY `states_id` (`states_id`),
   KEY `users_id_tech` (`users_id_tech`),
-  KEY `peripheraltypes_id` (`peripheraltypes_id`),
+  KEY `medicaldevicetypes_id` (`medicaldevicetypes_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `date_mod` (`date_mod`),
   KEY `groups_id_tech` (`groups_id_tech`),
@@ -138,7 +138,7 @@ CREATE TABLE `glpi_peripherals` (
 
 It seems that to create an assest 4 files are required:
 - 2 class file in the "inc" folder: on to define the asset-itme relationship , a subclass of **Item_Devices** an other to define the class itself ta subclass of  **CommonDevice**
-- 2 files in the "front" folder:to instanciate the dropdown (e.g. peripheral.php) and to define the edit form (e.g. peripheral.form.php)
+- 2 files in the "front" folder:to instanciate the dropdown (e.g. medicaldevice.php) and to define the edit form (e.g. medicaldevice.form.php)
 
 plus a table:
 ``` sql
@@ -150,10 +150,10 @@ CREATE TABLE `glpi_devicebatteries` (
   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `voltage` int(11) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
-  `devicebatterytypes_id` int(11) NOT NULL DEFAULT '0',
+  `medicalaccessorytypes_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-  `devicebatterymodels_id` int(11) DEFAULT NULL,
+  `medicalaccessorymodels_id` int(11) DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   `date_creation` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -163,8 +163,8 @@ CREATE TABLE `glpi_devicebatteries` (
   KEY `is_recursive` (`is_recursive`),
   KEY `date_mod` (`date_mod`),
   KEY `date_creation` (`date_creation`),
-  KEY `devicebatterymodels_id` (`devicebatterymodels_id`),
-  KEY `devicebatterytypes_id` (`devicebatterytypes_id`)
+  KEY `medicalaccessorymodels_id` (`medicalaccessorymodels_id`),
+  KEY `medicalaccessorytypes_id` (`medicalaccessorytypes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 

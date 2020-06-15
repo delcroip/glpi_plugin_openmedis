@@ -36,18 +36,17 @@ if (!defined('GLPI_ROOT')) {
 
 
 /**
- * Peripheral Class
+ * MedicalDevice Class
 **/
-class Peripheral extends CommonDBTM {
+class MedicalDevice extends CommonDBTM {
    use DCBreadcrumb;
 
    // From CommonDBTM
    public $dohistory                   = true;
 
-   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem',
-                                          'Item_OperatingSystem'];
+   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem'];
 
-   static $rightname                   = 'peripheral';
+   static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
 
@@ -88,7 +87,8 @@ class Peripheral extends CommonDBTM {
       $this->addStandardTab('Link', $ong, $options);
       $this->addStandardTab('Notepad', $ong, $options);
       $this->addStandardTab('Reservation', $ong, $options);
-      $this->addStandardTab('Certificate_Item', $ong, $options);
+      // need metrology
+     // $this->addStandardTab('Certificate_Item', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
 
       return $ong;
@@ -153,7 +153,7 @@ class Peripheral extends CommonDBTM {
 
 
    /**
-    * Print the peripheral form
+    * Print the medicaldevice form
     *
     * @param $ID integer ID of the item
     * @param $options array
@@ -185,7 +185,7 @@ class Peripheral extends CommonDBTM {
       State::dropdown([
          'value'     => $this->fields["states_id"],
          'entity'    => $this->fields["entities_id"],
-         'condition' => ['is_visible_peripheral' => 1]
+         'condition' => ['is_visible_medicaldevice' => 1]
       ]);
       echo "</td></tr>\n";
 
@@ -199,7 +199,7 @@ class Peripheral extends CommonDBTM {
       echo "</td>\n";
       echo "<td>".__('Type')."</td>\n";
       echo "<td>";
-      PeripheralType::dropdown(['value' => $this->fields["peripheraltypes_id"]]);
+      MedicalDeviceType::dropdown(['value' => $this->fields["medicaldevicetypes_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -227,11 +227,11 @@ class Peripheral extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Model')."</td>\n";
       echo "<td>";
-      PeripheralModel::dropdown(['value' => $this->fields["peripheralmodels_id"]]);
+      MedicalDeviceModel::dropdown(['value' => $this->fields["medicaldevicemodels_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alternate username number')."</td>\n";
+      echo "<td>".__('Alternate user contact number')."</td>\n";
       echo "<td>";
       Html::autocompletionTextField($this, "contact_num");
       echo "</td>";
@@ -241,7 +241,7 @@ class Peripheral extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alternate username')."</td>\n";
+      echo "<td>".__('Alternate user name')."</td>\n";
       echo "<td>";
       Html::autocompletionTextField($this, "contact");
       echo "</td>\n";
@@ -269,7 +269,7 @@ class Peripheral extends CommonDBTM {
                                  ['withtemplate' => $withtemplate,
                                        'value'        => $this->fields["is_global"],
                                        'management_restrict'
-                                                      => $CFG_GLPI["peripherals_management_restrict"],
+                                                      => $CFG_GLPI["medicaldevices_management_restrict"],
                                        'target'       => $target]);
       echo "</td></tr>\n";
 
@@ -382,7 +382,7 @@ class Peripheral extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '4',
-         'table'              => 'glpi_peripheraltypes',
+         'table'              => 'glpi_medicaldevicetypes',
          'field'              => 'name',
          'name'               => __('Type'),
          'datatype'           => 'dropdown'
@@ -390,7 +390,7 @@ class Peripheral extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '40',
-         'table'              => 'glpi_peripheralmodels',
+         'table'              => 'glpi_medicaldevicemodels',
          'field'              => 'name',
          'name'               => __('Model'),
          'datatype'           => 'dropdown'
@@ -402,7 +402,7 @@ class Peripheral extends CommonDBTM {
          'field'              => 'completename',
          'name'               => __('Status'),
          'datatype'           => 'dropdown',
-         'condition'          => ['is_visible_peripheral' => 1]
+         'condition'          => ['is_visible_medicaldevice' => 1]
       ];
 
       $tab[] = [
@@ -427,7 +427,7 @@ class Peripheral extends CommonDBTM {
          'id'                 => '7',
          'table'              => $this->getTable(),
          'field'              => 'contact',
-         'name'               => __('Alternate username'),
+         'name'               => __('Alternate user name'),
          'datatype'           => 'string',
          'autocomplete'       => true,
       ];
@@ -436,7 +436,7 @@ class Peripheral extends CommonDBTM {
          'id'                 => '8',
          'table'              => $this->getTable(),
          'field'              => 'contact_num',
-         'name'               => __('Alternate username number'),
+         'name'               => __('Alternate user contact number'),
          'datatype'           => 'string',
          'autocomplete'       => true,
       ];
@@ -557,7 +557,7 @@ class Peripheral extends CommonDBTM {
 
       $tab = array_merge($tab, Notepad::rawSearchOptionsToAdd());
 
-      $tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
+      //$tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
 
       return $tab;
    }
