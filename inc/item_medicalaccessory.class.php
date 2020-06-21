@@ -37,10 +37,10 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Relation between item and devices
 **/
-class Item_MedicalAccessory extends Item_Devices {
+class   PluginOpenmedisItem_MedicalAccessory extends Item_Devices {
 
-   static public $itemtype_2 = 'MedicalAccessory';
-   static public $items_id_2 = 'medicalaccessory_id';
+   static public $itemtype_2 = 'PluginOpenmedisMedicalAccessory';
+   static public $items_id_2 = 'plugin_openmedis_medicalaccessory_id';
 
    static protected $notable = false;
 

@@ -34,11 +34,11 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class MedicalAccessoryType extends CommonDeviceType {
+class  PluginOpenmedisMedicalAccessoryType extends CommonDeviceType {
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical accessory type', 'Medical accessories types', $nb);
+      return _n('Medical accessory type', 'Medical accessory types', $nb);
    }
 
 }

@@ -36,9 +36,9 @@ if (!defined('GLPI_ROOT')) {
 
 
 /**
- * MedicalDevice Class
+ * PluginOpenmedisMedicalDevice Class
 **/
-class MedicalDevice extends CommonDBTM {
+class PluginOpenmedisMedicalDevice extends CommonDBTM {
    use DCBreadcrumb;
 
    // From CommonDBTM
@@ -49,17 +49,25 @@ class MedicalDevice extends CommonDBTM {
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
-
+   static $types     = ['MedicalAccessory'];
    /**
     * Name of the type
     *
     * @param $nb : number of item in the type
    **/
    static function getTypeName($nb = 0) {
-      return _n('Device', 'Devices', $nb);
+      return _n('Medical Device', 'Medical Devices', $nb);
    }
 
+   static function getFormURL($full = true) {
+      global $CFG_GLPI;
 
+      $dir = ($full ? $CFG_GLPI['root_doc'] : '');
+      $itemtype = get_called_class();
+      $link = "$dir/plugins/openmedis/front/medicaldevice.form.php";
+
+      return $link;
+   }
    /**
     * @see CommonDBTM::useDeletedToLockIfDynamic()
     *
@@ -68,14 +76,16 @@ class MedicalDevice extends CommonDBTM {
    function useDeletedToLockIfDynamic() {
       return false;
    }
-
+   function redirectToList(){
+      Html::redirect("{$CFG_GLPI['root_doc']}/plugins/openmedis/front/medicaldevice.php");
+   }
 
    function defineTabs($options = []) {
 
       $ong = [];
       $this->addDefaultFormTab($ong);
       $this->addStandardTab('Item_Devices', $ong, $options);
-      $this->addStandardTab('Computer_Item', $ong, $options);
+    //  $this->addStandardTab('Computer_Item', $ong, $options);
       $this->addStandardTab('NetworkPort', $ong, $options);
       $this->addStandardTab('Infocom', $ong, $options);
       $this->addStandardTab('Contract_Item', $ong, $options);
@@ -164,11 +174,19 @@ class MedicalDevice extends CommonDBTM {
    **/
    function showForm($ID, $options = []) {
       global $CFG_GLPI;
-
+      $this->initForm($ID, $options);
+      $this->showFormHeader($options);
       $target       = $this->getFormURL();
       $withtemplate = $this->initForm($ID, $options);
-      $this->showFormHeader($options);
+      if (!isset($options['display'])) {
+         //display per default
+         $options['display'] = true;
+      }
+      $params = $options;
+      //do not display called elements per default; they'll be displayed or returned here
+      $params['display'] = false;
 
+      
       $tplmark = $this->getAutofillMark('name', $options);
       echo "<tr class='tab_bg_1'>";
       //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
@@ -199,7 +217,7 @@ class MedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "<td>".__('Type')."</td>\n";
       echo "<td>";
-      MedicalDeviceType::dropdown(['value' => $this->fields["medicaldevicetypes_id"]]);
+      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategory_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -227,7 +245,7 @@ class MedicalDevice extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Model')."</td>\n";
       echo "<td>";
-      MedicalDeviceModel::dropdown(['value' => $this->fields["medicaldevicemodels_id"]]);
+      PluginOpenmedisMedicalDeviceModel::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicemodels_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -265,12 +283,12 @@ class MedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "<td>".__('Management type')."</td>\n";
       echo "<td>";
-      Dropdown::showGlobalSwitch($this->fields["id"],
+  /*    Dropdown::showGlobalSwitch($this->fields["id"],
                                  ['withtemplate' => $withtemplate,
                                        'value'        => $this->fields["is_global"],
                                        'management_restrict'
                                                       => $CFG_GLPI["medicaldevices_management_restrict"],
-                                       'target'       => $target]);
+                                       'target'       => $target]);*/
       echo "</td></tr>\n";
 
       $rowspan        = 2;
@@ -330,6 +348,7 @@ class MedicalDevice extends CommonDBTM {
    }
 
 
+
    /**
     * @see CommonDBTM::getSpecificMassiveActions()
    **/
@@ -382,7 +401,7 @@ class MedicalDevice extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '4',
-         'table'              => 'glpi_medicaldevicetypes',
+         'table'              => 'glpi_plugin_openmedis_medicaldevicecategory',
          'field'              => 'name',
          'name'               => __('Type'),
          'datatype'           => 'dropdown'
@@ -390,7 +409,7 @@ class MedicalDevice extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '40',
-         'table'              => 'glpi_medicaldevicemodels',
+         'table'              => 'glpi_plugin_openmedis_medicaldevicemodels',
          'field'              => 'name',
          'name'               => __('Model'),
          'datatype'           => 'dropdown'
@@ -561,4 +580,43 @@ class MedicalDevice extends CommonDBTM {
 
       return $tab;
    }
+
+   static function getTypes($all = false) {
+
+      if ($all) {
+         return self::$types;
+      }
+
+      // Only allowed types
+      $types = self::$types;
+
+      foreach ($types as $key => $type) {
+         if (!class_exists($type)) {
+            continue;
+         }
+
+         $item = new $type();
+         if (!$item->canView()) {
+            unset($types[$key]);
+         }
+      }
+      return $types;
+   }
+
+   /**
+    * For other plugins, add a type to the linkable types
+    *
+    * @since version 1.3.0
+    *
+    * @param $type string class name
+   **/
+   static function registerType($type) {
+      if (!in_array($type, self::$types)) {
+         self::$types[] = $type;
+      }
+   }
+
+
+
+   
 }

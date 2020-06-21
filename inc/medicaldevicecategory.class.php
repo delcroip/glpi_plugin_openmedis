@@ -34,10 +34,14 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-/// Class MedicalDeviceCategory
-class MedicalDeviceCategory extends CommonTreeDropdown {
+/// Class PluginOpenmedisMedicalDeviceCategory
+class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
    public $can_be_translated = true;
+  // public $must_be_replace              = true;
+   public $dohistory                    = true;
+
+   static $rightname                    = 'plugin_openmedis_type';
 
 
    static function getTypeName($nb = 0) {
@@ -48,5 +52,35 @@ class MedicalDeviceCategory extends CommonTreeDropdown {
    function cleanDBonPurge() {
       Rule::cleanForItemAction($this);
    }
+
+   function getAdditionalFields() {
+
+      $tab = [['name'      => 'code',
+                         'label'     => __('code of the category'),
+                         'type'      => 'text',
+                         'list'      => true],
+                  ];
+
+      if (!Session::haveRightsOr('plugin_openmedis_type', [CREATE, UPDATE, DELETE])) {
+
+         unset($tab[7]);
+      }
+      return $tab;
+
+   }
+   function rawSearchOptions() {
+      $tab                       = parent::rawSearchOptions();
+
+      $tab[] = [
+         'id'                 => '80',
+         'table'              => 'code',
+         'field'              => 'name',
+         'name'               => __('Code'),
+         'datatype'           => 'text',
+         'right'              => 'plugin_openmedis'
+      ];
+   }
+
+
 
 }

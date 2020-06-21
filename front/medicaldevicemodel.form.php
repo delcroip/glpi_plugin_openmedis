@@ -30,7 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-include ('../inc/includes.php');
+include ('../../../inc/includes.php');
 
-$dropdown = new MedicalDeviceModel();
+$dropdown = new PluginOpenmedisMedicalDeviceModel();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");

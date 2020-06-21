@@ -34,9 +34,9 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class MedicalAccessory extends CommonDevice {
+class  PluginOpenmedisMedicalAccessory extends CommonDevice {
 
-   static protected $forward_entity_to = ['Item_MedicalAccessory', 'Infocom'];
+   static protected $forward_entity_to = ['  PluginOpenmedisItem_MedicalAccessory', 'Infocom'];
 
    static function getTypeName($nb = 0) {
       return _n('Medical accessory', 'Medical accessories', $nb);

@@ -30,12 +30,22 @@
  * ---------------------------------------------------------------------
  */
 
-include ('../inc/includes.php');
+include ('../../../inc/includes.php');
 
-Session::checkRight("medicaldevice", READ);
+$plugin = new Plugin();
+if (!$plugin->isInstalled('openmedis') || !$plugin->isActivated('openmedis')) {
+   Html::displayNotFoundError();
+}
 
-Html::header(MedicalDevice::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "medicaldevice");
 
-Search::show('MedicalDevice');
-
-Html::footer();
+if (PluginOpenmedisMedicalDevice::canView()) {
+    Html::header(
+        PluginOpenmedisMedicalDevice::getTypeName(Session::getPluralNumber()),
+        $_SERVER['PHP_SELF'], 
+        "assets", 
+        'pluginopenmedismedicaldevice');
+    Search::show('PluginOpenmedisMedicalDevice');
+    Html::footer();
+}else{
+    Html::displayRightError();
+}

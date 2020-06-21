@@ -34,8 +34,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-/// Class MedicalDeviceType
-class MedicalDeviceType extends CommonDropdown {
+/// Class PluginOpenmedisMedicalDeviceType
+class PluginOpenmedisMedicalDeviceType extends CommonDropdown {
 
 
    static function getTypeName($nb = 0) {

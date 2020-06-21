@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-class PluginOpenMedisMenu extends CommonGLPI {
+class PluginOpenmedisMenu extends CommonGLPI {
 
    static $rightname = 'plugin_openmedis';
 
@@ -42,39 +42,28 @@ class PluginOpenMedisMenu extends CommonGLPI {
       $menu                     = [];
       //Menu entry in tools
       $menu['title']            = self::getMenuName(2);
-      $menu['page']             = PluginOpenMedisMedicalDevice::getSearchURL(false);
-      $menu['links']['search']  = PluginOpenMedisMedicalDevice::getSearchURL(false);
+      $menu['page']             = PluginOpenmedisMedicalDevice::getSearchURL(false);
+      $menu['links']['search']  = PluginOpenmedisMedicalDevice::getSearchURL(false);
 
-      $menu['options']['openmedis']['links']['search'] = PluginOpenMedisMedicalDevice::getSearchURL(false);
-      $menu['options']['openmedis']['links']['config'] = PluginOpenMedisConfig::getFormURL(false);
 
-      $menu['options']['config']['title'] = __('Setup');
-      $menu['options']['config']['page']  = PluginOpenMedisConfig::getFormURL(false);
-
-      $menu['options']['specifications']['title']           = __('Specifications', 'openmedis');
-      $menu['options']['specifications']['page']            = PluginOpenMedisItemSpecification::getSearchURL(false);
-      $menu['options']['specifications']['links']['search'] = PluginOpenMedisItemSpecification::getSearchURL(false);
-
-      if (PluginOpenMedisMedicalDevice::canCreate()) {
+   
+      if (PluginOpenmedisMedicalDevice::canCreate()) {
          $menu['options']['openmedis']['links']['add'] = '/plugins/openmedis/front/setup.templates.php?add=1';
       }
 
-      if (PluginOpenMedisMedicalDeviceModel::canView()) {
+      if (PluginOpenmedisMedicalDeviceModel::canView()) {
          $menu['options']['openmedis']['links']['template'] = '/plugins/openmedis/front/setup.templates.php?add=0';
-         $menu['options']['openmedis']['links']["<img  src='".
-         $CFG_GLPI["root_doc"]."/pics/menu_showall.png' title=\"".__('Equipments models specifications', 'openmedis').
-         "\" alt=\"".__('Equipments models specifications', 'openmedis')."\">"] = PluginOpenMedisItemSpecification::getSearchURL(false);
       }
 
       return $menu;
    }
 
    static function removeRightsFromSession() {
-      if (isset($_SESSION['glpimenu']['assets']['types']['PluginOpenMedisMenu'])) {
-         unset($_SESSION['glpimenu']['assets']['types']['PluginOpenMedisMenu']);
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginOpenmedisMenu'])) {
+         unset($_SESSION['glpimenu']['assets']['types']['PluginOpenmedisMenu']);
       }
-      if (isset($_SESSION['glpimenu']['assets']['content']['pluginopenmedismenu'])) {
-         unset($_SESSION['glpimenu']['assets']['content']['pluginopenmedismenu']);
+      if (isset($_SESSION['glpimenu']['assets']['content']['PluginOpenmedisMenu'])) {
+         unset($_SESSION['glpimenu']['assets']['content']['PluginOpenmedisMenu']);
       }
    }
 }

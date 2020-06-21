@@ -32,9 +32,15 @@
 
 use Glpi\Event;
 
-include ('../inc/includes.php');
+include ('../../../inc/includes.php');
 
-Session::checkRight("medicaldevice", READ);
+// Check if plugin is activated...
+$plugin = new Plugin();
+if (!$plugin->isInstalled('openmedis') || !$plugin->isActivated('openmedis')) {
+   Html::displayNotFoundError();
+}
+
+Session::checkRight("plugin_openmedis", READ);
 
 if (empty($_GET["id"])) {
    $_GET["id"] = "";
@@ -43,13 +49,13 @@ if (!isset($_GET["withtemplate"])) {
    $_GET["withtemplate"] = "";
 }
 
-$medicaldevice = new MedicalDevice();
+$medicaldevice = new PluginOpenmedisMedicalDevice();
 
 if (isset($_POST["add"])) {
    $medicaldevice->check(-1, CREATE, $_POST);
 
    if ($newID = $medicaldevice->add($_POST)) {
-      Event::log($newID, "medicaldevices", 4, "inventory",
+      Event::log($newID, "PluginOpenMedisMedicalDevice", 4, "inventory",
                  sprintf(__('%1$s adds the item %2$s'), $_SESSION["glpiname"], $_POST["name"]));
       if ($_SESSION['glpibackcreated']) {
          Html::redirect($medicaldevice->getLinkURL());
@@ -61,7 +67,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->check($_POST["id"], DELETE);
    $medicaldevice->delete($_POST);
 
-   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
+   Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s deletes an item'), $_SESSION["glpiname"]));
    $medicaldevice->redirectToList();
@@ -70,7 +76,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->check($_POST["id"], DELETE);
 
    $medicaldevice->restore($_POST);
-   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
+   Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s restores an item'), $_SESSION["glpiname"]));
    $medicaldevice->redirectToList();
@@ -79,7 +85,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->check($_POST["id"], PURGE);
 
    $medicaldevice->delete($_POST, 1);
-   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
+   Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s purges an item'), $_SESSION["glpiname"]));
    $medicaldevice->redirectToList();
@@ -88,7 +94,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->check($_POST["id"], UPDATE);
 
    $medicaldevice->update($_POST);
-   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
+   Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
               sprintf(__('%s updates an item'), $_SESSION["glpiname"]));
    Html::back();
@@ -97,14 +103,18 @@ if (isset($_POST["add"])) {
    $medicaldevice->check($_POST["id"], UPDATE);
 
    Computer_Item::unglobalizeItem($medicaldevice);
-   Event::log($_POST["id"], "medicaldevices", 4, "inventory",
+   Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
                //TRANS: %s is the user login
                sprintf(__('%s sets unitary management'), $_SESSION["glpiname"]));
 
    Html::redirect($medicaldevice->getFormURLWithID($_POST["id"]));
 
 } else {
-   Html::header(MedicalDevice::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "medicaldevice");
+   Html::header(
+      PluginOpenmedisMedicalDevice::getTypeName(Session::getPluralNumber()),
+      $_SERVER['PHP_SELF'], 
+      "assets", 
+      'pluginopenmedismedicaldevice');
    $medicaldevice->display(['id'           => $_GET["id"],
                               'withtemplate' => $_GET["withtemplate"]]);
    Html::footer();

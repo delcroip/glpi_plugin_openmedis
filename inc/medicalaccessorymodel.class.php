@@ -34,13 +34,13 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-/// Class MedicalAccessoryModel
-class MedicalAccessoryModel extends CommonDeviceModel {
+/// Class  PluginOpenmedisMedicalAccessoryModel
+class  PluginOpenmedisMedicalAccessoryModel extends CommonDeviceModel {
 
    var $additional_fields_for_dictionnary = ['manufacturer'];
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical accessory model', 'Device Medical accessories models', $nb);
+      return _n('Medical accessory model', 'Medical accessory models', $nb);
    }
 }
