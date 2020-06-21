@@ -215,7 +215,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       Location::dropdown(['value'  => $this->fields["locations_id"],
                                'entity' => $this->fields["entities_id"]]);
       echo "</td>\n";
-      echo "<td>".__('Type')."</td>\n";
+      echo "<td>".__('Category')."</td>\n";
       echo "<td>";
       PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategory_id"]]);
       echo "</td></tr>\n";

@@ -37,7 +37,7 @@ function plugin_init_openmedis() {
       'PluginOpenmedisProfile',
       'initProfile'
    ];
-  /* Plugin::registerClass('PluginOpenmedisMedicalDevice', [
+   Plugin::registerClass('PluginOpenmedisMedicalDevice', [
       'reservation_types' => true,
       'document_types'       => true,
       'location_types'       => true,
@@ -46,7 +46,7 @@ function plugin_init_openmedis() {
       'linkuser_tech_types'  => true,
       'infocom_types'        => true,
       'ticket_types'         => true
-  ]);*/
+  ]);
 
   Plugin::registerClass('PluginOpenmedisProfile', [
       'addtabon' => 'Profile',
@@ -61,7 +61,7 @@ function plugin_init_openmedis() {
             $PLUGIN_HOOKS["menu_toadd"]['openmedis'] = ['assets'  => 'PluginOpenmedisMedicaldevice'];
                   // Display a menu entry ?
 
-            $PLUGIN_HOOKS['assign_to_ticket']['openmedis'] = true;
+            $PLUGIN_HOOKS['assign_to_ticket']['openmedis'] = 'plugin_openmedis_AssignToTicket';
             //$PLUGIN_HOOKS['use_massive_action']['openmedis'] = 1;
          }
          //If treeview plugin is installed, add rack as a type of item
