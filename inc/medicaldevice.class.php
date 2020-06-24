@@ -217,7 +217,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "<td>".__('Category')."</td>\n";
       echo "<td>";
-      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategory_id"]]);
+      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -401,7 +401,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '4',
-         'table'              => 'glpi_plugin_openmedis_medicaldevicecategory',
+         'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
          'field'              => 'name',
          'name'               => __('Type'),
          'datatype'           => 'dropdown'

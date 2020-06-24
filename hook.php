@@ -52,7 +52,7 @@ function plugin_openmedis_uninstall() {
    $migration = new Migration("1.0.0");
 
    $tables =  ["glpi_plugin_openmedis_medicalaccessory",
-                    "glpi_plugin_openmedis_medicaldevicecategory",
+                    "glpi_plugin_openmedis_medicaldevicecategories",
                     "glpi_plugin_openmedis_medicaldevicemodels",
                     "glpi_plugin_openmedis_medicaldevice",
                     "glpi_plugin_openmedis_items_medicalaccessory",
@@ -128,8 +128,9 @@ function plugin_openmedis_getDatabaseRelations() {
                       => ["glpi_plugin_openmedis_medicalaccessory" => "plugin_openmedis_medicalaccessorytypes_id"],
                       "glpi_plugin_openmedis_medicalaccessory"
                       => ["glpi_plugin_openmedis_items_medicalaccessory" => "plugin_openmedis_medicalaccessory_id"],
-                      "glpi_plugin_openmedis_medicaldevicecategory"
-                      => ["glpi_plugin_openmedis_medicaldevice" => "plugin_openmedis_medicaldevicecategory_id"],
+                      "glpi_plugin_openmedis_medicaldevicecategories"
+                      => ["glpi_plugin_openmedis_medicaldevice" => "plugin_openmedis_medicaldevicecategories_id",
+                     "glpi_plugin_openmedis_medicaldevicecategories" => "plugin_openmedis_medicaldevicecategories_id"],
                       "glpi_plugin_openmedis_medicaldevicemodels"
                       => ["glpi_plugin_openmedis_medicaldevice" => "plugin_openmedis_medicaldevicemodels_id"],
                    "glpi_locations"

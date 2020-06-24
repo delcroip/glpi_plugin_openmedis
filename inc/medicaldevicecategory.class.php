@@ -59,6 +59,9 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
                          'label'     => __('code of the category'),
                          'type'      => 'text',
                          'list'      => true],
+            ['name'      => 'plugin_openmedis_medicaldevicecategories_id',
+                         'label'     => __('Parent'),
+                         'type'      => 'dropdownValue'],
                   ];
 
       if (!Session::haveRightsOr('plugin_openmedis_type', [CREATE, UPDATE, DELETE])) {
@@ -79,6 +82,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
          'datatype'           => 'text',
          'right'              => 'plugin_openmedis'
       ];
+      return $tab;
    }
 
 

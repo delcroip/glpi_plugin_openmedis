@@ -29,13 +29,13 @@ CREATE TABLE `glpi_plugin_openmedis_medicaldevicecategories` (
   `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, 
   `comment` text COLLATE utf8_unicode_ci, 
-  `parent` int(11) NOT NULL DEFAULT '0', 
+  `plugin_openmedis_medicaldevicecategories_id` int(11) NOT NULL DEFAULT '0', 
   `completename` text COLLATE utf8_unicode_ci, 
   `level` int(11) NOT NULL DEFAULT '0',
   `ancestors_cache` longtext COLLATE utf8_unicode_ci,
   `sons_cache` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
-  KEY `parent` (`parent`)
+  KEY `plugin_openmedis_medicaldevicecategories_id` (`plugin_openmedis_medicaldevicecategories_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
