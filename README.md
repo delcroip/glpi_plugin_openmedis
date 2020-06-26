@@ -17,6 +17,18 @@ This is my first GLPI module, I found it diffictult to start because the example
 
 I will try to add comment to clarify the code, here my current understanding:
 
+until now the key is the nomenclature, to have the module working it is a must have
+
+
+All class MUST start with PluginPluginnameObject : don't use a capital letter in the middle of the Pluginname or it will mess with GLPI (it will interpret PluginNameObject as NameObject part of the "Plugin" plugin)
+
+Follow to the letter this page:
+https://glpi-developer-documentation.readthedocs.io/en/master/devapi/database/dbmodel.html?highlight=name#naming-conventions
+
+
+https://glpi-developer-documentation.readthedocs.io/en/master/codingstandards.html#variables-and-constants
+
+
 To build the assset (Medical device) I duplciated the peripherical code and db (Shown as "ASSET > Device" in glpi)
 
 To build the new asset Item (ASSET > ASSET X > Component in GLPI) I duplicate the medicalaccessory code and db
@@ -30,26 +42,14 @@ It seem that to create a simple dropdown one need to create 3 files
 and a table:
 
 ``` sql
-DROP TABLE IF EXISTS `glpi_medicaldevicemodels`;
-CREATE TABLE `glpi_medicaldevicemodels` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicaldevicemodels`;
+CREATE TABLE `glpi_plugin_openmedis_medicaldevicemodels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
   `product_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `weight` int(11) NOT NULL DEFAULT '0',
-  `required_units` int(11) NOT NULL DEFAULT '1',
-  `depth` float NOT NULL DEFAULT 1,
-  `power_connections` int(11) NOT NULL DEFAULT '0',
-  `power_consumption` int(11) NOT NULL DEFAULT '0',
-  `is_half_rack` tinyint(1) NOT NULL DEFAULT '0',
-  `picture_front` text COLLATE utf8_unicode_ci,
-  `picture_rear` text COLLATE utf8_unicode_ci,
-  `date_mod` datetime DEFAULT NULL,
-  `date_creation` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
-  KEY `date_mod` (`date_mod`),
-  KEY `date_creation` (`date_creation`),
   KEY `product_number` (`product_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
@@ -58,18 +58,31 @@ CREATE TABLE `glpi_medicaldevicemodels` (
 
 
 ``` sql
-CREATE TABLE `glpi_softwarecategories` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_items_medicalaccessories` ;
+CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment` text COLLATE utf8_unicode_ci,
-  `softwarecategories_id` int(11) NOT NULL DEFAULT '0',
-  `completename` text COLLATE utf8_unicode_ci,
-  `level` int(11) NOT NULL DEFAULT '0',
-  `ancestors_cache` longtext COLLATE utf8_unicode_ci,
-  `sons_cache` longtext COLLATE utf8_unicode_ci,
+  `items_id` int(11) NOT NULL DEFAULT '0',
+  `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `plugin_openmedis_medicalaccessory_id` int(11) NOT NULL DEFAULT '0',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locations_id` int(11) NOT NULL DEFAULT '0',
+  `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `softwarecategories_id` (`softwarecategories_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `plugin_openmedis_medicaldevice_id` (`items_id`),
+  KEY `plugin_openmedis_medicalaccessory_id` (`plugin_openmedis_medicalaccessory_id`),
+  KEY `is_deleted` (`is_deleted`),
+  KEY `is_dynamic` (`is_dynamic`),
+  KEY `entities_id` (`entities_id`),
+  KEY `is_recursive` (`is_recursive`),
+  KEY `serial` (`serial`),
+  KEY `item` (`itemtype`,`items_id`),
+  KEY `otherserial` (`otherserial`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 ## asset
@@ -80,11 +93,11 @@ It seems that to create an assest 3 files are required:
 
 plus a table:
 ``` sql
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medical_devices`;
-CREATE TABLE `glpi_plugin_openmedis_medical_devices` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicaldevices` ;
+CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, -- assetid
   `entities_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, -- AssetFullName
   `date_mod` datetime DEFAULT NULL,
   `contact` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contact_num` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -94,8 +107,8 @@ CREATE TABLE `glpi_plugin_openmedis_medical_devices` (
   `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locations_id` int(11) NOT NULL DEFAULT '0',
-  `medicaldevicetypes_id` int(11) NOT NULL DEFAULT '0',
-  `medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_medicaldevicecategories_id` int(11) NOT NULL DEFAULT '0',
   `brand` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
   `is_global` tinyint(1) NOT NULL DEFAULT '0',
@@ -118,10 +131,10 @@ CREATE TABLE `glpi_plugin_openmedis_medical_devices` (
   KEY `groups_id` (`groups_id`),
   KEY `users_id` (`users_id`),
   KEY `locations_id` (`locations_id`),
-  KEY `medicaldevicemodels_id` (`medicaldevicemodels_id`),
+  KEY `plugin_openmedis_medicaldevicemodels_id` (`plugin_openmedis_medicaldevicemodels_id`),
   KEY `states_id` (`states_id`),
   KEY `users_id_tech` (`users_id_tech`),
-  KEY `medicaldevicetypes_id` (`medicaldevicetypes_id`),
+  KEY `plugin_openmedis_medicaldevicecategories_id` (`plugin_openmedis_medicaldevicecategories_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `date_mod` (`date_mod`),
   KEY `groups_id_tech` (`groups_id_tech`),
@@ -134,7 +147,7 @@ CREATE TABLE `glpi_plugin_openmedis_medical_devices` (
 ```
 
 
-## item
+## item (not yet working)
 
 It seems that to create an assest 4 files are required:
 - 2 class file in the "inc" folder: on to define the asset-itme relationship , a subclass of **Item_Devices** an other to define the class itself ta subclass of  **CommonDevice**
@@ -142,29 +155,30 @@ It seems that to create an assest 4 files are required:
 
 plus a table:
 ``` sql
-DROP TABLE IF EXISTS `glpi_devicebatteries`;
-CREATE TABLE `glpi_devicebatteries` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_items_medicalaccessories` ;
+CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `designation` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment` text COLLATE utf8_unicode_ci,
-  `manufacturers_id` int(11) NOT NULL DEFAULT '0',
-  `voltage` int(11) DEFAULT NULL,
-  `capacity` int(11) DEFAULT NULL,
-  `medicalaccessorytypes_id` int(11) NOT NULL DEFAULT '0',
+  `items_id` int(11) NOT NULL DEFAULT '0',
+  `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `plugin_openmedis_medicalaccessory_id` int(11) NOT NULL DEFAULT '0',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-  `medicalaccessorymodels_id` int(11) DEFAULT NULL,
-  `date_mod` datetime DEFAULT NULL,
-  `date_creation` datetime DEFAULT NULL,
+  `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locations_id` int(11) NOT NULL DEFAULT '0',
+  `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `designation` (`designation`),
-  KEY `manufacturers_id` (`manufacturers_id`),
+  KEY `plugin_openmedis_medicaldevice_id` (`items_id`),
+  KEY `plugin_openmedis_medicalaccessory_id` (`plugin_openmedis_medicalaccessory_id`),
+  KEY `is_deleted` (`is_deleted`),
+  KEY `is_dynamic` (`is_dynamic`),
   KEY `entities_id` (`entities_id`),
   KEY `is_recursive` (`is_recursive`),
-  KEY `date_mod` (`date_mod`),
-  KEY `date_creation` (`date_creation`),
-  KEY `medicalaccessorymodels_id` (`medicalaccessorymodels_id`),
-  KEY `medicalaccessorytypes_id` (`medicalaccessorytypes_id`)
+  KEY `serial` (`serial`),
+  KEY `item` (`itemtype`,`items_id`),
+  KEY `otherserial` (`otherserial`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
@@ -187,11 +201,12 @@ for the rack module the unit (metric of not) can be defined for the wholé plugi
 
 ## hooks
 
-Evnt based actions
+the hook page define the hook that can be called from elswhere but mostl of the plugin hook are called from the setup page
 
 for more infornation https://glpi-developer-documentation.readthedocs.io/en/master/plugins/requirements.html#hook-php
 
 ## setup
+
 
 for more information https://glpi-developer-documentation.readthedocs.io/en/master/plugins/requirements.html#setup-php
 

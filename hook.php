@@ -37,6 +37,11 @@ function plugin_openmedis_install() {
       $DB->runFile(GLPI_ROOT ."/plugins/openmedis/sql/empty-1.0.0.sql");
 
    }
+   // load the data
+   if ($DB->tableExists("glpi_plugin_openmedis_medicaldevicecategories")) {
+      $DB->runFile(GLPI_ROOT ."/plugins/openmedis/sql/data-1.0.0.sql");
+
+   }
    //Migrate profiles to the system introduced in 0.85
   PluginOpenmedisProfile::initProfile();
   PluginOpenmedisProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
