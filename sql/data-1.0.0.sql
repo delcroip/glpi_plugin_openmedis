@@ -350,5 +350,6 @@ INSERT INTO `glpi_plugin_openmedis_medicaldevicecategories` (`id`, `code`, `name
 (90003, '90003', 'Gas Delivery Systems', '', 2, 'gen_images/90003.jpg', 1),
 (90005, '90005', 'Analyzers, Point-of-Care, Cholestrol', '', 8, 'gen_images/90005.jpg', 1),
 (90007, '90007', 'Dental Laboratory Drives', '', 1, 'gen_images/90007.jpg', 1),
-(99999, '99999', 'Other', '', 7, 'gen_images/99999.jpg', 1),
-UPDATE glpi_plugin_openmedis_medicaldevicecategories SET completename = name;
+(99999, '99999', 'Other', '', 7, 'gen_images/99999.jpg', 1);
+
+UPDATE glpi_plugin_openmedis_medicaldevicecategories SET comment = (CASE WHEN picture_name IS NOT NULL THEN CONCAT('<img src="plugins/openmedis/pics/', picture_name, '">') ELSE '' END);

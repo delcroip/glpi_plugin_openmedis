@@ -44,12 +44,12 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    // From CommonDBTM
    public $dohistory                   = true;
 
-   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem'];
+   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem','PluginOpenmedisMedicalAccessories'];
 
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
-   static $types     = ['MedicalAccessory'];
+   static $types     = ['PluginOpenmedisMedicalAccessories'];
    /**
     * Name of the type
     *
@@ -79,28 +79,31 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    function redirectToList(){
       Html::redirect("{$CFG_GLPI['root_doc']}/plugins/openmedis/front/medicaldevice.php");
    }
-
+    /**
+     * Define tabs to display
+     *
+     * @see CommonGLPI::defineTabs()
+    **/
    function defineTabs($options = []) {
 
       $ong = [];
-      $this->addDefaultFormTab($ong);
-      $this->addStandardTab('Item_Devices', $ong, $options);
-      $this->addStandardTab('Computer_Item', $ong, $options);
-      $this->addStandardTab('NetworkPort', $ong, $options);
-      $this->addStandardTab('Infocom', $ong, $options);
-      $this->addStandardTab('Contract_Item', $ong, $options);
-      $this->addStandardTab('Document_Item', $ong, $options);
-      $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
-      $this->addStandardTab('Ticket', $ong, $options);
-      $this->addStandardTab('Item_Problem', $ong, $options);
-      $this->addStandardTab('Change_Item', $ong, $options);
-      $this->addStandardTab('Link', $ong, $options);
-      $this->addStandardTab('Notepad', $ong, $options);
-      $this->addStandardTab('Reservation', $ong, $options);
-      // need metrology
-     // $this->addStandardTab('Certificate_Item', $ong, $options);
-      $this->addStandardTab('Log', $ong, $options);
-
+      $this->addDefaultFormTab($ong)
+         ->addStandardTab('Item_Devices', $ong, $options)
+         ->addStandardTab('NetworkPort', $ong, $options)
+         ->addStandardTab('Infocom', $ong, $options)
+         ->addStandardTab('Contract_Item', $ong, $options)
+         ->addStandardTab('Document_Item', $ong, $options)
+         ->addStandardTab('KnowbaseItem_Item', $ong, $options)
+         ->addStandardTab('Ticket', $ong, $options)
+         ->addStandardTab('Item_Problem', $ong, $options)
+         ->addStandardTab('Change_Item', $ong, $options)
+         ->addStandardTab('Link', $ong, $options)
+         ->addStandardTab('Certificate_Item', $ong, $options)
+         ->addStandardTab('Lock', $ong, $options)
+         ->addStandardTab('Notepad', $ong, $options)
+         ->addStandardTab('Reservation', $ong, $options)
+         ->addStandardTab('Log', $ong, $options);
+         //need metrology
       return $ong;
    }
 
@@ -123,7 +126,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       if (isset($this->input["_oldID"])) {
          // ADD Devices
          Item_devices::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
-
+         PluginOpenmedisMedicalAccessories::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
          // ADD Infocoms
          Infocom::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
 
@@ -154,6 +157,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
             Item_Problem::class,
             Change_Item::class,
             Item_Project::class,
+            PluginOpenmedisMedicalAccessories::class,
          ]
       );
 
@@ -577,6 +581,9 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $tab = array_merge($tab, Notepad::rawSearchOptionsToAdd());
 
       //$tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
+      $tab = array_merge($tab, Item_Devices::rawSearchOptionsToAdd(get_class($this)));
+
+      //$tab = array_merge($tab, PluginOpenmedisMedicalAccessories::rawSearchOptionsToAdd(get_class($this)));
 
       return $tab;
    }

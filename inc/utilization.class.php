@@ -31,16 +31,14 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access this file directly");
 }
 
-/// Class  PluginOpenmedisMedicalAccessoryModel
-class  PluginOpenmedisMedicalAccessoryModel extends CommonDeviceModel {
-
-   var $additional_fields_for_dictionnary = ['manufacturer'];
-
+/// Class PluginOpenmedisMedicalDeviceModel
+class PluginOpenmedisUtilization extends CommonDropdown {
 
    static function getTypeName($nb = 0) {
-      return _n('Medical Accessories model', 'Medical Accessories models', $nb);
+      return _n('Medical Device Utilisation', 'Medical Devices Utilisations', $nb);
    }
+
 }

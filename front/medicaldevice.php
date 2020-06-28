@@ -49,3 +49,4 @@ if (PluginOpenmedisMedicalDevice::canView()) {
 }else{
     Html::displayRightError();
 }
+

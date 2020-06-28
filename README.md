@@ -31,13 +31,14 @@ https://glpi-developer-documentation.readthedocs.io/en/master/codingstandards.ht
 
 To build the assset (Medical device) I duplciated the peripherical code and db (Shown as "ASSET > Device" in glpi)
 
-To build the new asset Item (ASSET > ASSET X > Component in GLPI) I duplicate the medicalaccessory code and db
+To build the new asset Item (ASSET > ASSET X > Component in GLPI) I duplicate the medicalaccessories code and db
 
 ## Dropdown
 
 It seem that to create a simple dropdown one need to create 3 files
 - 1 in the "inc" folder to define the class a subclass of  **CommonDropdown** (e.g medicaldevicemodel.class.php)
 - 2 in the "front" folder: to instanciate the dropdown (e.g. medicaldevicemodel.php) and to define the edit form (e.g. medicaldevicemodel.form.php)
+
 
 and a table:
 
@@ -58,12 +59,12 @@ CREATE TABLE `glpi_plugin_openmedis_medicaldevicemodels` (
 
 
 ``` sql
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_items_medicalaccessories` ;
-CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories_items` ;
+CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_openmedis_medicalaccessory_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_medicalaccessories_id` int(11) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -74,7 +75,7 @@ CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
   `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_openmedis_medicaldevice_id` (`items_id`),
-  KEY `plugin_openmedis_medicalaccessory_id` (`plugin_openmedis_medicalaccessory_id`),
+  KEY `plugin_openmedis_medicalaccessories_id` (`plugin_openmedis_medicalaccessories_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `is_dynamic` (`is_dynamic`),
   KEY `entities_id` (`entities_id`),
@@ -86,6 +87,8 @@ CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
 ```
 
 ## asset
+
+https://glpi-developer-documentation.readthedocs.io/en/master/plugins/objects.html#add-a-front-for-my-object-crud
 
 It seems that to create an assest 3 files are required:
 - 1 class file in the "inc" folder a subclass of  **CommonDBTM**
@@ -155,12 +158,12 @@ It seems that to create an assest 4 files are required:
 
 plus a table:
 ``` sql
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_items_medicalaccessories` ;
-CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories_items` ;
+CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_openmedis_medicalaccessory_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_medicalaccessories_id` int(11) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -171,7 +174,7 @@ CREATE TABLE  `glpi_plugin_openmedis_items_medicalaccessories` (
   `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_openmedis_medicaldevice_id` (`items_id`),
-  KEY `plugin_openmedis_medicalaccessory_id` (`plugin_openmedis_medicalaccessory_id`),
+  KEY `plugin_openmedis_medicalaccessories_id` (`plugin_openmedis_medicalaccessories_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `is_dynamic` (`is_dynamic`),
   KEY `entities_id` (`entities_id`),

@@ -31,16 +31,36 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access this file directly");
 }
 
-/// Class  PluginOpenmedisMedicalAccessoryModel
-class  PluginOpenmedisMedicalAccessoryModel extends CommonDeviceModel {
+/**
+ * Relation between item and devices
+**/
+class   PluginOpenmedisMedicalAccessories_Item extends Item_Devices {
 
-   var $additional_fields_for_dictionnary = ['manufacturer'];
+   static public $itemtype_2 = 'PluginOpenmedisMedicalAccessories';
+   static public $items_id_2 = 'plugin_openmedis_medicalaccessories_id';
+
+   static protected $notable = false;
 
 
-   static function getTypeName($nb = 0) {
-      return _n('Medical Accessories model', 'Medical Accessories models', $nb);
+   /**
+    * @since 0.85
+    **/
+   static function getSpecificities($specif = '') {
+      return [
+         'serial'             => parent::getSpecificities('serial'),
+         'otherserial'        => parent::getSpecificities('otherserial'),
+         'locations_id'       => parent::getSpecificities('locations_id'),
+         'states_id'          => parent::getSpecificities('states_id'),
+         'manufacturing_date' => [
+            'long name' => __('Manufacturing date'),
+            'short name' => __('Date'),
+            'size'       => 10,
+            'id'         => 20,
+            'autocomplete' => true,
+         ]
+      ];
    }
 }

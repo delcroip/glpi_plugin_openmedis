@@ -30,6 +30,7 @@ define('OPENMEDIS_VERSION', '0.0.1');
 
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
+   $CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessories_Item';
    // to check what it means to be CSRF compatible
    $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
    //load changeprofile function
@@ -41,16 +42,36 @@ function plugin_init_openmedis() {
       'reservation_types' => true,
       'document_types'       => true,
       'location_types'       => true,
+      'PluginOpenmedisMedicalAccessories_Item'       => true,
       'unicity_types'        => true,
       'linkgroup_tech_types' => true,
       'linkuser_tech_types'  => true,
       'infocom_types'        => true,
       'ticket_types'         => true
   ]);
+  Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
+  Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
+  Plugin::registerClass('PluginOpenmedisMedicalAccessories', [
+   'reservation_types' => true,
+   'document_types'       => true,
+   'location_types'       => true,
+   'unicity_types'        => true,
+   'linkgroup_tech_types' => true,
+   'linkuser_tech_types'  => true,
+   'infocom_types'        => true,
+   'ticket_types'         => true
+   ]);
+   Plugin::registerClass('PluginOpenmedisMedicalAccessories_Item');
+   Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');
+   Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
+   Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
   Plugin::registerClass('PluginOpenmedisProfile', [
       'addtabon' => 'Profile',
   ]); 
+  
+
+
   $plugin = new Plugin();    
   if ($plugin->isInstalled('openmedis') && $plugin->isActivated('openmedis')) {
       $CFG_GLPI["project_asset_types"][] = 'PluginOpenmedisMedicalDevice';
