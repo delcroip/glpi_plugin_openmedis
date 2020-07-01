@@ -42,7 +42,6 @@ function plugin_init_openmedis() {
       'reservation_types' => true,
       'document_types'       => true,
       'location_types'       => true,
-      'PluginOpenmedisMedicalAccessories_Item'       => true,
       'unicity_types'        => true,
       'linkgroup_tech_types' => true,
       'linkuser_tech_types'  => true,
@@ -55,12 +54,9 @@ function plugin_init_openmedis() {
   Plugin::registerClass('PluginOpenmedisMedicalAccessories', [
    'reservation_types' => true,
    'document_types'       => true,
-   'location_types'       => true,
-   'unicity_types'        => true,
-   'linkgroup_tech_types' => true,
-   'linkuser_tech_types'  => true,
    'infocom_types'        => true,
-   'ticket_types'         => true
+   'ticket_types'         => true,
+   'addtabon'              => PluginOpenmedisMedicalDevice
    ]);
    Plugin::registerClass('PluginOpenmedisMedicalAccessories_Item');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');

@@ -119,7 +119,6 @@ function plugin_openmedis_postinit() {
 function plugin_openmedis_AssignToTicket($types) {
 
    if (Session::checkRight("plugin_openmedis_openticket", CREATE)) {
-     
       $types['PluginOpenmedisMedicalDevice'] = PluginOpenmedisMedicalDevice::getTypeName(2);
    }
    return $types;
