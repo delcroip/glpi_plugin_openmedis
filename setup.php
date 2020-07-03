@@ -78,7 +78,7 @@ function plugin_init_openmedis() {
             $PLUGIN_HOOKS["menu_toadd"]['openmedis'] = ['assets'  => 'PluginOpenmedisMedicaldevice'];
                   // Display a menu entry ?
 
-            $PLUGIN_HOOKS['assign_to_ticket']['openmedis'] = 'plugin_openmedis_AssignToTicket';
+            $PLUGIN_HOOKS['assign_to_ticket']['openmedis'] = true;
             //$PLUGIN_HOOKS['use_massive_action']['openmedis'] = 1;
          }
          //If treeview plugin is installed, add rack as a type of item

@@ -246,29 +246,51 @@ FROM openmedis_old.`assetutilization`
 ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevices` ADD COLUMN `old_ID` text DEFAULT NULL;
 
 INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevices`( `old_ID`,`plugin_openmedis_medicaldevicemodels_id`,`plugin_openmedis_medicaldevicecategories_id`,`entities_id`, `name`, `contact`, `contact_num`, `users_id_tech`, `groups_id_tech`, `comment`, `serial`, `otherserial`, `locations_id`,   `plugin_openmedis_utilizations_id`, `brand`, `manufacturers_id`, `users_id`, `groups_id`, `states_id`)
+
+SELECT `old_ID`,
+(CASE WHEN `plugin_openmedis_medicaldevicemodels_id` IS  NULL THEN '0' ELSE `plugin_openmedis_medicaldevicemodels_id` END) ,
+(CASE WHEN `plugin_openmedis_medicaldevicecategories_id` IS NULL THEN '0' ELSE `plugin_openmedis_medicaldevicecategories_id` END) ,
+`entities_id`, 
+`name`, 
+`contact`, 
+`contact_num`, 
+(CASE WHEN `users_id_tech` IS NULL THEN '0' ELSE `users_id_tech` END ), 
+`groups_id_tech`, 
+`comment`, 
+`serial`, 
+`otherserial`, 
+(CASE WHEN `locations_id`IS NULL THEN '0' ELSE `locations_id` END) ,   
+(CASE WHEN`plugin_openmedis_utilizations_id` IS NULL THEN '0' ELSE `plugin_openmedis_utilizations_id` END) , 
+`brand`, 
+(CASE WHEN `manufacturers_id` IS NULL THEN '0' ELSE `manufacturers_id` END ), 
+`users_id`, 
+`groups_id`, 
+(CASE WHEN `states_id` IS NULL THEN '0' ELSE `states_id` END )
+FROM (
 SELECT a.`AssetID` as old_ID, 
-(CASE a.`Model` WHEN NULL THEN '0' ELSE (SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicemodels WHERE  name  = LOWER(Model) ) END ) as `plugin_openmedis_medicaldevicemodels_id`,
-(CASE a.`GenericAssetID` WHEN NULL THEN '0' ELSE (SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicecategories WHERE  name  = ga.name ) END ) as  plugin_openmedis_medicaldevicecategories_id, 
+(SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicemodels WHERE  name  = LOWER(Model) LIMIT 1)  as `plugin_openmedis_medicaldevicemodels_id`,
+(SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicecategories WHERE  name  = ga.GenericAssetName  LIMIT 1) as  plugin_openmedis_medicaldevicecategories_id, 
 '0' as entities_id,
 a.`AssetFullName` as name,
 a.ResponsiblePers as contact,
 '' as contact_num,
-'0' as users_id_tech,
+(SELECT id FROM glpidb.glpi_users WHERE  old_locaitonsID  = EmployeeID COLLATE utf8_unicode_ci LIMIT 1 ) as users_id_tech,
 '0' as groups_id_tech,
 Notes as comment,
 a.SerialNumber as serial,
 a.InternalIventoryNumber as otherserial,
-(CASE WHEN LENGTH(LocationID)>0 THEN (SELECT id FROM glpidb.`glpi_locations` WHERE old_locationsID=f.LocationID) ELSE '0' END) as locations_id,
- (CASE a.`AssetUtilizationID` WHEN NULL THEN '0' ELSE (SELECT id FROM glpidb.glpi_plugin_openmedis_utilizations WHERE  name  = au.AssetUtilizationDesc ) END )as plugin_openmedis_utilizations_id,
+ (SELECT id FROM glpidb.`glpi_locations` as lll WHERE  FIND_IN_SET(LocationID,lll.old_locaitonsID COLLATE utf8_unicode_ci)>0  LIMIT 1)   as locations_id,
+(SELECT id FROM glpidb.glpi_plugin_openmedis_utilizations WHERE  name  = au.AssetUtilizationDesc  LIMIT 1 )as plugin_openmedis_utilizations_id,
 '' as brand,
-(CASE a.`ManufacturerID` WHEN NULL THEN '0' ELSE (SELECT id FROM glpidb.glpi_manufacturers WHERE  old_locationsID  = ManufacturerID ) END ) as manufacturers_id,
-(CASE a.`EmployeeID` WHEN NULL THEN '0' ELSE (SELECT id FROM glpidb.glpi_users WHERE  old_locationsID  = EmployeeID ) END )as users_id,
-'' as groups_id,
- (CASE a.`AssetStatusID` WHEN NULL THEN '0' ELSE (SELECT id FROM glpidb.glpi_states WHERE  name  = s.AssetStatusDesc ) END )as states_id
+(SELECT id FROM glpidb.glpi_manufacturers WHERE  old_locaitonsID  = ManufacturerID COLLATE utf8_unicode_ci LIMIT 1) as manufacturers_id,
+'0' as users_id,
+'0' as groups_id,
+ (SELECT id FROM glpidb.glpi_states WHERE  name  = s.AssetStatusDesc  LIMIT 1) as states_id
 FROM openmedis_old.`assets` as a
-JOIN  openmedis_old.asssetenericname as ga ON a.GenericAssetID = ga.GenericAssetID 
+JOIN  openmedis_old.assetgenericname as ga ON a.GenericAssetID = ga.GenericAssetID 
 JOIN openmedis_old.assetstatus as s ON a.AssetStatusID = s.AssetStatusID
-join openmedis_old.asseetutilisation as au on au.AssetUtilizationID = a.AssetUtilizationID
+join openmedis_old.assetutilization as au on au.AssetUtilizationID = a.AssetUtilizationID
+) A
 
 --  Remaining fields ``, ``, ``, `AgentID`, ``, ``, ``, ``, `PurchaseDate`, `InstallationDate`, `Year_installed`, `Lifetime`, `PurchasePrice`, `CurrentValue`, ``, `WarrantyContractID`, `MaintenanceContract`, `MaintenanceContractNo`, `MaintenanceContractExpiry`, `WarrantyContractExp`, `WarrantyContractNotes`, `SupplierID`, `DonorID`, `ServiceManual`, `OperatorsManual`, ``, `Picture`, `lastmodified`, `by_user`, `deleted`, `URL_Manual`, `MetrologyDocument`, `MetrologyDate`, `Metrology`, `` 
 
