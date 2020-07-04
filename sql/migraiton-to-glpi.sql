@@ -17,8 +17,8 @@ c.Country as name,
 '' AS town,
 '' AS state,
 c.Country as country,
-'0' as locations_id
-c.CountryID as old_ID
+'0' as locations_id,
+MAX(c.CountryID) as old_ID
 FROM openmedis_old.countries c 
 INNER JOIN openmedis_old.province p on p.CountryID = c.CountryID
 GROUP BY c.Country;
@@ -131,7 +131,7 @@ JOIN openmedis_old.countries c on p.CountryID = c.CountryID
 JOIN openmedis_old.facilities r on f.ReferralFacilityID = r.FacilityID
 ) as A
 LEFT JOIN openmedis_old.location loc on A.FacilityID = loc.FacilityID
-GROUP BY A.locations_id, A.name
+GROUP BY A.locations_id, A.name;
 
 -- Manufacturers
 ALTER TABLE glpidb.`glpi_manufacturers` ADD COLUMN `old_ID` text DEFAULT NULL;
@@ -147,7 +147,7 @@ CONCAT('{',
 m.ManufacturerID  as old_ID
 FROM openmedis_old.`manufactures` as m
 JOIN openmedis_old.contact as c on m.ContactID = c.ContactID
-JOIN openmedis_old.countries co on c.CountryID = co.CountryID
+JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
 
 
@@ -172,7 +172,7 @@ MAX(e.FirstName) as firstname,
 MAX(EmployeeID) as old_ID
 FROM  openmedis_old.login as l
 LEFT JOIN  openmedis_old.`employees` as e on  e.LoginID  =l.LoginID
-GROUP BY LOWER(l.username)) as A
+GROUP BY LOWER(l.username)) as A;
 
 
 -- email
@@ -182,7 +182,7 @@ SELECT e.email,
 (SELECT id FROM glpidb.`glpi_users` u WHERE ( e.EmployeeID COLLATE utf8_unicode_ci) = u.old_ID) as users_id,
 '1' as is_default
 FROM openmedis_old.`employees` as e
-WHERE (SELECT id FROM glpidb.`glpi_users` u WHERE ( e.EmployeeID COLLATE utf8_unicode_ci) = u.old_ID) IS NOT NULL
+WHERE (SELECT id FROM glpidb.`glpi_users` u WHERE ( e.EmployeeID COLLATE utf8_unicode_ci) = u.old_ID) IS NOT NULL;
 
 -- add profile
 INSERT INTO glpidb.`glpi_profiles_users`( `users_id`, `profiles_id`, `entities_id`) 
@@ -196,7 +196,7 @@ SELECT
   '0' as entities_id
 FROM  openmedis_old.login as l
 LEFT JOIN  openmedis_old.`employees` as e on  e.LoginID  =l.LoginID
-WHERE (SELECT id FROM glpidb.`glpi_users` u WHERE ( e.EmployeeID COLLATE utf8_unicode_ci) = u.old_ID) IS NOT NULL
+WHERE (SELECT id FROM glpidb.`glpi_users` u WHERE ( e.EmployeeID COLLATE utf8_unicode_ci) = u.old_ID) IS NOT NULL;
 
 -- Supplier
 
@@ -220,33 +220,37 @@ c.FaxNumber as fax,
 s.SupplierID  as old_ID
 FROM openmedis_old.`suppliers` as s
 JOIN openmedis_old.contact as c on s.ContactID = c.ContactID
-JOIN openmedis_old.countries co on c.CountryID = co.CountryID
+JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
--- models
-INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevicemodels` (name)
-SELECT A.name
-FROM (SELECT  DISTINCT LOWER(Model) as name
-FROM openmedis_old.`assets`) as A
+
 
 
 -- category
 
 
 -- AssetStatus (FIXME, new table required)
+
 INSERT INTO glpidb.`glpi_states` (name, completename)
 SELECT  AssetStatusDesc,AssetStatusDesc
-FROM openmedis_old.`assetstatus` 
+FROM openmedis_old.`assetstatus` ;
+
+
+
+-- models
+INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevicemodels` (name)
+SELECT A.name
+FROM (SELECT  DISTINCT LOWER(Model) as name
+FROM openmedis_old.`assets`) as A;
 
 -- Utilization's
 INSERT INTO glpidb.`glpi_plugin_openmedis_utilizations` (name)
 SELECT  AssetUtilizationDesc
-FROM openmedis_old.`assetutilization` 
+FROM openmedis_old.`assetutilization` ;
 
 -- Asset
 ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevices` ADD COLUMN `old_ID` text DEFAULT NULL;
 
 INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevices`( `old_ID`,`plugin_openmedis_medicaldevicemodels_id`,`plugin_openmedis_medicaldevicecategories_id`,`entities_id`, `name`, `contact`, `contact_num`, `users_id_tech`, `groups_id_tech`, `comment`, `serial`, `otherserial`, `locations_id`,   `plugin_openmedis_utilizations_id`, `brand`, `manufacturers_id`, `users_id`, `groups_id`, `states_id`)
-
 SELECT `old_ID`,
 (CASE WHEN `plugin_openmedis_medicaldevicemodels_id` IS  NULL THEN '0' ELSE `plugin_openmedis_medicaldevicemodels_id` END) ,
 (CASE WHEN `plugin_openmedis_medicaldevicecategories_id` IS NULL THEN '0' ELSE `plugin_openmedis_medicaldevicecategories_id` END) ,
@@ -274,15 +278,15 @@ SELECT a.`AssetID` as old_ID,
 a.`AssetFullName` as name,
 a.ResponsiblePers as contact,
 '' as contact_num,
-(SELECT id FROM glpidb.glpi_users WHERE  old_locaitonsID  = EmployeeID COLLATE utf8_unicode_ci LIMIT 1 ) as users_id_tech,
+(SELECT id FROM glpidb.glpi_users WHERE  old_ID  = EmployeeID COLLATE utf8_unicode_ci LIMIT 1 ) as users_id_tech,
 '0' as groups_id_tech,
 Notes as comment,
 a.SerialNumber as serial,
 a.InternalIventoryNumber as otherserial,
- (SELECT id FROM glpidb.`glpi_locations` as lll WHERE  FIND_IN_SET(LocationID,lll.old_locaitonsID COLLATE utf8_unicode_ci)>0  LIMIT 1)   as locations_id,
+ (SELECT id FROM glpidb.`glpi_locations` as lll WHERE  FIND_IN_SET(LocationID,lll.old_ID COLLATE utf8_unicode_ci)>0  LIMIT 1)   as locations_id,
 (SELECT id FROM glpidb.glpi_plugin_openmedis_utilizations WHERE  name  = au.AssetUtilizationDesc  LIMIT 1 )as plugin_openmedis_utilizations_id,
 '' as brand,
-(SELECT id FROM glpidb.glpi_manufacturers WHERE  old_locaitonsID  = ManufacturerID COLLATE utf8_unicode_ci LIMIT 1) as manufacturers_id,
+(SELECT id FROM glpidb.glpi_manufacturers WHERE  old_ID  = ManufacturerID COLLATE utf8_unicode_ci LIMIT 1) as manufacturers_id,
 '0' as users_id,
 '0' as groups_id,
  (SELECT id FROM glpidb.glpi_states WHERE  name  = s.AssetStatusDesc  LIMIT 1) as states_id
@@ -290,7 +294,7 @@ FROM openmedis_old.`assets` as a
 JOIN  openmedis_old.assetgenericname as ga ON a.GenericAssetID = ga.GenericAssetID 
 JOIN openmedis_old.assetstatus as s ON a.AssetStatusID = s.AssetStatusID
 join openmedis_old.assetutilization as au on au.AssetUtilizationID = a.AssetUtilizationID
-) A
+) A;
 
 --  Remaining fields ``, ``, ``, `AgentID`, ``, ``, ``, ``, `PurchaseDate`, `InstallationDate`, `Year_installed`, `Lifetime`, `PurchasePrice`, `CurrentValue`, ``, `WarrantyContractID`, `MaintenanceContract`, `MaintenanceContractNo`, `MaintenanceContractExpiry`, `WarrantyContractExp`, `WarrantyContractNotes`, `SupplierID`, `DonorID`, `ServiceManual`, `OperatorsManual`, ``, `Picture`, `lastmodified`, `by_user`, `deleted`, `URL_Manual`, `MetrologyDocument`, `MetrologyDate`, `Metrology`, `` 
 

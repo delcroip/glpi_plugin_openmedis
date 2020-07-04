@@ -34,9 +34,9 @@ class PluginOpenmedisProfile extends Profile
 
             self::addDefaultProfileInfos($ID,
                 ['plugin_openmedis' => __('Medical Device asset'),
-                'plugin_openmedis_models' => __('Medical Device asset'),
-                'plugin_openmedis_type' => __('Medical Device asset'),
-                'plugin_openmedis_openticket' => __('Medical Device asset')]);
+                'plugin_openmedis_models' => __('Medical Device Models'),
+                'plugin_openmedis_type' => __('Medical Device type'),
+                'plugin_openmedis_openticket' => __('OpenTicket for Medical Device')]);
             $prof->showForm($ID);
         }
         return true;
@@ -151,7 +151,7 @@ class PluginOpenmedisProfile extends Profile
                 ['rights' => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update'), DELETE => __('Delete')],
                 'label' => __('Model '),
                 'field' => 'plugin_openmedis_model'],
-                ['rights' => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update'), DELETE => __('Delete')],
+                ['rights' => [ CREATE => __('Create')],
                 'label' => __('Create ticket '),
                 'field' => 'plugin_openmedis_openticket'],
         ];

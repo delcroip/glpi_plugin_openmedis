@@ -407,7 +407,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'id'                 => '4',
          'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
          'field'              => 'name',
-         'name'               => __('Type'),
+         'name'               => __('Category'),
          'datatype'           => 'dropdown'
       ];
 
@@ -581,7 +581,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $tab = array_merge($tab, Notepad::rawSearchOptionsToAdd());
 
       //$tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
-      $tab = array_merge($tab, Item_Devices::rawSearchOptionsToAdd(get_class($this)));
+     // $tab = array_merge($tab, Item_Devices::rawSearchOptionsToAdd(get_class($this)));
 
       //$tab = array_merge($tab, PluginOpenmedisMedicalAccessories::rawSearchOptionsToAdd(get_class($this)));
 

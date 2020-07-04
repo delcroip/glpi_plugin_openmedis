@@ -180,17 +180,7 @@ function plugin_openmedis_getDropdown() {
    }
 }
 
-// Define Dropdown tables to be manage in GLPI :
-function plugin_openmedis_getComponent() {
-   $plugin = new Plugin();
-   if ($plugin->isActivated("openmedis")) {
-      return [
-                   'PluginOpenmedisMedicalAccessories_Item'    =>  PluginOpenmedisMedicalAccessories_item::getTypeName(0)
-               ];
-   } else {
-      return [];
-   }
-}
+
 
 
 function plugin_openmedis_getAddSearchOptions($itemtype) {
@@ -199,15 +189,15 @@ function plugin_openmedis_getAddSearchOptions($itemtype) {
    if (in_array($itemtype, PluginOpenmedisMedicalDevice::getTypes(true))) {
 
       if (PluginOpenmedisMedicalDevice::canView()) {
-         $sopt[4460]['table']         = 'glpi_plugin_openmedis_medicaldevice';
-         $sopt[4460]['field']         = 'name';
-         $sopt[4460]['name']          = _n('Medical Device',
+         $sopt[8610]['table']         = 'glpi_plugin_openmedis_medicaldevice';
+         $sopt[8610]['field']         = 'name';
+         $sopt[8610]['name']          = _n('Medical Device',
                                            'Medical Devices', 2, 'openmedis')
                                         . " - ". __('Name');
-         $sopt[4460]['forcegroupby']  = '1';
-         $sopt[4460]['datatype']      = 'itemlink';
-         $sopt[4460]['itemlink_type'] = 'MedicalDevice';
-         $sopt[4460]['massiveaction'] = false;
+         $sopt[8610]['forcegroupby']  = '1';
+         $sopt[8610]['datatype']      = 'itemlink';
+         $sopt[8610]['itemlink_type'] = 'MedicalDevice';
+         $sopt[8610]['massiveaction'] = false;
       }
    }
    return $sopt;
