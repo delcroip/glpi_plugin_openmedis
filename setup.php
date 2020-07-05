@@ -46,17 +46,15 @@ function plugin_init_openmedis() {
       'linkgroup_tech_types' => true,
       'linkuser_tech_types'  => true,
       'infocom_types'        => true,
-      'ticket_types'         => true
+      'ticket_types'         => true,
+      'contract_types'       => true,
+      'planning_types'        => true
   ]);
   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
   Plugin::registerClass('PluginOpenmedisMedicalAccessories', [
-   'reservation_types' => true,
-   'document_types'       => true,
-   'infocom_types'        => true,
-   'ticket_types'         => true,
-   'addtabon'              => PluginOpenmedisMedicalDevice
+   'addtabon'              => 'PluginOpenmedisMedicalDevice'
    ]);
    Plugin::registerClass('PluginOpenmedisMedicalAccessories_Item');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');
@@ -70,7 +68,7 @@ function plugin_init_openmedis() {
 
   $plugin = new Plugin();    
   if ($plugin->isInstalled('openmedis') && $plugin->isActivated('openmedis')) {
-      $CFG_GLPI["project_asset_types"][] = 'PluginOpenmedisMedicalDevice';
+     // $CFG_GLPI["project_asset_types"][] = 'PluginOpenmedisMedicalDevice';
        // load the javascript
       // $PLUGIN_HOOKS['javascript']['openmedis'][]   = '/plugins/openmedis/openmedis.js';
       if (Session::getLoginUserID()) {
