@@ -190,23 +190,40 @@ class PluginOpenmedisProfile extends Profile
      */
     static function initProfile()
     {
-        global $DB;
-        $profile = new self();
-        $dbu = new DbUtils();
-        //Add new rights in glpi_profilerights table
-        foreach ($profile->getAllRights(true) as $data) {
-            if ($dbu->countElementsInTable("glpi_profilerights",
-                    ["name" => $data['field']]) == 0) {
-                ProfileRight::addProfileRights([$data['field']]);
-            }
+        
+        $pfProfile = new self();
+        $profile   = new Profile();
+        $a_rights  = $pfProfile->getAllRights();
+  
+        foreach ($a_rights as $data) {
+           if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
+              ProfileRight::addProfileRights(array($data['field']));
+              $_SESSION['glpiactiveprofile'][$data['field']] = 0;
+           }
         }
-
-
-        foreach ($DB->request("SELECT *
-                           FROM `glpi_profilerights` 
-                           WHERE `profiles_id`='" . $_SESSION['glpiactiveprofile']['id'] . "' 
-                              AND `name` LIKE '%plugin_openmedis_%'") as $prof) {
-            $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
+  
+        // Add all rights to current profile of the user
+        if (isset($_SESSION['glpiactiveprofile'])) {
+           $dataprofile       = array();
+           $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
+           $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
+           foreach ($a_rights as $info) {
+              if (is_array($info)
+                  && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
+                    && (!empty($info['label'])) && (!empty($info['field']))) {
+  
+                 if (isset($info['rights'])) {
+                    $rights = $info['rights'];
+                 } else {
+                    $rights = $profile->getRightsFor($info['itemtype']);
+                 }
+                 foreach ($rights as $right => $label) {
+                    $dataprofile['_'.$info['field']][$right] = 1;
+                    $_SESSION['glpiactiveprofile'][$data['field']] = $right;
+                 }
+              }
+           }
+           $profile->update($dataprofile);
         }
     }
 
