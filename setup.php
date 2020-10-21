@@ -30,7 +30,7 @@ define('OPENMEDIS_VERSION', '0.0.1');
 
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
-   $CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessories_Item';
+   $CFG_GLPI["itemdevices"][]='Item_DevicesPluginOpenmedisMedicalAccessories';
    // to check what it means to be CSRF compatible
    $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
    //load changeprofile function
@@ -39,24 +39,23 @@ function plugin_init_openmedis() {
       'initProfile'
    ];
    Plugin::registerClass('PluginOpenmedisMedicalDevice', [
-      'reservation_types' => true,
-      'document_types'       => true,
-      'location_types'       => true,
+      'reservation_types' => true, // allow reservation
+      'document_types'       => true, // allow docs
+      'location_types'       => true, // link by location
       'unicity_types'        => true,
       'linkgroup_tech_types' => true,
-      'linkuser_tech_types'  => true,
-      'infocom_types'        => true,
-      'ticket_types'         => true,
-      'contract_types'       => true,
-      'planning_types'        => true
+      'linkuser_tech_types'  => true, 
+      'infocom_types'        => true, // suplier, vbuy date ...
+      'ticket_types'         => true, // enable to link to ticket (device> ... )
+      'contract_types'       => true, // enable^to link contract
+      'planning_types'        => true, // enable planning reservation
+      'linkuser_types'        => true  // enable device in Mydevice on ticket
   ]);
   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
-  Plugin::registerClass('PluginOpenmedisMedicalAccessories', [
-   'addtabon'              => 'PluginOpenmedisMedicalDevice'
-   ]);
-   Plugin::registerClass('PluginOpenmedisMedicalAccessories_Item');
+  Plugin::registerClass('PluginOpenmedisMedicalAccessory');
+   Plugin::registerClass('PluginOpenmedisItem_DevicesMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
    Plugin::registerClass('PluginOpenmedisMedicalCategory'); 

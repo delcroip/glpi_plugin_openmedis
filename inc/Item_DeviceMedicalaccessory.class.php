@@ -37,10 +37,10 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Relation between item and devices
 **/
-class   PluginOpenmedisMedicalAccessories_Item extends Item_Devices {
+class   PluginOpenmedisItem_DevicesMedicalAccessory extends Item_Devices {
 
-   static public $itemtype_2 = 'PluginOpenmedisMedicalAccessories';
-   static public $items_id_2 = 'plugin_openmedis_medicalaccessories_id';
+   static public $itemtype_2 = 'PluginOpenmedisMedicalAccessory';
+   static public $items_id_2 = 'pluginopenmedismedicalaccessories_id';
 
    static protected $notable = false;
 
@@ -63,4 +63,8 @@ class   PluginOpenmedisMedicalAccessories_Item extends Item_Devices {
          ]
       ];
    }
+   function cloneItem($specif = ''){
+
+   }
+
 }
