@@ -49,6 +49,7 @@ function plugin_init_openmedis() {
       'ticket_types'         => true, // enable to link to ticket (device> ... )
       'contract_types'       => true, // enable^to link contract
       'planning_types'        => true, // enable planning reservation
+
       'linkuser_types'        => true,  // enable device in Mydevice on ticket
       'itemdevices_types' => true,
       'itemdevicepowersupply_types' => true,
@@ -56,7 +57,6 @@ function plugin_init_openmedis() {
       'itemdevicepci_types' => false,
       "asset_types" => true
   ]); 
-
   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
