@@ -2,7 +2,7 @@
 /**
  * ---------------------------------------------------------------------
  * GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2015-2018 Teclib' and contributors.
+ * Copyright (C) 2015-2020 Teclib' and contributors.
  *
  * http://glpi-project.org
  *
@@ -30,7 +30,20 @@
  * ---------------------------------------------------------------------
  */
 
-include ('../../../inc/includes.php');
+/**
+ * @since 0.84
+ */
 
-$item_device = new   PluginOpenmedisMedicalAccessories_Item();
-include (GLPI_ROOT . "/front/item_device.common.form.php");
+include ('../inc/includes.php');
+
+Session::checkCentralAccess();
+Session::checkRight("plugin_openmedis_devicemedicalaccessory", READ);
+
+if (isset($_POST["add"])) {
+    PluginOpenmedisDeviceMedicalAccessory::addDevicesFromPOST($_POST);
+   Html::back();
+} else if (isset($_POST["updateall"])) {
+    PluginOpenmedisDeviceMedicalAccessory::updateAll($_POST);
+   Html::back();
+}
+Html::displayErrorAndDie('Lost');

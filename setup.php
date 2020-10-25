@@ -30,7 +30,7 @@ define('OPENMEDIS_VERSION', '0.0.1');
 
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
-   $CFG_GLPI["itemdevices"][]='Item_DevicesPluginOpenmedisMedicalAccessories';
+   //$CFG_GLPI["itemdevices"][]='PluginOpenmedisDeviceMedicalAccessory_Item';
    // to check what it means to be CSRF compatible
    $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
    //load changeprofile function
@@ -49,16 +49,24 @@ function plugin_init_openmedis() {
       'ticket_types'         => true, // enable to link to ticket (device> ... )
       'contract_types'       => true, // enable^to link contract
       'planning_types'        => true, // enable planning reservation
-      'linkuser_types'        => true  // enable device in Mydevice on ticket
-  ]);
+      'linkuser_types'        => true,  // enable device in Mydevice on ticket
+      'itemdevices_types' => true,
+      'itemdevicepowersupply_types' => true,
+
+      'itemdevicepci_types' => false,
+      "asset_types" => true
+  ]); 
+
   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
-  Plugin::registerClass('PluginOpenmedisMedicalAccessory');
-   Plugin::registerClass('PluginOpenmedisItem_DevicesMedicalAccessory');
+  Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
+   'devices_types' => true,
+   ]);
+   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
-   Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
+  // Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
   Plugin::registerClass('PluginOpenmedisProfile', [
       'addtabon' => 'Profile',
   ]); 
@@ -70,6 +78,7 @@ function plugin_init_openmedis() {
      // $CFG_GLPI["project_asset_types"][] = 'PluginOpenmedisMedicalDevice';
        // load the javascript
       // $PLUGIN_HOOKS['javascript']['openmedis'][]   = '/plugins/openmedis/openmedis.js';
+      $PLUGIN_HOOKS['migratetypes']['openmedis'] = 'plugin_datainjection_migratetypes_openmedis';
       if (Session::getLoginUserID()) {
          if (PluginOpenmedisMedicalDevice::canView()) {
             $PLUGIN_HOOKS["menu_toadd"]['openmedis'] = ['assets'  => 'PluginOpenmedisMedicaldevice'];
@@ -130,3 +139,8 @@ function plugin_openmedis_check_config() {
    return true;
 }
 
+function plugin_datainjection_migratetypes_openmedis($types) {
+
+   $types[8210] = 'PluginOpenmedisMedicalDevice';
+   return $types;
+}

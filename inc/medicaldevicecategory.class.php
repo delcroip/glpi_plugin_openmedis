@@ -41,7 +41,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
   // public $must_be_replace              = true;
    public $dohistory                    = true;
 
-   static $rightname                    = 'plugin_openmedis_type';
+   static $rightname                    = 'plugin_openmedis_category';
 
 
    static function getTypeName($nb = 0) {
@@ -64,7 +64,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
                          'type'      => 'dropdownValue'],
                   ];
 
-      if (!Session::haveRightsOr('plugin_openmedis_type', [CREATE, UPDATE, DELETE])) {
+      if (!Session::haveRightsOr('plugin_openmedis_category', [CREATE, UPDATE, DELETE])) {
 
          unset($tab[7]);
       }

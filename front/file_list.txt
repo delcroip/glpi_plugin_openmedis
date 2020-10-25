@@ -3,7 +3,7 @@ medical_device --> medical deviuce list ?
 medical_devicemodel.form --> form to edit medical device model drop down
 medical_devicemodel --> medical device model drop down
 
-item_medicalaccessories.form --> form to edit medical item drop down
+item_medicalaccessory.form --> form to edit medical item drop down
 medical_devicecategory.form --> form to edit medical device type drop down
 medical_devicecategory --> medical device type drop down
 

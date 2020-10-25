@@ -35,7 +35,10 @@ class PluginOpenmedisProfile extends Profile
             self::addDefaultProfileInfos($ID,
                 ['plugin_openmedis' => __('Medical Device asset'),
                 'plugin_openmedis_models' => __('Medical Device Models'),
-                'plugin_openmedis_type' => __('Medical Device type'),
+                'plugin_openmedis_category' => __('Medical Device Category'),
+                'plugin_openmedis_devicemedicalaccessory' => __('Medical Accessory'),
+                'plugin_openmedis_devicemedicalaccessory_type' => __('Medical Accessory Type'),
+                'plugin_openmedis_devicemedicalaccessory_model' => __('Medical Accessory Model'),
                 'plugin_openmedis_openticket' => __('OpenTicket for Medical Device')]);
             $prof->showForm($ID);
         }
@@ -51,7 +54,10 @@ class PluginOpenmedisProfile extends Profile
         self::addDefaultProfileInfos($ID,
         ['plugin_openmedis' => 1,
         'plugin_openmedis_models' => 1,
-        'plugin_openmedis_type' => 1,
+        'plugin_openmedis_category' => 1,
+        'plugin_openmedis_devicemedicalaccessory' => 1,
+        'plugin_openmedis_devicemedicalaccessory_type' => 1,
+        'plugin_openmedis_devicemedicalaccessory_model' => 1,
         'plugin_openmedis_openticket' => 7], true);
     }
 
@@ -142,20 +148,30 @@ class PluginOpenmedisProfile extends Profile
     static function getAllRights($all = false)
     {
         $rights = [
-            ['rights' => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update'), DELETE => __('Delete')],
+                ['itemtype' => 'PluginOpenmedisMedicalDevice',
                 'label' => __('Medical Device'),
                 'field' => 'plugin_openmedis'],
-                ['rights' =>[READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update'), DELETE => __('Delete')],
-                'label' => __('Type & category '),
-                'field' => 'plugin_openmedis_type'],
-                ['rights' => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update'), DELETE => __('Delete')],
-                'label' => __('Model '),
+                ['itemtype' => 'PluginOpenmedisMedicalDeviceCategory',
+                'label' => __('Medical Device Categories '),
+                'field' => 'plugin_openmedis_category'],
+                ['itemtype' => 'PluginOpenmedisMedicalDeviceModel',
+                'label' => __('Medical Device Model'),
                 'field' => 'plugin_openmedis_model'],
-                ['rights' => [ CREATE => __('Create')],
-                'label' => __('Create ticket '),
-                'field' => 'plugin_openmedis_openticket'],
+                ['itemtype' => 'PluginOpenmedisDeviceMedicalAccessory',
+                'label' => __('Medical Accessory '),
+                'field' => 'plugin_openmedis_devicemedicalaccessory'],
+                ['itemtype' => 'PluginOpenmedisMedicalAccessoryModel',
+                'label' => __('Medical Accessory Model'),
+                'field' => 'plugin_openmedis_devicemedicalaccessory_model'],
+                ['itemtype' => 'PluginOpenmedisMedicalAccessoryType',
+                'label' => __('Medical Accessory Type '),
+                'field' => 'plugin_openmedis_devicemedicalaccessory_type']
         ];
-
+        if ($all) {
+            $rights[] = ['itemtype' => 'PluginOpenmedisMedicalDevice',
+                         'label'    =>  __('Associable items to a ticket'),
+                         'field'    => 'plugin_openmedis_openticket'];
+         }
         return $rights;
     }
 
@@ -184,48 +200,71 @@ class PluginOpenmedisProfile extends Profile
                 return 0;
         }
     }
+   /**
+    * @since 0.85
+    *
+    * Migration rights from old system to the new one for one profile
+    * @param $profiles_id the profile ID
+    *
+    * @return bool
+   **/
+  static function migrateOneProfile($profiles_id) {
+    global $DB;
 
-    /**
-     * Initialize profiles, and migrate it necessary
-     */
-    static function initProfile()
-    {
-        
-        $pfProfile = new self();
-        $profile   = new Profile();
-        $a_rights  = $pfProfile->getAllRights();
-  
-        foreach ($a_rights as $data) {
-           if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
-              ProfileRight::addProfileRights(array($data['field']));
-              $_SESSION['glpiactiveprofile'][$data['field']] = 0;
-           }
-        }
-  
-        // Add all rights to current profile of the user
-        if (isset($_SESSION['glpiactiveprofile'])) {
-           $dataprofile       = array();
-           $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
-           $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
-           foreach ($a_rights as $info) {
-              if (is_array($info)
-                  && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
-                    && (!empty($info['label'])) && (!empty($info['field']))) {
-  
-                 if (isset($info['rights'])) {
-                    $rights = $info['rights'];
-                 } else {
-                    $rights = $profile->getRightsFor($info['itemtype']);
-                 }
-                 foreach ($rights as $right => $label) {
-                    $dataprofile['_'.$info['field']][$right] = 1;
-                    $_SESSION['glpiactiveprofile'][$data['field']] = $right;
-                 }
-              }
-           }
-           $profile->update($dataprofile);
-        }
+    //Cannot launch migration if there's nothing to migrate...
+    if ($DB->tableExists('glpi_plugin_openmedis_profiles')) {
+       foreach ($DB->request('glpi_plugin_openmedis_profiles',
+                             ['id' => $profiles_id]) as $profile_data) {
+
+          $matching = ['openmedis'  => 'plugin_openmedis',
+                       'openmedis_openticket' => 'plugin_openmedis_openticket',
+                       'openmedis_type' => 'plugin_openmedis_category',
+                       'openmedis_model' => 'plugin_openmedis_model'
+                    ];
+          $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
+          foreach ($matching as $old => $new) {
+             if (!isset($current_rights[$old])) {
+                $query = "UPDATE `glpi_profilerights`
+                          SET `rights`='".self::translateARight($profile_data[$old])."'
+                          WHERE `name`='$new' AND `profiles_id`='$profiles_id'";
+                $DB->query($query);
+             }
+          }
+       }
     }
+ }
+
+
+   /**
+    * Initialize profiles, and migrate it necessary
+   **/
+  static function initProfile() {
+    global $DB;
+
+    $profile = new self();
+    $dbu     = new DbUtils();
+
+    //Add new rights in glpi_profilerights table
+    foreach ($profile->getAllRights(true) as $data) {
+       if ($dbu->countElementsInTable("glpi_profilerights",
+                                      ['name' => $data['field']]) == 0) {
+          ProfileRight::addProfileRights([$data['field']]);
+       }
+    }
+
+    //Migration old rights in new ones
+    foreach ($DB->request(['SELECT' => 'id',
+                           'FROM'   => 'glpi_profiles']) as $prof) {
+       self::migrateOneProfile($prof['id']);
+    }
+    foreach ($DB->request(['FROM'  => 'glpi_profilerights',
+                           'WHERE' => ['profiles_id' => $_SESSION['glpiactiveprofile']['id'],
+                                       'name'        => ['LIKE', '%plugin_openmedis%']]]) as $prof) {
+       $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
+    }
+ }
+
+   
 
     static function removeRightsFromSession()
     {

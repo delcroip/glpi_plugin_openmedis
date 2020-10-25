@@ -2,7 +2,17 @@
 -- Make sure the openmedis db and the glpi db are in the same mysql server
 -- the scripts use the name openmedis_old for the openmedsi database
 -- and glpidb for the GLPI database
+DELETE FROM  glpidb.`glpi_plugin_openmedis_medicaldevices` WHERE 1 =1;
+DELETE FROM  glpidb.`glpi_plugin_openmedis_utilizations` WHERE 1 =1;
+-- cat
+DELETE FROM  glpidb.`glpi_plugin_openmedis_medicaldevicemodels` WHERE 1 =1;
+DELETE FROM  glpidb.`glpi_states` WHERE 1 =1;
 
+DELETE FROM  glpidb.`glpi_suppliers` WHERE 1 =1;
+DELETE FROM  glpidb.`glpi_useremails` WHERE 1 =1;
+DELETE FROM  glpidb.`glpi_users` WHERE name <> glpi ;
+DELETE FROM  glpidb.`glpi_manufacturers` WHERE 1 =1;
+DELETE FROM  glpidb.`glpi_locations` WHERE 1 =1;
 -- Locations
 ALTER TABLE glpidb.`glpi_locations` ADD COLUMN `old_ID` text DEFAULT NULL;
 
@@ -35,7 +45,7 @@ p.ProvinceName as name,
 '' AS town,
 p.ProvinceName  as state,
 c.Country as country,
-(SELECT id FROM glpidb.`glpi_locations` WHERE level=1 and old_ID=c.CountryID) as locations_id
+(SELECT id FROM glpidb.`glpi_locations` WHERE level=1 and old_ID=c.CountryID) as locations_id,
 p.`ProvinceID` as old_ID
 FROM openmedis_old.province p
 JOIN openmedis_old.countries c on p.CountryID = c.CountryID;
@@ -52,43 +62,13 @@ d.DistrictName as name,
 '' AS town,
 p.ProvinceName  as state,
 c.Country as country,
-(SELECT id FROM glpidb.`glpi_locations` WHERE level=2 and comment=p.ProvinceID) as locations_id
+(SELECT id FROM glpidb.`glpi_locations` WHERE level=2 and old_ID=p.ProvinceID) as locations_id,
 d.`DistrictID` as old_ID
 FROM openmedis_old.districts d
 JOIN openmedis_old.province p on d.ProvinceID = p.ProvinceID
 JOIN openmedis_old.countries c on p.CountryID = c.CountryID;
 
-/*
-INSERT INTO glpidb.`glpi_locations` (completename,name, comment, entities_id,level,address,town,state,country,locations_id)
-SELECT 
-(CASE WHEN LENGTH(A.name)>0 THEN A.completename ELSE Concat(A.completename,'Default') END) as completename,
-(CASE WHEN LENGTH(A.name)>0 THEN A.name ELSE 'Default' END) as name,
-A.comment,
-A.entities_id,
-A.level,
-A.address, 
-(CASE WHEN LENGTH(A.name)>0 THEN A.name ELSE 'Default' END) as town,
-A.state,
-A.country,
-A.location_id
-FROM
-  (SELECT DISTINCT LOWER(SUBSTR( f.ward FROM ( f.ward REGEXP '\w' )))  as name,
- CONCAT((d.DistrictName),'>',LOWER(SUBSTR( f.ward FROM ( f.ward REGEXP '\w' ))) )as completename,
-'0' AS entities_id,
-'4' AS level,
-'' AS address,
-'' AS comment,
-'' AS town,
-(p.ProvinceName)  as state,
-(c.Country) as country,
-(SELECT id FROM glpidb.`glpi_locations` WHERE level=3 and comment=(d.DistrictID)) as location_id
-FROM openmedis_old.facilities f
-JOIN openmedis_old.districts d ON d.DistrictID = f.DistrictID
-JOIN openmedis_old.province p on d.ProvinceID = p.ProvinceID
-JOIN openmedis_old.countries c on p.CountryID = c.CountryID) AS A
-*/
 
-DELEtE FROM glpidb.`glpi_locations` WHERE level=4;
 SET @@group_concat_max_len = 65535  ;
 
 INSERT INTO glpidb.`glpi_locations` (completename,name, comment, entities_id,level,address,town,state,country,locations_id,longitude,latitude,old_ID)
@@ -157,9 +137,10 @@ JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
 ALTER TABLE glpidb.`glpi_users` ADD COLUMN `old_ID` text DEFAULT NULL;
 
-INSERT INTO glpidb.`glpi_users` (name,comment,phone,phone2,realname,firstname,locations_id,old_ID)
-Select name,comment,phone,phone2,realname,firstname,locations_id,old_ID
-FROM (SELECT LOWER(l.username) as name,
+INSERT INTO glpidb.`glpi_users` (name,password,comment,phone,phone2,realname,firstname,locations_id,old_ID)
+Select name,password,comment,phone,phone2,realname,firstname,locations_id,old_ID
+FROM (SELECT LOWER(REPLACE(l.username,' ','_')) as name, 
+MD5(CONCAT(LOWER(REPLACE(MAX(l.username),' ','_')),'@2020')) as password,
 CONCAT('{',
 '"\n Position:"',MAX(e.Position),
 '"\n email:"',MAX(e.Email),
@@ -172,7 +153,7 @@ MAX(e.FirstName) as firstname,
 MAX(EmployeeID) as old_ID
 FROM  openmedis_old.login as l
 LEFT JOIN  openmedis_old.`employees` as e on  e.LoginID  =l.LoginID
-GROUP BY LOWER(l.username)) as A;
+GROUP BY LOWER(REPLACE(l.username,' ','_'))) as A;
 
 
 -- email
@@ -225,7 +206,6 @@ JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
 
 
--- category
 
 
 -- AssetStatus (FIXME, new table required)
@@ -234,7 +214,7 @@ INSERT INTO glpidb.`glpi_states` (name, completename)
 SELECT  AssetStatusDesc,AssetStatusDesc
 FROM openmedis_old.`assetstatus` ;
 
-
+-- category
 
 -- models
 INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevicemodels` (name)
@@ -304,8 +284,9 @@ join openmedis_old.assetutilization as au on au.AssetUtilizationID = a.AssetUtil
 -- consumable
 
 -- cleanup 
-ALTER TABLE glpidb.`glpi_users` DROP COLUMN `old_ID`;
-ALTER TABLE glpidb.`glpi_manufacturers` DROP COLUMN `old_ID`;
 ALTER TABLE glpidb.`glpi_locations` DROP COLUMN `old_ID`;
+ALTER TABLE glpidb.`glpi_manufacturers` DROP COLUMN `old_ID`;
+ALTER TABLE glpidb.`glpi_users` DROP COLUMN `old_ID`;
 ALTER TABLE glpidb.`glpi_suppliers` DROP COLUMN `old_ID`;
+
 ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevices` DROP COLUMN `old_ID`;

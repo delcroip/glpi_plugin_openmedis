@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories`;
-CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_devicemedicalaccessories`;
+CREATE TABLE  `glpi_plugin_openmedis_devicemedicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT, -- AccessoryID
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, -- former designation
   `comment` text COLLATE utf8_unicode_ci, 
@@ -81,8 +81,8 @@ CREATE TABLE `glpi_plugin_openmedis_medicalaccessorytypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories_items` ;
-CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_item_devicemedicalaccessories` ;
+CREATE TABLE  `glpi_plugin_openmedis_item_devicemedicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -161,8 +161,4 @@ CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
   KEY `is_recursive` (`is_recursive`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `glpi_displaypreferences` ( `id` , `itemtype` , `num` , `rank` , `users_id` )
-   VALUES (NULL,'PluginOpenmedisMedicaldevice','2','2','0'),
-          (NULL,'PluginOpenmedisMedicaldevice','3','3','0'),
-          (NULL,'PluginOpenmedisMedicaldevice','4','4','0'),
-          (NULL,'PluginOpenmedisMedicaldevice','5','5','0');
+

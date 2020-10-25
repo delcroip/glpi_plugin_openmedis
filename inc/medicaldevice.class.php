@@ -44,12 +44,12 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    // From CommonDBTM
    public $dohistory                   = true;
 
-   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem','PluginOpenmedisMedicalAccessories'];
+   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem','Item_Devices'];
 
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
-   static $types     = ['PluginOpenmedisMedicalAccessories'];
+   static $types     = ['PluginOpenmedisDeviceMedicalAccessory'];
    /**
     * Name of the type
     *
@@ -96,13 +96,12 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $this->addStandardTab('Ticket', $ong, $options);
       $this->addStandardTab('Item_Problem', $ong, $options);
       $this->addStandardTab('Change_Item', $ong, $options);
-      $this->addStandardTab('Item_Devices', $ong, $options);
       //$this->addStandardTab('Link', $ong, $options);
       $this->addStandardTab('Certificate_Item', $ong, $options);
       //$this->addStandardTab('Lock', $ong, $options);
       $this->addStandardTab('Notepad', $ong, $options);
       $this->addStandardTab('Reservation', $ong, $options);
-      //$this->addStandardTab('Planning', $ong, $options);
+      $this->addStandardTab('Item_Devices', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
          //need metrology
       return $ong;
@@ -127,7 +126,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       if (isset($this->input["_oldID"])) {
          // ADD Devices
          Item_devices::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
-         PluginOpenmedisMedicalAccessories::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
+         PluginOpenmedisDeviceMedicalAccessory::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
          // ADD Infocoms
          Infocom::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
 
@@ -145,9 +144,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
 
          //Add KB links
          KnowbaseItem_Item::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
-         
-         //add a accessory link
-         PluginOpenmedisItem_DevicesMedicalAccessory::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
       }
 
    }
@@ -161,7 +157,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
             Item_Problem::class,
             Change_Item::class,
             Item_Project::class,
-            PluginOpenmedisMedicalAccessories::class,
+            PluginOpenmedisDeviceMedicalAccessory::class,
          ]
       );
 
@@ -341,19 +337,23 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
     * @return an array of linked items  like array('Computer' => array(1,2), 'Printer' => array(5,6))
     * @since 0.84.4
    **/
-   function getLinkedItems() {
-      global $DB;
+  function getLinkedItems() {
+   global $DB;
 
-      $query = "SELECT 'Computer', `computers_id`
-                FROM `glpi_computers_items`
-                WHERE `itemtype` = '".$this->getType()."'
-                      AND `items_id` = '" . $this->fields['id']."'";
-      $tab = [];
-      foreach ($DB->request($query) as $data) {
-         $tab['Computer'][$data['computers_id']] = $data['computers_id'];
-      }
-      return $tab;
+   $iterator = $DB->request([
+      'SELECT' => 'computers_id',
+      'FROM'   => 'glpi_computers_items',
+      'WHERE'  => [
+         'itemtype'  => $this->getType(),
+         'items_id'  => $this->fields['id']
+      ]
+   ]);
+   $tab = [];
+   while ($data = $iterator->next()) {
+      $tab['Computer'][$data['computers_id']] = $data['computers_id'];
    }
+   return $tab;
+}
 
 
 
@@ -587,7 +587,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //$tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
      // $tab = array_merge($tab, Item_Devices::rawSearchOptionsToAdd(get_class($this)));
 
-      //$tab = array_merge($tab, PluginOpenmedisMedicalAccessories::rawSearchOptionsToAdd(get_class($this)));
+      //$tab = array_merge($tab, PluginOpenmedisDeviceMedicalAccessory::rawSearchOptionsToAdd(get_class($this)));
 
       return $tab;
    }
@@ -628,5 +628,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    }
 
 
-   
+   static function getiCon() {
+      return "fas fa-laptop-medical";
+   }
 }

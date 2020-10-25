@@ -31,6 +31,6 @@
  */
 
 include ('../../../inc/includes.php');
-Session::checkRight("plugin_openmedis_category", READ);
-$dropdown = new PluginOpenmedisMedicalDeviceCategory();
-include (GLPI_ROOT . "/front/dropdown.common.form.php");
+
+$item_device = new   PluginOpenmedisItem_DevicesMedicalAccessory();
+include (GLPI_ROOT . "/front/item_device.common.form.php");
