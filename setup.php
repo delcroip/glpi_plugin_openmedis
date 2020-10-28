@@ -61,7 +61,7 @@ function plugin_init_openmedis() {
   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
   Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
-   'devices_types' => true,
+   'device_types' => true,
    ]);
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');

@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
  * Relation between item and devices
  * We completely relies on CommonDBConnexity to manage the can* and the history and the deletion ...
 **/
-class PluginOpenmedisDeviceMedicalAccessory extends CommonDBRelation {
+class PluginOpenmedisDeviceMedicalAccessory extends CommonDevice  {
 
    static public $itemtype_1            = 'itemtype';
    static public $items_id_1            = 'items_id';

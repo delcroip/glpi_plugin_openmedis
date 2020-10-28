@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 **/
 class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
 
-   static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessoryessory';
+   static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessory';
    static public $items_id_2 = 'pluginopenmedismedicalaccessories_id';
 
    static protected $notable = false;
@@ -81,8 +81,8 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
 
       ];
    }
-   function cloneItem($specif = ''){
+  /* function cloneItem($specif = ''){
 
-   }
+   }*/
 
 }
