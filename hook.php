@@ -129,36 +129,36 @@ function plugin_openmedis_AssignToTicket($types) {
 function plugin_openmedis_getDatabaseRelations() {
    $plugin = new Plugin();
    if ($plugin->isActivated("openmedis")) {
-      return ["glpi_plugin_openmedis_medicalaccessorymodels"
+      return [ "glpi_plugin_openmedis_medicalaccessorymodels"
                       => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorymodels_id"],
-                      "glpi_plugin_openmedis_medicalaccessorytypes"
+               "glpi_plugin_openmedis_medicalaccessorytypes"
                       => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorytypes_id"],
-                      "glpi_plugin_openmedis_utilizations"
+               "glpi_plugin_openmedis_utilizations"
                       => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_utilizations_id"],
-                      "glpi_plugin_openmedis_devicemedicalaccessories"
-                      => ["glpi_plugin_openmedis_item_devicemedicalaccessories" => "plugin_openmedis_medicalaccessories_id"],
-                      "glpi_plugin_openmedis_medicaldevicecategories"
+               "glpi_plugin_openmedis_devicemedicalaccessories"
+                      => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "plugin_openmedis_devicemedicalaccessories_id"],
+               "glpi_plugin_openmedis_medicaldevicecategories"
                       => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_medicaldevicecategories_id"],
-                      "glpi_plugin_openmedis_medicaldevicemodels"
+               "glpi_plugin_openmedis_medicaldevicemodels"
                       => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_medicaldevicemodels_id"],
-                   "glpi_locations"
-                      => ["glpi_plugin_openmedis_item_devicemedicalaccessories" => "locations_id",
+               "glpi_locations"
+                      => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "locations_id",
                       "glpi_plugin_openmedis_medicaldevices"        => "locations_id"],
-                   "glpi_users"
+               "glpi_users"
                       => ["glpi_plugin_openmedis_medicaldevices" => "users_id_tech",
                            "glpi_plugin_openmedis_medicaldevices" => "users_id"],
-                   "glpi_groups"
+               "glpi_groups"
                       => ["glpi_plugin_openmedis_medicaldevices" => "groups_id_tech",
                       "glpi_plugin_openmedis_medicaldevices" => "groups_id"],
-                   "glpi_manufacturers"
+               "glpi_manufacturers"
                       => ["glpi_plugin_openmedis_openmedis" => "manufacturers_id",
                            "glpi_plugin_openmedis_devicemedicalaccessories" => "manufacturers_id"],
-                    "glpi_entities"
+               "glpi_entities"
                      => ["glpi_plugin_openmedis_devicemedicalaccessories"         => "entities_id",
-                              "glpi_plugin_openmedis_item_devicemedicalaccessories" => "entities_id",
+                              "glpi_plugin_openmedis_items_devicemedicalaccessories" => "entities_id",
                               "glpi_plugin_openmedis_medicaldevices"        => "entities_id"],
-                     "glpi_states"
-                     => ["glpi_plugin_openmedis_item_devicemedicalaccessories" => "states_id",
+               "glpi_states"
+                     => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "states_id",
                      "glpi_plugin_openmedis_medicaldevices" => "states_id"]];
    } else {
       return [];
@@ -208,19 +208,19 @@ function plugin_openmedis_addLeftJoin($type, $ref_table, $new_table,
                                   $linkfield, &$already_link_tables) {
 
    switch ($new_table) {
-      case "glpi_plugin_openmedis_medicalaccessories_items" :
-         return " LEFT JOIN `glpi_plugin_openmedis_medicalaccessories_items`
-         ON (`$ref_table`.`id` = `glpi_plugin_openmedis_medicalaccessories_items`.`items_id`
-         AND `glpi_plugin_openmedis_medicalaccessories_items`.`itemtype`= '".$type."Model') ";
+      case "glpi_plugin_openmedis_items_devicemedicalaccessories" :
+         return " LEFT JOIN `glpi_plugin_openmedis_items_devicemedicalaccessories`
+         ON (`$ref_table`.`id` = `glpi_plugin_openmedis_items_devicemedicalaccessories`.`items_id`
+         AND `glpi_plugin_openmedis_items_devicemedicalaccessories`.`itemtype`= '".$type."Model') ";
          break;
 
-     /* case "glpi_plugin_openmedis_medicaldevice" : // From items
+     case "glpi_plugin_openmedis_medicaldevice" : // From items
          $out = Search::addLeftJoin($type, $ref_table, $already_link_tables,
-                                   "glpi_plugin_openmedis_medicalaccessories_items",
+                                   "glpi_plugin_openmedis_items_devicemedicalaccessories",
                                    "plugin_openmedis_medicaldevice_id");
          $out .= " LEFT JOIN `glpi_plugin_openmedis_medicaldevice`
-                  ON (`glpi_plugin_openmedis_medicaldevice`.`id` = `glpi_plugin_openmedis_medicalaccessories_items`.`items_id`) ";
-         */return $out;
+                  ON (`glpi_plugin_openmedis_medicaldevice`.`id` = `glpi_plugin_openmedis_items_devicemedicalaccessories`.`items_id`) ";
+         return $out;
          break;
    }
    return "";
@@ -259,7 +259,7 @@ function plugin_openmedis_giveItem($type, $ID, array $data, $num) {
          $appliances_id = $data['id'];
          $query_device  = $DB->request(['SELECT DISTINCT' => 'itemtype',
                                         'FROM'            => 'glpi_plugin_openmedis_medicalaccessories_items',
-                                        'WHERE'           => ['plugin_openmedis_medicalaccessories_id'
+                                        'WHERE'           => ['plugin_openmedis_devicemedicalaccessories_id'
                                                                => $appliances_id],
                                         'ORDER'           => 'itemtype']);
          $number_device  = count($query_device);
@@ -307,7 +307,7 @@ function plugin_openmedis_giveItem($type, $ID, array $data, $num) {
                                               => ['FKEY' => ['glpi_entities' => 'id',
                                                              $table          => 'entities_id']]],
                             'WHERE'      => ['glpi_plugin_openmedis_medicalaccessories_items.itemtype' => $type,
-                                             'glpi_plugin_openmedis_medicalaccessories_items.glpi_plugin_openmedis_medicalaccessories_id'
+                                             'glpi_plugin_openmedis_medicalaccessories_items.glpi_plugin_openmedis_devicemedicalaccessories_id'
                                                                => $appliances_id]
                                              + getEntitiesRestrictCriteria($table, '', '',
                                                                            $item->maybeRecursive())];

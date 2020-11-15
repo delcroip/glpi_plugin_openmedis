@@ -38,6 +38,11 @@ function plugin_init_openmedis() {
       'PluginOpenmedisProfile',
       'initProfile'
    ];
+   Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
+      'device_types' => true
+      ]);
+   // add the type in the config so other module could register 
+   //$CFG_GLPI['itempluginopenmedisdevicemedicalaccessory_types'] = array();
    Plugin::registerClass('PluginOpenmedisMedicalDevice', [
       'reservation_types' => true, // allow reservation
       'document_types'       => true, // allow docs
@@ -53,16 +58,16 @@ function plugin_init_openmedis() {
       'linkuser_types'        => true,  // enable device in Mydevice on ticket
       'itemdevices_types' => true,
       'itemdevicepowersupply_types' => true,
-
-      'itemdevicepci_types' => false,
+      // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
+      //  devicetype is class name https://github.com/glpi-project/glpi/blob/dc9ff8801377a3fb7c3bf3c9a9337b61eb814982/inc/plugin.class.php#L1298
+      'itempluginopenmedisdevicemedicalaccessory_types' => true,
       "asset_types" => true
   ]); 
+
   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
-  Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
-   'device_types' => true,
-   ]);
+
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');

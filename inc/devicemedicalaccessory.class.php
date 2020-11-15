@@ -48,19 +48,24 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          parent::getAdditionalFields(),
          [
             [
-               'name'  => 'medicalaccessorytypes_id',
-               'label' => __('Type'),
+               'name'  => 'plugin_openmedis_medicalaccessorytypes_id',
+               'label' => _n('Type','Types',1),
                'type'  => 'dropdownValue'
             ],
             [
-               'name'  => 'medicalaccessorymodels_id',
-               'label' => __('Model'),
+               'name'  => 'plugin_openmedis_medicalaccessorymodels_id',
+               'label' => _n('Model','Models', 1),
                'type'  => 'dropdownValue'
             ],
             [
                'name'   => 'part_number',
-               'label'  => __('Part Number'),
+               'label'  => _n('Part Number','part_numbers',1),
                'type'   => 'text'
+            ],
+            [
+               'name'   => 'picture',
+               'label'  => __('Picture'),
+               'type'   => 'picture'
             ]
          ]
       );
@@ -125,20 +130,20 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       Manufacturer::getHTMLTableCellsForItem($row, $this, null, $options);
 
-      if ($this->fields["medicalaccessorytypes_id"]) {
+      if ($this->fields["plugin_openmedis_medicalaccessorytypes_id"]) {
          $row->addCell(
             $row->getHeaderByName('medicalaccessory_type'),
             Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorytypes",
-            $this->fields["medicalaccessorytypes_id"]),
+            $this->fields["plugin_openmedis_medicalaccessorytypes_id"]),
             $father
          );
       }
 
-      if ($this->fields["medicalaccessorymodels_id"]) {
+      if ($this->fields["plugin_openmedis_medicalaccessorymodels_id"]) {
          $row->addCell(
             $row->getHeaderByName('medicalaccessory_model'),
             Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorymodels",
-            $this->fields["medicalaccessorymodels_id"]),
+            $this->fields["plugin_openmedis_medicalaccessorymodels_id"]),
             $father
          );
       }
@@ -158,10 +163,31 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       return [
          'designation'           => 'equal',
-         'medicalaccessorytypes_id' => 'equal',
+         'plugin_openmedis_medicalaccessorytypes_id' => 'equal',
          'manufacturers_id'      => 'equal',
-         'medicalaccessorymodels_id' => 'equal',
+         'plugin_openmedis_medicalaccessorymodels_id' => 'equal',
          'voltage'               => 'delta:10'
       ];
+   }
+   public static function rawSearchOptionsToAdd($itemtype,$main_joinparams) {
+      $tab = [];
+
+      $tab[] = [
+         'id'                 => '8610',
+         'table'              => 'glpi_plugin_openmedis_devicemedicalaccessories',
+         'field'              => 'designation',
+         'name'               => static::getTypeName(1),
+         'forcegroupby'       => true,
+         'massiveaction'      => false,
+         'datatype'           => 'string',
+         'joinparams'         => [
+            'beforejoin'         => [
+               'table'              => 'glpi_plugin_openmedis_items_devicemedicalaccessories',
+               'joinparams'         => $main_joinparams
+            ]
+         ]
+      ];
+
+      return $tab;
    }
 }

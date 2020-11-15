@@ -149,7 +149,7 @@ class PluginOpenmedisDeviceMedicalAccessory extends CommonDevice  {
       $tab[] = [
          'id'                 => '4',
          'table'              => getTableForItemType($deviceType),
-         'field'              => 'designation',
+         'field'              => 'name',
          'name'               => $deviceType::getTypeName(1),
          'datatype'           => 'itemlink',
          'forcegroupby'       => true,
@@ -231,46 +231,26 @@ class PluginOpenmedisDeviceMedicalAccessory extends CommonDevice  {
       return $tab;
    }
 
-   public static function rawSearchOptionsToAdd($itemtype) {
-      global $CFG_GLPI;
+   public static function rawSearchOptionsToAdd($itemtype,$main_joinparams) {
+      $tab = [];
 
-      $options = [];
-      $device_types = $CFG_GLPI['device_types'];
-
-      $main_joinparams = [
-         'jointype'           => 'itemtype_item',
-         'specific_itemtype'  => $itemtype
+      $tab[] = [
+         'id'                 => '8610',
+         'table'              => 'glpi_devicemotherboards',
+         'field'              => 'designation',
+         'name'               => static::getTypeName(1),
+         'forcegroupby'       => true,
+         'massiveaction'      => false,
+         'datatype'           => 'string',
+         'joinparams'         => [
+            'beforejoin'         => [
+               'table'              => 'glpi_items_devicemotherboards',
+               'joinparams'         => $main_joinparams
+            ]
+         ]
       ];
 
-      foreach ($device_types as $device_type) {
-         if (isset($CFG_GLPI['item' . strtolower($device_type) . '_types'])) {
-            $itemtypes = $CFG_GLPI['item' . strtolower($device_type) . '_types'];
-            if ($itemtypes == '*' || in_array($itemtype, $itemtypes)) {
-               if (method_exists($device_type, 'rawSearchOptionsToAdd')) {
-                  $options = array_merge(
-                     $options,
-                     $device_type::rawSearchOptionsToAdd(
-                        $itemtype,
-                        $main_joinparams
-                     )
-                  );
-               }
-            }
-         }
-      }
-
-      if (count($options)) {
-         //add title if there are options
-         $options = array_merge(
-            [[
-               'id'                => 'devices',
-               'name'              => _n('Component', 'Components', Session::getPluralNumber())
-            ]],
-            $options
-         );
-      }
-
-      return $options;
+      return $tab;
    }
 
    static function getSpecificValueToDisplay($field, $values, array $options = []) {

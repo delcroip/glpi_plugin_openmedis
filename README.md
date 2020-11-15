@@ -95,7 +95,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_openmedis_medicalaccessories_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_devicemedicalaccessories_id` int(11) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -106,7 +106,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
   `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_openmedis_medicaldevice_id` (`items_id`),
-  KEY `plugin_openmedis_medicalaccessories_id` (`plugin_openmedis_medicalaccessories_id`),
+  KEY `plugin_openmedis_devicemedicalaccessories_id` (`plugin_openmedis_devicemedicalaccessories_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `is_dynamic` (`is_dynamic`),
   KEY `entities_id` (`entities_id`),
@@ -189,12 +189,12 @@ It seems that to create an assest 4 files are required:
 
 plus a table:
 ``` sql
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories_items` ;
-CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_items_devicemedicalaccessories` ;
+CREATE TABLE  `glpi_plugin_openmedis_items_devicemedicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_openmedis_medicalaccessories_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_devicemedicalaccessories_id` int(11) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
@@ -205,7 +205,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
   `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_openmedis_medicaldevice_id` (`items_id`),
-  KEY `plugin_openmedis_medicalaccessories_id` (`plugin_openmedis_medicalaccessories_id`),
+  KEY `plugin_openmedis_devicemedicalaccessories_id` (`plugin_openmedis_devicemedicalaccessories_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `is_dynamic` (`is_dynamic`),
   KEY `entities_id` (`entities_id`),

@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
 
    static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessory';
-   static public $items_id_2 = 'pluginopenmedismedicalaccessories_id';
+   static public $items_id_2 = 'plugin_openmedis_devicemedicalaccessories_id';
 
    static protected $notable = false;
 
@@ -49,6 +49,15 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
     * @since 0.85
     **/
    static function getSpecificities($specif = '') {
+      switch ($specif) {
+         case 'serial' :
+         case 'otherserial':
+         case 'locations_id':
+         case 'states_id':   
+            return  parent::getSpecificities($specif);
+         break;
+      }
+/*
       return [
          'serial'             => parent::getSpecificities('serial'),
          'otherserial'        => parent::getSpecificities('otherserial'),
@@ -61,7 +70,7 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
             'id'         => 20,
             'autocomplete' => true,
          ]
-/*[
+[
                'name'  => 'medicalaccessorytypes_id',
                'label' => __('Type'),
                'type'  => 'dropdownValue'
@@ -75,14 +84,15 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
                'name'   => 'part_number',
                'label'  => __('Part Number'),
                'type'   => 'text'
-            ]*/
+            ]
 
 
 
-      ];
+      ];*/
    }
   /* function cloneItem($specif = ''){
 
    }*/
 
+   
 }

@@ -189,8 +189,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $params = $options;
       //do not display called elements per default; they'll be displayed or returned here
       $params['display'] = false;
-
-      
       $tplmark = $this->getAutofillMark('name', $options);
       echo "<tr class='tab_bg_1'>";
       //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
@@ -628,7 +626,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    }
 
 
-   static function getiCon() {
+   static function getIcon() {
       return "fas fa-laptop-medical";
    }
 }
