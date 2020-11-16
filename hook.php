@@ -33,7 +33,7 @@ function plugin_openmedis_install() {
    
    $migration = new Migration("1.0.0");
    $update    = false;
-   if (!$DB->tableExists("glpi_plugin_openmedis_medicaldevice")) {
+   if (!$DB->tableExists("glpi_plugin_openmedis_medicaldevices")) {
       $DB->runFile(GLPI_ROOT ."/plugins/openmedis/sql/empty-1.0.0.sql");
 
    }
@@ -59,7 +59,7 @@ function plugin_openmedis_uninstall() {
    $tables =  ["glpi_plugin_openmedis_medicalaccessories",
                     "glpi_plugin_openmedis_medicaldevicecategories",
                     "glpi_plugin_openmedis_medicaldevicemodels",
-                    "glpi_plugin_openmedis_medicaldevice",
+                    "glpi_plugin_openmedis_medicaldevices",
                     "glpi_plugin_openmedis_medicalaccessories_items",
                     "glpi_plugin_openmedis_medicalaccessorymodels",
                     "glpi_plugin_openmedis_medicalaccessorytypes",
@@ -189,7 +189,7 @@ function plugin_openmedis_getAddSearchOptions($itemtype) {
    if (in_array($itemtype, PluginOpenmedisMedicalDevice::getTypes(true))) {
 
       if (PluginOpenmedisMedicalDevice::canView()) {
-         $sopt[8610]['table']         = 'glpi_plugin_openmedis_medicaldevice';
+         $sopt[8610]['table']         = 'glpi_plugin_openmedis_medicaldevices';
          $sopt[8610]['field']         = 'name';
          $sopt[8610]['name']          = _n('Medical Device',
                                            'Medical Devices', 2, 'openmedis')
@@ -214,12 +214,12 @@ function plugin_openmedis_addLeftJoin($type, $ref_table, $new_table,
          AND `glpi_plugin_openmedis_items_devicemedicalaccessories`.`itemtype`= '".$type."Model') ";
          break;
 
-     case "glpi_plugin_openmedis_medicaldevice" : // From items
+     case "glpi_plugin_openmedis_medicaldevices" : // From items
          $out = Search::addLeftJoin($type, $ref_table, $already_link_tables,
                                    "glpi_plugin_openmedis_items_devicemedicalaccessories",
                                    "plugin_openmedis_medicaldevice_id");
-         $out .= " LEFT JOIN `glpi_plugin_openmedis_medicaldevice`
-                  ON (`glpi_plugin_openmedis_medicaldevice`.`id` = `glpi_plugin_openmedis_items_devicemedicalaccessories`.`items_id`) ";
+         $out .= " LEFT JOIN `glpi_plugin_openmedis_medicaldevices`
+                  ON (`glpi_plugin_openmedis_medicaldevices`.`id` = `glpi_plugin_openmedis_items_devicemedicalaccessories`.`items_id`) ";
          return $out;
          break;
    }
