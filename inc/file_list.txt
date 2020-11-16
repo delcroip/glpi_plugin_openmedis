@@ -3,7 +3,7 @@ medical_devicemodel.class
 medical_devicetype.class
 medicalaccessoy.class --> medcial Item
 medicalaccessoriescategory.class --> medcial Item type
-medicalaccessorymodel.class ----> medcial Item Model
+medicalaccessorycategorie.class ----> medcial Item Model
 item_medicalaccessory.class --> link between medical device and medical item
 menu.class.php --> to add a medical device module
 profile.class --> to add right on the profile page

@@ -37,7 +37,7 @@
 include ('../inc/includes.php');
 
 Session::checkCentralAccess();
-Session::checkRight("plugin_openmedis_devicemedicalaccessory", READ);
+Session::checkRight("plugin_openmedis_medicalaccessory", READ);
 
 if (isset($_POST["add"])) {
     PluginOpenmedisDeviceMedicalAccessory::addDevicesFromPOST($_POST);

@@ -30,17 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
+include ('../../../inc/includes.php');
 
-/// Class  PluginOpenmedisMedicalAccessoryModel
-class  PluginOpenmedisMedicalAccessoryModel extends CommonDeviceModel {
-
-   var $additional_fields_for_dictionnary = ['manufacturer'];
-
-
-   static function getTypeName($nb = 0) {
-      return _n('Medical Accessories model', 'Medical Accessories models', $nb);
-   }
-}
+$dropdown = new PluginOpenmedisMedicalAccessoryCategory();
+include (GLPI_ROOT . "/front/dropdown.common.php");

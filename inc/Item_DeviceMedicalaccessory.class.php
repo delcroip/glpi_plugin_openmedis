@@ -42,7 +42,7 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
    static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessory';
    static public $items_id_2 = 'plugin_openmedis_devicemedicalaccessories_id';
  /*  private $medicalaccessorytypes_id;
-   private $medicalaccessorymodels_id;
+   private $medicalaccessorycategories_id;
    private $part_number;
    private $manufacturing_date;*/
    static protected $notable = false;

@@ -90,8 +90,8 @@ CREATE TABLE `glpi_plugin_openmedis_medicaldevicemodels` (
 
 
 ``` sql
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories_items` ;
-CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories_items` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_items_devicemedicalaccessories` ;
+CREATE TABLE  `glpi_plugin_openmedis_items_devicemedicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

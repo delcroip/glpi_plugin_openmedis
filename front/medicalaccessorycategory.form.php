@@ -30,16 +30,7 @@
  * ---------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access this file directly");
-}
-
-/// Class PluginOpenmedisMedicalDeviceType
-class PluginOpenmedisMedicalDeviceType extends CommonDropdown {
-
-
-   static function getTypeName($nb = 0) {
-      return _n('Devices type', 'Devices types', $nb);
-   }
-
-}
+include ('../../../inc/includes.php');
+Session::checkRight("plugin_openmedis_medicalaccessorycategory", READ);
+$dropdown = new PluginOpenmedisMedicalAccessoryCategory();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");

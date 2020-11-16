@@ -34,11 +34,11 @@ class PluginOpenmedisProfile extends Profile
 
             self::addDefaultProfileInfos($ID,
                 ['plugin_openmedis' => __('Medical Device asset'),
-                'plugin_openmedis_models' => __('Medical Device Models'),
-                'plugin_openmedis_category' => __('Medical Device Category'),
-                'plugin_openmedis_devicemedicalaccessory' => __('Medical Accessory'),
-                'plugin_openmedis_devicemedicalaccessory_type' => __('Medical Accessory Type'),
-                'plugin_openmedis_devicemedicalaccessory_model' => __('Medical Accessory Model'),
+                'plugin_openmedis_medicaldevicemodel' => __('Medical Device Models'),
+                'plugin_openmedis_medicaldevicecategory' => __('Medical Device Category'),
+                'plugin_openmedis_medicalaccessory' => __('Medical Accessory'),
+                'plugin_openmedis_medicalaccessory_type' => __('Medical Accessory Type'),
+                'plugin_openmedis_medicalaccessorycategorie' => __('Medical Accessory Model'),
                 'plugin_openmedis_openticket' => __('OpenTicket for Medical Device')]);
             $prof->showForm($ID);
         }
@@ -52,12 +52,12 @@ class PluginOpenmedisProfile extends Profile
     {
         //85
         self::addDefaultProfileInfos($ID,
-        ['plugin_openmedis' => 1,
-        'plugin_openmedis_models' => 1,
-        'plugin_openmedis_category' => 1,
-        'plugin_openmedis_devicemedicalaccessory' => 1,
-        'plugin_openmedis_devicemedicalaccessory_type' => 1,
-        'plugin_openmedis_devicemedicalaccessory_model' => 1,
+        ['plugin_openmedis' => 7,
+        'plugin_openmedis_medicaldevicemodel' => 7,
+        'plugin_openmedis_medicaldevicecategory' => 7,
+        'plugin_openmedis_medicalaccessory' => 7,
+        'plugin_openmedis_medicalaccessory_type' => 7,
+        'plugin_openmedis_medicalaccessorycategory' => 7,
         'plugin_openmedis_openticket' => 7], true);
     }
 
@@ -153,19 +153,19 @@ class PluginOpenmedisProfile extends Profile
                 'field' => 'plugin_openmedis'],
                 ['itemtype' => 'PluginOpenmedisMedicalDeviceCategory',
                 'label' => __('Medical Device Categories '),
-                'field' => 'plugin_openmedis_category'],
+                'field' => 'plugin_openmedis_medicaldevicecategory'],
                 ['itemtype' => 'PluginOpenmedisMedicalDeviceModel',
                 'label' => __('Medical Device Model'),
-                'field' => 'plugin_openmedis_model'],
+                'field' => 'plugin_openmedis_medicaldevicemodel'],
                 ['itemtype' => 'PluginOpenmedisDeviceMedicalAccessory',
                 'label' => __('Medical Accessory '),
-                'field' => 'plugin_openmedis_devicemedicalaccessory'],
-                ['itemtype' => 'PluginOpenmedisMedicalAccessoryModel',
-                'label' => __('Medical Accessory Model'),
-                'field' => 'plugin_openmedis_devicemedicalaccessory_model'],
+                'field' => 'plugin_openmedis_medicalaccessory'],
+                ['itemtype' => 'PluginOpenmedisMedicalAccessoryCategory',
+                'label' => __('Medical Accessory Category'),
+                'field' => 'plugin_openmedis_medicalaccessorycategory'],
                 ['itemtype' => 'PluginOpenmedisMedicalAccessoryType',
                 'label' => __('Medical Accessory Type '),
-                'field' => 'plugin_openmedis_devicemedicalaccessory_type']
+                'field' => 'plugin_openmedis_medicalaccessory_type']
         ];
         if ($all) {
             $rights[] = ['itemtype' => 'PluginOpenmedisMedicalDevice',
@@ -253,10 +253,10 @@ class PluginOpenmedisProfile extends Profile
     }
 
     //Migration old rights in new ones
-    foreach ($DB->request(['SELECT' => 'id',
+    /*foreach ($DB->request(['SELECT' => 'id',
                            'FROM'   => 'glpi_profiles']) as $prof) {
        self::migrateOneProfile($prof['id']);
-    }
+    }*/
     foreach ($DB->request(['FROM'  => 'glpi_profilerights',
                            'WHERE' => ['profiles_id' => $_SESSION['glpiactiveprofile']['id'],
                                        'name'        => ['LIKE', '%plugin_openmedis%']]]) as $prof) {

@@ -35,17 +35,17 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /// Class PluginOpenmedisMedicalDeviceCategory
-class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
+class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
 
    public $can_be_translated = true;
   // public $must_be_replace              = true;
    public $dohistory                    = true;
 
-   static $rightname                    = 'plugin_openmedis_medicaldevicecategory';
+   static $rightname                    = 'plugin_openmedis_medicalaccessorycategory';
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb);
+      return _n('Medical accessory category (e.g. UMDS,GMDN)', 'Medical accessory categories (e.g. UMDS,GMDN)', $nb);
    }
 
 
@@ -59,15 +59,15 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
                          'label'     => __('code of the category'),
                          'type'      => 'text',
                          'list'      => true],
-            ['name'      => 'plugin_openmedis_medicaldevicecategories_id',
+            ['name'      => 'plugin_openmedis_medicalaccessorycategories_id',
                          'label'     => __('Parent'),
                          'type'      => 'dropdownValue'],
-            ['name'      => 'picture',
+         ['name'      => 'picture',
                          'label'     => __('Picture'),
                          'type'      => 'picture'],
                   ];
 
-      if (!Session::haveRightsOr('plugin_openmedis_medicaldevicecategory', [CREATE, UPDATE, DELETE])) {
+      if (!Session::haveRightsOr('plugin_openmedis_medicalaccessorycategory', [CREATE, UPDATE, DELETE])) {
 
          unset($tab[7]);
       }
@@ -83,7 +83,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
          'field'              => 'name',
          'name'               => __('Code'),
          'datatype'           => 'text',
-         'right'              => 'plugin_openmedis'
+         'right'              => 'plugin_openmedis_medicalaccessorycategory'
       ];
       return $tab;
    }

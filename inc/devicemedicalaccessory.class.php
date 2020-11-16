@@ -53,7 +53,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
                'type'  => 'dropdownValue'
             ],
             [
-               'name'  => 'plugin_openmedis_medicalaccessorymodels_id',
+               'name'  => 'plugin_openmedis_medicalaccessorycategories_id',
                'label' => _n('Model','Models', 1),
                'type'  => 'dropdownValue'
             ],
@@ -86,9 +86,9 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       $tab[] = [
          'id'                 => '12',
-         'table'              => 'glpi_plugin_openmedis_medicalaccessorymodels',
+         'table'              => 'glpi_plugin_openmedis_medicalaccessorycategories',
          'field'              => 'name',
-         'name'               => __('Model'),
+         'name'               => __('Category'),
          'datatype'           => 'dropdown'
       ];
 
@@ -115,7 +115,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       Manufacturer::getHTMLTableHeader(__CLASS__, $base, $super, $father, $options);
       $base->addHeader('medicalaccessory_type', __('Type'), $super, $father);
-      $base->addHeader('medicalaccessory_model', __('Model'), $super, $father);
+      $base->addHeader('medicalaccessory_category', __('Model'), $super, $father);
       $base->addHeader('part_number', sprintf('%1$s', __('Part Number')), $super, $father);
    }
 
@@ -139,11 +139,11 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          );
       }
 
-      if ($this->fields["plugin_openmedis_medicalaccessorymodels_id"]) {
+      if ($this->fields["plugin_openmedis_medicalaccessorycategories_id"]) {
          $row->addCell(
-            $row->getHeaderByName('medicalaccessory_model'),
-            Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorymodels",
-            $this->fields["plugin_openmedis_medicalaccessorymodels_id"]),
+            $row->getHeaderByName('medicalaccessory_category'),
+            Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorycategories",
+            $this->fields["plugin_openmedis_medicalaccessorycategories_id"]),
             $father
          );
       }
@@ -165,7 +165,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          'designation'           => 'equal',
          'plugin_openmedis_medicalaccessorytypes_id' => 'equal',
          'manufacturers_id'      => 'equal',
-         'plugin_openmedis_medicalaccessorymodels_id' => 'equal',
+         'plugin_openmedis_medicalaccessorycategories_id' => 'equal',
          'voltage'               => 'delta:10'
       ];
    }

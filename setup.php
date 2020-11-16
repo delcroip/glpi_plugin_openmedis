@@ -69,7 +69,7 @@ function plugin_init_openmedis() {
 
 
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
-   Plugin::registerClass('PluginOpenmedisMedicalAccessoryModel');
+   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
   // Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
   Plugin::registerClass('PluginOpenmedisProfile', [
