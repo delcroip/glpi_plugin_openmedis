@@ -88,6 +88,7 @@ CREATE TABLE  `glpi_plugin_openmedis_items_devicemedicalaccessories` (
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `plugin_openmedis_devicemedicalaccessories_id` int(11) NOT NULL DEFAULT '0',
+  `manufacturing_date` datetime DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',

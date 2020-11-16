@@ -41,7 +41,10 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
 
    static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessory';
    static public $items_id_2 = 'plugin_openmedis_devicemedicalaccessories_id';
-
+ /*  private $medicalaccessorytypes_id;
+   private $medicalaccessorymodels_id;
+   private $part_number;
+   private $manufacturing_date;*/
    static protected $notable = false;
 
 
@@ -49,15 +52,7 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
     * @since 0.85
     **/
    static function getSpecificities($specif = '') {
-      switch ($specif) {
-         case 'serial' :
-         case 'otherserial':
-         case 'locations_id':
-         case 'states_id':   
-            return  parent::getSpecificities($specif);
-         break;
-      }
-/*
+
       return [
          'serial'             => parent::getSpecificities('serial'),
          'otherserial'        => parent::getSpecificities('otherserial'),
@@ -66,29 +61,13 @@ class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
          'manufacturing_date' => [
             'long name' => __('Manufacturing date'),
             'short name' => __('Date'),
-            'size'       => 10,
-            'id'         => 20,
-            'autocomplete' => true,
+            'id'         => 8620,
+            'size' => 10,
+            'datatype' => 'date'
+
          ]
-[
-               'name'  => 'medicalaccessorytypes_id',
-               'label' => __('Type'),
-               'type'  => 'dropdownValue'
-            ],
-            [
-               'name'  => 'medicalaccessorymodels_id',
-               'label' => __('Model'),
-               'type'  => 'dropdownValue'
-            ],
-            [
-               'name'   => 'part_number',
-               'label'  => __('Part Number'),
-               'type'   => 'text'
-            ]
 
-
-
-      ];*/
+      ];
    }
   /* function cloneItem($specif = ''){
 

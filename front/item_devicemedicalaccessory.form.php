@@ -32,5 +32,5 @@
 
 include ('../../../inc/includes.php');
 
-$item_device = new   PluginOpenmedisItem_DevicesMedicalAccessory();
+$item_device = new   PluginOpenmedisItem_DeviceMedicalAccessory();
 include (GLPI_ROOT . "/front/item_device.common.form.php");
