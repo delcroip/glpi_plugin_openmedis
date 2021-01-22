@@ -137,8 +137,8 @@ JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
 ALTER TABLE glpidb.`glpi_users` ADD COLUMN `old_ID` text DEFAULT NULL;
 
-INSERT INTO glpidb.`glpi_users` (name,password,comment,phone,phone2,realname,firstname,locations_id,old_ID)
-Select name,password,comment,phone,phone2,realname,firstname,locations_id,old_ID
+INSERT INTO glpidb.`glpi_users` (name,password,comment,phone,phone2,realname,firstname,locations_id,old_ID,authtype)
+Select name,password,comment,phone,phone2,realname,firstname,locations_id,old_ID , 1 as authtype
 FROM (SELECT LOWER(REPLACE(l.username,' ','_')) as name, 
 MD5(CONCAT(LOWER(REPLACE(MAX(l.username),' ','_')),'@2020')) as password,
 CONCAT('{',
