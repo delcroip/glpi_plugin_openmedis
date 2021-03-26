@@ -2,7 +2,7 @@
 /**
  * ---------------------------------------------------------------------
  * GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2015-2018 Teclib' and contributors.
+ * Copyright (C) 2015-2021 Teclib' and contributors.
  *
  * http://glpi-project.org
  *
@@ -29,6 +29,23 @@
  * ---------------------------------------------------------------------
  */
 
+/**
+ * @since 0.84
+ */
+
+use Glpi\Event;
+
 include ('../../../inc/includes.php');
-$dropdown = new PluginOpenmedisMedicalDeviceModel();
-include (GLPI_ROOT . "/front/dropdown.common.php");
+
+$cipm = new PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel();
+if (isset($_POST["add"])) {
+   $cipm->check(-1, CREATE, $_POST);
+   if ($cipm->add($_POST)) {
+      Event::log($_POST["plugin_openmedis_medicalconsumableitems_id"], "medicalconsumables", 4, "inventory",
+                 //TRANS: %s is the user login
+                 sprintf(__('%s associates a type'), $_SESSION["glpiname"]));
+   }
+   Html::back();
+
+}
+Html::displayErrorAndDie('Lost');

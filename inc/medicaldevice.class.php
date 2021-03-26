@@ -7,13 +7,12 @@
  * http://glpi-project.org
  *
  * based on GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2003-2014 by the INDEPNET Development Team.
- *
+ * Copyright © 2021 by Patrick delcroix <patrick@pmpd.eu>
+ * This file is part of openmedis Plugin for GLPI.
  * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of GLPI.
  *
  * GLPI is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +95,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $this->addStandardTab('Ticket', $ong, $options);
       $this->addStandardTab('Item_Problem', $ong, $options);
       $this->addStandardTab('Change_Item', $ong, $options);
+      $this->addStandardTab('PluginOpenmedisMedicalConsumable', $ong, $options);
       //$this->addStandardTab('Link', $ong, $options);
       $this->addStandardTab('Certificate_Item', $ong, $options);
       //$this->addStandardTab('Lock', $ong, $options);
@@ -332,7 +332,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    /**
     * Return the linked items (in computers_items)
     *
-    * @return an array of linked items  like array('Computer' => array(1,2), 'Printer' => array(5,6))
+    * @return an array of linked items  like array('Computer' => array(1,2), 'Medical Device' => array(5,6))
     * @since 0.84.4
    **/
   function getLinkedItems() {

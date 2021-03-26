@@ -7,13 +7,12 @@
  * http://glpi-project.org
  *
  * based on GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2003-2014 by the INDEPNET Development Team.
- *
+ * Copyright © 2021 by Patrick delcroix <patrick@pmpd.eu>
+ * This file is part of openmedis Plugin for GLPI.
  * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of GLPI.
  *
  * GLPI is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +39,7 @@ if (!$plugin->isInstalled('openmedis') || !$plugin->isActivated('openmedis')) {
    Html::displayNotFoundError();
 }
 
-Session::checkRight("plugin_openmedis", READ);
+Session::checkRight(PluginOpenmedisMedicalDevice::$rightname, READ);
 
 if (empty($_GET["id"])) {
    $_GET["id"] = "";
@@ -114,7 +113,7 @@ if (isset($_POST["add"])) {
       PluginOpenmedisMedicalDevice::getTypeName(Session::getPluralNumber()),
       $_SERVER['PHP_SELF'], 
       "assets", 
-      'pluginopenmedismedicaldevice');
+      'PluginOpenmedisMedicalDevice');
    $medicaldevice->display(['id'           => $_GET["id"],
                               'withtemplate' => $_GET["withtemplate"]]);
    Html::footer();

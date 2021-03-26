@@ -2,7 +2,7 @@
 /**
  * ---------------------------------------------------------------------
  * GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2015-2018 Teclib' and contributors.
+ * Copyright (C) 2015-2021 Teclib' and contributors.
  *
  * http://glpi-project.org
  *
@@ -29,6 +29,16 @@
  * ---------------------------------------------------------------------
  */
 
-include ('../../../inc/includes.php');
-$dropdown = new PluginOpenmedisMedicalDeviceModel();
-include (GLPI_ROOT . "/front/dropdown.common.php");
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access this file directly");
+}
+
+/// Class MedicalConsumableItemType
+class PluginOpenmedisMedicalConsumableItemType extends CommonDropdown {
+
+   static $rightname  = 'plugin_openmedis_medicalconsumabletype';
+   static function getTypeName($nb = 0) {
+      return _n('Medical consumable type', 'Medical consumable types', $nb);
+   }
+
+}

@@ -7,13 +7,12 @@
  * http://glpi-project.org
  *
  * based on GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2003-2014 by the INDEPNET Development Team.
- *
+ * Copyright © 2021 by Patrick delcroix <patrick@pmpd.eu>
+ * This file is part of openmedis Plugin for GLPI.
  * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of GLPI.
  *
  * GLPI is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +66,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
                          'type'      => 'picture'],
                   ];
 
-      if (!Session::haveRightsOr('plugin_openmedis_medicalaccessorycategory', [CREATE, UPDATE, DELETE])) {
+      if (!Session::haveRightsOr(PluginOpenmedisMedicalAccessoryCategory::$rightname, [CREATE, UPDATE, DELETE])) {
 
          unset($tab[7]);
       }
@@ -83,7 +82,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
          'field'              => 'name',
          'name'               => __('Code'),
          'datatype'           => 'text',
-         'right'              => 'plugin_openmedis_medicalaccessorycategory'
+         'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
       ];
       return $tab;
    }
