@@ -401,12 +401,12 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'table'              => 'glpi_plugin_openmedis_medicaldevicemodels',
          'field'              => 'name',
          'datatype'           => 'dropdown',
-         'name'               => _n('Printer model', 'Printer models', Session::getPluralNumber()),
+         'name'               => _n('Medical Device model', 'Medical Device models', Session::getPluralNumber()),
          'forcegroupby'       => true,
          'massiveaction'      => false,
          'joinparams'         => [
             'beforejoin'         => [
-               'table'              => 'glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels',
+               'table'              => 'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels',
                'joinparams'         => [
                   'jointype'           => 'child'
                ]
@@ -548,7 +548,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    /**
     * Print a select with compatible medical consumable
     *
-    * @param $medicaldevice Printer object
+    * @param $medicaldevice Medical Device object
     *
     * @return string|boolean
    **/
@@ -565,9 +565,9 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          ],
          'FROM'         => self::getTable(),
          'INNER JOIN'   => [
-            'glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels' => [
+            'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels' => [
                'ON' => [
-                  'glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels' => 'plugin_openmedis_medicalconsumableitems_id',
+                  'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels' => 'plugin_openmedis_medicalconsumableitems_id',
                   'glpi_plugin_openmedis_medicalconsumableitems'               => 'id'
                ]
             ],
@@ -591,7 +591,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
             ]
          ],
          'WHERE'        => [
-            'glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels.plugin_openmedis_medicaldevicemodels_id'  => $medicaldevice->fields['plugin_openmedis_medicaldevicemodels_id']
+            'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels.plugin_openmedis_medicaldevicemodels_id'  => $medicaldevice->fields['plugin_openmedis_medicaldevicemodels_id']
          ] + getEntitiesRestrictCriteria('glpi_plugin_openmedis_medicalconsumableitems', '', $medicaldevice->fields['entities_id'], true),
          'GROUPBY'      => 'tID',
          'ORDERBY'      => ['name', 'ref']
