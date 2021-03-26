@@ -7,13 +7,12 @@
  * http://glpi-project.org
  *
  * based on GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2003-2014 by the INDEPNET Development Team.
- *
+ * Copyright © 2021 by Patrick delcroix <patrick@pmpd.eu>
+ * This file is part of openmedis Plugin for GLPI.
  * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of GLPI.
  *
  * GLPI is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +36,7 @@ if (!defined('GLPI_ROOT')) {
 class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
    static protected $forward_entity_to = ['PluginOpenmedisItem_DevicesMedicalAccessory', 'Infocom'];
-
+   static $rightname                   = 'plugin_openmedis_devicemedicalaccessory';
    static function getTypeName($nb = 0) {
       return _n('Medical Accessory', 'Medical accessories', $nb);
    }
@@ -115,7 +114,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       Manufacturer::getHTMLTableHeader(__CLASS__, $base, $super, $father, $options);
       $base->addHeader('medicalaccessory_type', __('Type'), $super, $father);
-      $base->addHeader('medicalaccessory_category', __('Model'), $super, $father);
+      $base->addHeader('medicalaccessory_category', __('Category'), $super, $father);
       $base->addHeader('part_number', sprintf('%1$s', __('Part Number')), $super, $father);
    }
 

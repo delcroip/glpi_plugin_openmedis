@@ -7,13 +7,12 @@
  * http://glpi-project.org
  *
  * based on GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2003-2014 by the INDEPNET Development Team.
- *
+ * Copyright © 2021 by Patrick delcroix <patrick@pmpd.eu>
+ * This file is part of openmedis Plugin for GLPI.
  * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of GLPI.
  *
  * GLPI is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 
 /// Class PluginOpenmedisMedicalDeviceModel
 class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
-
+   static $rightname  = 'plugin_openmedis_medicaldevicemodel';
    static function getTypeName($nb = 0) {
       return _n('Medical Device model', 'Medical Devices models', $nb);
    }
