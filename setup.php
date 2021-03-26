@@ -26,117 +26,182 @@
  along with openmedis. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-define('OPENMEDIS_VERSION', '0.0.1');
+// Version of the plugin
+define('PLUGIN_OPENMEDIS_VERSION', '1.0.1');
+// Schema version of this version
+define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.1');
+// is or is not an official release of the plugin
+define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
+// Minimal GLPI version, inclusive
+define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '9.4');
+// Maximum GLPI version, exclusive
+define('PLUGIN_OPENMEDIS_GLPI_MAX_VERSION', '9.5');
+
+define('PLUGIN_OPENMEDIS_ROOT', GLPI_ROOT . '/plugins/openmedis');
+
 
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
-   //$CFG_GLPI["itemdevices"][]='PluginOpenmedisDeviceMedicalAccessory_Item';
+
+  $plugin = new Plugin();    
+     //$CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessory_Item';
    // to check what it means to be CSRF compatible
-   $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
-   //load changeprofile function
-   $PLUGIN_HOOKS['change_profile']['openmedis']   = [
-      'PluginOpenmedisProfile',
-      'initProfile'
-   ];
-   Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
-      'device_types' => true
-      ]);
-   // add the type in the config so other module could register 
-   //$CFG_GLPI['itempluginopenmedisdevicemedicalaccessory_types'] = array();
+  $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
+
+  $config = Config::getConfigurationValues('openmedis', ['version']);
+  if (isset($config['version']) && $config['version'] != PLUGIN_OPENMEDIS_VERSION) {
+     $plugin->getFromDBbyDir('openmedis');
+     $plugin->update([
+           'id'     => $plugin->getID(),
+           'state'  => Plugin::NOTUPDATED
+     ]);
+  }
+
+  if (!$plugin->getFromDBbyDir('openmedis')) {
+      // nothing more to do at this moment
+      return;
+  }
+
+  if ($plugin->isInstalled('openmedis') && $plugin->isActivated('openmedis')) {
+
+      plugin_openmedis_registerClasses();
+      plugin_openmedis_addHooks();
+      // load the javascript
+      // $PLUGIN_HOOKS['javascript']['openmedis'][]   = '/plugins/openmedis/openmedis.js';
+
+  }
+}
+
+/**
+ * Register classes
+ */
+
+function plugin_openmedis_registerClasses(){
+   Plugin::registerClass('PluginOpenmedisMedicalAccessory', [
+         'device_types' => true
+         ]);
+      // add the type in the config so other module could register 
+      //$CFG_GLPI['itemPluginOpenmedisMedicalAccessory_types'] = array();
    Plugin::registerClass('PluginOpenmedisMedicalDevice', [
-      'reservation_types' => true, // allow reservation
-      'document_types'       => true, // allow docs
-      'location_types'       => true, // link by location
-      'unicity_types'        => true,
-      'linkgroup_tech_types' => true,
-      'linkuser_tech_types'  => true, 
-      'infocom_types'        => true, // suplier, vbuy date ...
-      'ticket_types'         => true, // enable to link to ticket (device> ... )
-      'contract_types'       => true, // enable^to link contract
-      'planning_types'        => true, // enable planning reservation
+         'reservation_types' => true, // allow reservation
+         'document_types'       => true, // allow docs
+         'location_types'       => true, // link by location
+         'unicity_types'        => true,
+         'linkgroup_tech_types' => true,
+         'linkuser_tech_types'  => true, 
+         'infocom_types'        => true, // suplier, vbuy date ...
+         'ticket_types'         => true, // enable to link to ticket (device> ... )
+         'contract_types'       => true, // enable^to link contract
+         'planning_types'        => true, // enable planning reservation
 
-      'linkuser_types'        => true,  // enable device in Mydevice on ticket
-      'itemdevices_types' => true,
-      'itemdevicepowersupply_types' => true,
-      // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
-      //  devicetype is class name https://github.com/glpi-project/glpi/blob/dc9ff8801377a3fb7c3bf3c9a9337b61eb814982/inc/plugin.class.php#L1298
-      'pluginopenmedisitemdevicemedicalaccessory_types' => true,
-      "asset_types" => true
-  ]); 
+         'linkuser_types'        => true,  // enable device in Mydevice on ticket
+         'itemdevices_types' => true,
+         'itemdevicepowersupply_types' => true,
+         // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
+         //  devicetype is class name https://github.com/glpi-project/glpi/blob/dc9ff8801377a3fb7c3bf3c9a9337b61eb814982/inc/plugin.class.php#L1298
+         'pluginopenmedisitemdevicemedicalaccessory_types' => true,
+         "asset_types" => true
+   ]); 
 
-  Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
-  Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
+   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
+   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
 
 
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
-  // Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
-  Plugin::registerClass('PluginOpenmedisProfile', [
-      'addtabon' => 'Profile',
-  ]); 
-  
+   // Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
+   Plugin::registerClass('PluginOpenmedisProfile', [
+         'addtabon' => 'Profile',
+   ]); 
+   Plugin::registerClass('PluginOpenmedisMedicalConsumable');
+   Plugin::registerClass('PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel'); 
+   Plugin::registerClass('PluginOpenmedisMedicalConsumableItem', [
+      "asset_types" => true,
+      "infocom_types" => true,
+       'contract_types'  => true,
+      "document_types" => true
+   ]); 
+   Plugin::registerClass('PluginOpenmedisMedicalConsumableItemType'); 
+}
 
-
-  $plugin = new Plugin();    
-  if ($plugin->isInstalled('openmedis') && $plugin->isActivated('openmedis')) {
-     // $CFG_GLPI["project_asset_types"][] = 'PluginOpenmedisMedicalDevice';
-       // load the javascript
-      // $PLUGIN_HOOKS['javascript']['openmedis'][]   = '/plugins/openmedis/openmedis.js';
-      $PLUGIN_HOOKS['migratetypes']['openmedis'] = 'plugin_datainjection_migratetypes_openmedis';
-      if (Session::getLoginUserID()) {
-         if (PluginOpenmedisMedicalDevice::canView()) {
-            $PLUGIN_HOOKS["menu_toadd"]['openmedis'] = ['assets'  => 'PluginOpenmedisMedicaldevice'];
-                  // Display a menu entry ?
-
-            $PLUGIN_HOOKS['assign_to_ticket']['openmedis'] = true;
-            //$PLUGIN_HOOKS['use_massive_action']['openmedis'] = 1;
-         }
-         //If treeview plugin is installed, add rack as a type of item
-         //that can be shown in the tree
-         if (class_exists('PluginTreeviewConfig')) {
-            $PLUGIN_HOOKS['treeview']['PluginOpenmedisMedicalDevice'] = '../openmedis/pics/openmedis_icon.png';
-         }
-         $PLUGIN_HOOKS['post_init']['openmedis'] = 'plugin_openmedis_postinit';
+/**
+ * Adds all hooks the plugin needs
+ */
+function plugin_openmedis_addHooks() {
+   global $PLUGIN_HOOKS;
+   //load changeprofile function
+   $PLUGIN_HOOKS['change_profile']['openmedis']   = [
+      'PluginOpenmedisProfile',
+      'initProfile'
+   ];
+   //if glpi is loaded
+   //if (Session::getLoginUserID()) {
+   //   $PLUGIN_HOOKS['menu']['flyvemdm'] = true;
+   //}
+   $PLUGIN_HOOKS['post_init']['openmedis'] = 'plugin_openmedis_postinit';
+      
+   if (Session::getLoginUserID()) {
+      if (Session::haveRight(PluginOpenmedisMedicalDevice::$rightname, READ)) {
+         $PLUGIN_HOOKS["menu_toadd"]['openmedis'] = ['assets'  => ['PluginOpenmedisMedicalDevice', 'PluginOpenmedisMedicalConsumableItem']];
+         $PLUGIN_HOOKS['assign_to_ticket']['openmedis'] = true;
+         
       }
-  }
+      // Notifications
+      $PLUGIN_HOOKS['item_get_events']['openmedis'] = []; // TODO event about consumable
+      $PLUGIN_HOOKS['item_get_datas']['openmedis'] = [];
+
+      $PLUGIN_HOOKS['use_massive_action']['openmedis'] = 1;
+      //If treeview plugin is installed, add rack as a type of item
+      //that can be shown in the tree
+      if (class_exists('PluginTreeviewConfig')) {
+         $PLUGIN_HOOKS['treeview']['PluginOpenmedisMedicalDevice'] = '../openmedis/pics/openmedis_icon.png';
+      }
+      
+   }
   
 
-   //
-
-         // add the config page if the user has the right profile
-         /*if (MedicalDevice::canCreate()
-            || Config::canUpdate()) {
-            $PLUGIN_HOOKS['config_page']['openmedis'] = 'front/config.form.php';
-*/
-         // load css
-         //$PLUGIN_HOOKS['add_css']['openmedis']   = "openmedis.css";
-         // FIXME: where to find the init 
-         // Add reports 
-         /*$PLUGIN_HOOKS['reports']['openmedis']   =
-            ['front/report.php' => __("Report - Bays management", "openmedis")];
-         */
 
 }
 
+
+
+
+
 function plugin_version_openmedis() {
-   return  ['name'           => _n('Health technologies management',
+   $author = '<a href="https://github.com/delcroip">Patrick Delcroix</a>';
+   
+   $requirements =  ['name'           => _n('Health technologies management',
                                         'Health technologies management',
                                         2, 'openmedis'),
-                  'version'        => '0.0.1',
+                  'version'        => PLUGIN_OPENMEDIS_VERSION,
                   'license'        => 'GPLv2+',
-                  'author'         => 'Patrick Delcroix',
+                  'author'         => $author ,
                   'homepage'       => 'https://github.com/delcroip/glpi_openmedis',
-                  'minGlpiVersion' => '9.2'];
+                  'minGlpiVersion' => PLUGIN_OPENMEDIS_GLPI_MIN_VERSION];
+   if (PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE) {
+      // This is not a development version
+      $requirements['requirements']['glpi']['max'] = PLUGIN_OPENMEDIS_GLPI_MAX_VERSION;
+   }
+   return $requirements;
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_openmedis_check_prerequisites() {
-   if (version_compare(GLPI_VERSION, '9.2', 'lt') ) {
-      echo __('This plugin requires GLPI >= 9.2');
-      return false;
+   $prerequisitesSuccess = true;
+
+   /*if (!is_readable(__DIR__ . '/vendor/autoload.php') || !is_file(__DIR__ . '/vendor/autoload.php')) {
+      echo "Run composer install --no-dev in the plugin directory<br>";
+      $prerequisitesSuccess = false;
+   }*/
+
+   if (version_compare(GLPI_VERSION, PLUGIN_OPENMEDIS_GLPI_MIN_VERSION, 'lt')
+       || PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE && version_compare(GLPI_VERSION, PLUGIN_OPENMEDIS_GLPI_MAX_VERSION, 'ge')) {
+      echo "This plugin requires GLPi >= " . PLUGIN_OPENMEDIS_GLPI_MIN_VERSION . " and GLPI < " . PLUGIN_OPENMEDIS_GLPI_MAX_VERSION . "<br>";
+      $prerequisitesSuccess = false;
    }
-   return true;
+
+   return $prerequisitesSuccess;
 }
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect

@@ -7,13 +7,12 @@
  * http://glpi-project.org
  *
  * based on GLPI - Gestionnaire Libre de Parc Informatique
- * Copyright (C) 2003-2014 by the INDEPNET Development Team.
- *
+ * Copyright © 2021 by Patrick delcroix <patrick@pmpd.eu>
+ * This file is part of openmedis Plugin for GLPI.
  * ---------------------------------------------------------------------
  *
  * LICENSE
  *
- * This file is part of GLPI.
  *
  * GLPI is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +48,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
-   static $types     = ['PluginOpenmedisDeviceMedicalAccessory'];
+   static $types     = ['PluginOpenmedisMedicalAccessory'];
    /**
     * Name of the type
     *
@@ -96,6 +95,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $this->addStandardTab('Ticket', $ong, $options);
       $this->addStandardTab('Item_Problem', $ong, $options);
       $this->addStandardTab('Change_Item', $ong, $options);
+      $this->addStandardTab('PluginOpenmedisMedicalConsumable', $ong, $options);
       //$this->addStandardTab('Link', $ong, $options);
       $this->addStandardTab('Certificate_Item', $ong, $options);
       //$this->addStandardTab('Lock', $ong, $options);
@@ -126,7 +126,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       if (isset($this->input["_oldID"])) {
          // ADD Devices
          Item_devices::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
-         PluginOpenmedisDeviceMedicalAccessory::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
+         PluginOpenmedisMedicalAccessory::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
          // ADD Infocoms
          Infocom::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
 
@@ -157,7 +157,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
             Item_Problem::class,
             Change_Item::class,
             Item_Project::class,
-            PluginOpenmedisDeviceMedicalAccessory::class,
+            PluginOpenmedisMedicalAccessory::class,
          ]
       );
 
@@ -585,7 +585,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //$tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
      // $tab = array_merge($tab, Item_Devices::rawSearchOptionsToAdd(get_class($this)));
 
-      //$tab = array_merge($tab, PluginOpenmedisDeviceMedicalAccessory::rawSearchOptionsToAdd(get_class($this)));
+      //$tab = array_merge($tab, PluginOpenmedisMedicalAccessory::rawSearchOptionsToAdd(get_class($this)));
 
       return $tab;
    }
