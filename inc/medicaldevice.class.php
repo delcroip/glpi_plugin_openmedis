@@ -48,7 +48,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
-   static $types     = ['PluginOpenmedisMedicalAccessory'];
+   static $types     = ['PluginOpenmedisDeviceMedicalAccessory'];
    /**
     * Name of the type
     *
@@ -126,7 +126,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       if (isset($this->input["_oldID"])) {
          // ADD Devices
          Item_devices::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
-         PluginOpenmedisMedicalAccessory::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
+         PluginOpenmedisDeviceMedicalAccessory::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
          // ADD Infocoms
          Infocom::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
 
@@ -157,7 +157,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
             Item_Problem::class,
             Change_Item::class,
             Item_Project::class,
-            PluginOpenmedisMedicalAccessory::class,
+            PluginOpenmedisDeviceMedicalAccessory::class,
          ]
       );
 
@@ -332,7 +332,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    /**
     * Return the linked items (in computers_items)
     *
-    * @return an array of linked items  like array('Computer' => array(1,2), 'Printer' => array(5,6))
+    * @return an array of linked items  like array('Computer' => array(1,2), 'Medical Device' => array(5,6))
     * @since 0.84.4
    **/
   function getLinkedItems() {
@@ -585,7 +585,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //$tab = array_merge($tab, Datacenter::rawSearchOptionsToAdd(get_class($this)));
      // $tab = array_merge($tab, Item_Devices::rawSearchOptionsToAdd(get_class($this)));
 
-      //$tab = array_merge($tab, PluginOpenmedisMedicalAccessory::rawSearchOptionsToAdd(get_class($this)));
+      //$tab = array_merge($tab, PluginOpenmedisDeviceMedicalAccessory::rawSearchOptionsToAdd(get_class($this)));
 
       return $tab;
    }

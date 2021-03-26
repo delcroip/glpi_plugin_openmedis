@@ -42,7 +42,7 @@ if (PluginOpenmedisMedicalDevice::canView()) {
         PluginOpenmedisMedicalDevice::getTypeName(Session::getPluralNumber()),
         $_SERVER['PHP_SELF'], 
         "assets", 
-        'pluginopenmedismedicaldevice');
+        'PluginOpenmedisMedicalDevice');
     Search::show('PluginOpenmedisMedicalDevice');
     Html::footer();
 }else{

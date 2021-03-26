@@ -33,10 +33,10 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class  PluginOpenmedisMedicalAccessory extends CommonDevice {
+class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
    static protected $forward_entity_to = ['PluginOpenmedisItem_DevicesMedicalAccessory', 'Infocom'];
-   static $rightname                   = 'plugin_openmedis_medicalaccessory';
+   static $rightname                   = 'plugin_openmedis_devicemedicalaccessory';
    static function getTypeName($nb = 0) {
       return _n('Medical Accessory', 'Medical accessories', $nb);
    }
@@ -114,7 +114,7 @@ class  PluginOpenmedisMedicalAccessory extends CommonDevice {
 
       Manufacturer::getHTMLTableHeader(__CLASS__, $base, $super, $father, $options);
       $base->addHeader('medicalaccessory_type', __('Type'), $super, $father);
-      $base->addHeader('medicalaccessory_category', __('Model'), $super, $father);
+      $base->addHeader('medicalaccessory_category', __('Category'), $super, $father);
       $base->addHeader('part_number', sprintf('%1$s', __('Part Number')), $super, $father);
    }
 
@@ -173,7 +173,7 @@ class  PluginOpenmedisMedicalAccessory extends CommonDevice {
 
       $tab[] = [
          'id'                 => '8610',
-         'table'              => 'glpi_plugin_openmedis_medicalaccessories',
+         'table'              => 'glpi_plugin_openmedis_devicemedicalaccessories',
          'field'              => 'designation',
          'name'               => static::getTypeName(1),
          'forcegroupby'       => true,

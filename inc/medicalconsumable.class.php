@@ -87,7 +87,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical consumable', 'Medical consumable', $nb);
+      return _n('Medical consumable', 'Medical consumables', $nb);
    }
 
 
@@ -862,7 +862,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       if (!self::canView()) {
          return false;
       }
-      $canedit = Session::haveRight("plugin_openmedis_medicalconsumable", UPDATE);
+      $canedit = Session::haveRight(PluginOpenmedisMedicalConsumable::$rightname, UPDATE);
       $rand    = mt_rand();
 
       $where = ['glpi_plugin_openmedis_medicalconsumables.plugin_openmedis_medicaldevices_id' => $instID];

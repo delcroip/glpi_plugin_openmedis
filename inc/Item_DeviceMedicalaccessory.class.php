@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 class   PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
 
    static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessory';
-   static public $items_id_2 = 'plugin_openmedis_medicalaccessories_id';
+   static public $items_id_2 = 'plugin_openmedis_devicemedicalaccessories_id';
  /*  private $medicalaccessorytypes_id;
    private $medicalaccessorycategories_id;
    private $part_number;

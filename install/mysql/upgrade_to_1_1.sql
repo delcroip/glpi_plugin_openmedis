@@ -133,11 +133,11 @@ END $$
 DELIMITER ;
 ### change key plugin_openmedis_medicaldevice_id -->> plugin_openmedis_medicaldevices_id
 
-CALL  replace_key_if_exists('glpi_plugin_openmedis_medicalaccessories_items','plugin_openmedis_medicaldevice_id', 'plugin_openmedis_medicaldevices_id (items_id)');
+CALL  replace_key_if_exists('glpi_plugin_openmedis_devicemedicalaccessories_items','plugin_openmedis_medicaldevice_id', 'plugin_openmedis_medicaldevices_id (items_id)');
 CALL  add_column_if_not_exists('glpi_plugin_openmedis_medicaldevices','init_usages_counter','int(11) NOT NULL DEFAULT 0');
 CALL  add_column_if_not_exists('glpi_plugin_openmedis_medicaldevices','last_usages_counter','int(11) NOT NULL DEFAULT 0');
 CALL  remane_table_if_exists('glpi_plugin_openmedis_item_devicemedicalaccessories', 'glpi_plugin_openmedis_item_medicalaccessories');
-CALL  remane_table_if_exists('glpi_plugin_openmedis_medicalaccessories', 'glpi_plugin_openmedis_medicalaccessories');
-CALL  rename_column_if_exists('glpi_plugin_openmedis_items_medicalaccessories','plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_medicalaccessories_id int(11) NOT NULL DEFAULT 0');
-CALL  replace_key_if_exists('plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id' , 'plugin_openmedis_medicalaccessories_id (`plugin_openmedis_medicalaccessories_id`)");
+CALL  remane_table_if_exists('glpi_plugin_openmedis_devicemedicalaccessories', 'glpi_plugin_openmedis_devicemedicalaccessories');
+CALL  rename_column_if_exists('glpi_plugin_openmedis_items_medicalaccessories','plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id int(11) NOT NULL DEFAULT 0');
+CALL  replace_key_if_exists('plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id' , 'plugin_openmedis_devicemedicalaccessories_id (`plugin_openmedis_devicemedicalaccessories_id`)");
 

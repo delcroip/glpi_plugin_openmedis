@@ -69,14 +69,14 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if (!$withtemplate && Printer::canView()) {
+      if (!$withtemplate && PluginOpenmedisMedicalDevice::canView()) {
          $nb = 0;
          switch ($item->getType()) {
             case 'PluginOpenmedisMedicalConsumableItem' :
                if ($_SESSION['glpishow_count_on_tabs']) {
                   $nb = self::countForItem($item);
                }
-               return self::createTabEntry(PrinterModel::getTypeName(Session::getPluralNumber()), $nb);
+               return self::createTabEntry(PluginOpenmedisMedicalDeviceModel::getTypeName(Session::getPluralNumber()), $nb);
          }
       }
       return '';
@@ -120,7 +120,7 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
 
          echo "<tr><td class='tab_bg_2 center'>";
          echo "<input type='hidden' name='plugin_openmedis_medicalconsumableitems_id' value='$instID'>";
-         PrinterModel::dropdown(['used' => $used]);
+         PluginOpenmedisMedicalDeviceModel::dropdown(['used' => $used]);
          echo "</td><td class='tab_bg_2 center'>";
          echo "<input type='submit' name='add' value=\""._sx('button', 'Add')."\" class='submit'>";
          echo "</td></tr>";
@@ -170,7 +170,7 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
                   ]
                ]
             ];
-            $url = Printer::getSearchURL()."?".Toolbox::append_params($opt, '&amp;');
+            $url = PluginOpenmedisMedicalDevice::getSearchURL()."?".Toolbox::append_params($opt, '&amp;');
             echo "<td class='center'><a href='".$url."'>".$data["name"]."</a></td>";
             echo "</tr>";
          }

@@ -37,13 +37,13 @@
 include ('../../../inc/includes.php');
 
 Session::checkCentralAccess();
-Session::checkRight("plugin_openmedis_medicalaccessory", READ);
+Session::checkRight("plugin_openmedis_devicemedicalaccessory", READ);
 
 if (isset($_POST["add"])) {
-    PluginOpenmedisMedicalAccessory::addDevicesFromPOST($_POST);
+    PluginOpenmedisDeviceMedicalAccessory::addDevicesFromPOST($_POST);
    Html::back();
 } else if (isset($_POST["updateall"])) {
-    PluginOpenmedisMedicalAccessory::updateAll($_POST);
+    PluginOpenmedisDeviceMedicalAccessory::updateAll($_POST);
    Html::back();
 }
 Html::displayErrorAndDie('Lost');

@@ -66,7 +66,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
                          'type'      => 'picture'],
                   ];
 
-      if (!Session::haveRightsOr('plugin_openmedis_medicalaccessorycategory', [CREATE, UPDATE, DELETE])) {
+      if (!Session::haveRightsOr(PluginOpenmedisMedicalAccessoryCategory::$rightname, [CREATE, UPDATE, DELETE])) {
 
          unset($tab[7]);
       }
@@ -82,7 +82,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
          'field'              => 'name',
          'name'               => __('Code'),
          'datatype'           => 'text',
-         'right'              => 'plugin_openmedis_medicalaccessorycategory'
+         'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
       ];
       return $tab;
    }

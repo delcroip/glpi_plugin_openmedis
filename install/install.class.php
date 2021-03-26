@@ -207,7 +207,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDevice::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE | READNOTE | UPDATENOTE,
         PluginOpenmedisMedicalDeviceModel::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalDeviceCategory::$rightname => READ | CREATE | UPDATE | DELETE | PURGE,
-        PluginOpenmedisMedicalAccessory::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
+        PluginOpenmedisDeviceMedicalAccessory::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalAccessoryType ::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalAccessoryCategory::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalConsumable::$rightname => READ | CREATE | UPDATE | DELETE | PURGE,
@@ -237,7 +237,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDevice::$rightname =>  READ ,
         PluginOpenmedisMedicalDeviceModel::$rightname =>  READ ,
         PluginOpenmedisMedicalDeviceCategory::$rightname =>  READ ,
-        PluginOpenmedisMedicalAccessory::$rightname =>  READ ,
+        PluginOpenmedisDeviceMedicalAccessory::$rightname =>  READ ,
         PluginOpenmedisMedicalAccessoryType ::$rightname => READ ,
         PluginOpenmedisMedicalAccessoryCategory::$rightname => READ ,
         PluginOpenmedisMedicalConsumable::$rightname => READ ,
@@ -263,7 +263,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDevice::$rightname =>  READ | CREATE | UPDATE | DELETE |  READNOTE | UPDATENOTE, 
         PluginOpenmedisMedicalDeviceModel::$rightname =>  READ ,
         PluginOpenmedisMedicalDeviceCategory::$rightname =>  READ ,
-        PluginOpenmedisMedicalAccessory::$rightname =>  READ | CREATE | UPDATE | DELETE,
+        PluginOpenmedisDeviceMedicalAccessory::$rightname =>  READ | CREATE | UPDATE | DELETE,
         PluginOpenmedisMedicalAccessoryType ::$rightname => READ ,
         PluginOpenmedisMedicalAccessoryCategory::$rightname => READ ,
         PluginOpenmedisMedicalConsumable::$rightname => READ | CREATE | UPDATE | DELETE |  READNOTE | UPDATENOTE, 
@@ -433,7 +433,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDevice::getTable(),
         PluginOpenmedisMedicalDeviceModel::getTable(),
         PluginOpenmedisMedicalDeviceCategory::getTable(),
-        PluginOpenmedisMedicalAccessory::getTable(),
+        PluginOpenmedisDeviceMedicalAccessory::getTable(),
         PluginOpenmedisMedicalAccessoryType::getTable(),
         PluginOpenmedisMedicalAccessoryCategory::getTable(),
         PluginOpenmedisMedicalConsumable::getTable(),
@@ -479,7 +479,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDevice::$rightname,
         PluginOpenmedisMedicalDeviceModel::$rightname,
         PluginOpenmedisMedicalDeviceCategory::$rightname,
-        PluginOpenmedisMedicalAccessory::$rightname,
+        PluginOpenmedisDeviceMedicalAccessory::$rightname,
         PluginOpenmedisMedicalAccessoryType::$rightname,
         PluginOpenmedisMedicalAccessoryCategory::$rightname,
         PluginOpenmedisMedicalConsumable::$rightname,
@@ -497,7 +497,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDevice::class,
         PluginOpenmedisMedicalDeviceModel::class,
         PluginOpenmedisMedicalDeviceCategory::class,
-        PluginOpenmedisMedicalAccessory::class,
+        PluginOpenmedisDeviceMedicalAccessory::class,
         PluginOpenmedisMedicalAccessoryType::class,
         PluginOpenmedisMedicalAccessoryCategory::class,
         PluginOpenmedisMedicalConsumable::class,
@@ -567,7 +567,7 @@ class PluginOpenmedisInstall {
          ]);
       }
 
-      $itemtype = PluginOpenmedisMedicalAccessory::class;
+      $itemtype = PluginOpenmedisDeviceMedicalAccessory::class;
       $rank = 1;
       if (version_compare(GLPI_VERSION, '9.4') < 0) {
          $criteria = "`itemtype` = '$itemtype' AND `num` = '3' AND `users_id` = '0'";

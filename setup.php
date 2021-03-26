@@ -77,7 +77,7 @@ function plugin_init_openmedis() {
  */
 
 function plugin_openmedis_registerClasses(){
-   Plugin::registerClass('PluginOpenmedisMedicalAccessory', [
+   Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
          'device_types' => true
          ]);
       // add the type in the config so other module could register 
@@ -110,7 +110,7 @@ function plugin_openmedis_registerClasses(){
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
-   // Plugin::registerClass('PluginOpenmedisMedicalCategory'); 
+
    Plugin::registerClass('PluginOpenmedisProfile', [
          'addtabon' => 'Profile',
    ]); 

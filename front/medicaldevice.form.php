@@ -113,7 +113,7 @@ if (isset($_POST["add"])) {
       PluginOpenmedisMedicalDevice::getTypeName(Session::getPluralNumber()),
       $_SERVER['PHP_SELF'], 
       "assets", 
-      'pluginopenmedismedicaldevice');
+      'PluginOpenmedisMedicalDevice');
    $medicaldevice->display(['id'           => $_GET["id"],
                               'withtemplate' => $_GET["withtemplate"]]);
    Html::footer();

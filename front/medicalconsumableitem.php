@@ -43,7 +43,7 @@ if (PluginOpenmedisMedicalConsumable::canView()) {
         PluginOpenmedisMedicalConsumable::getTypeName(Session::getPluralNumber()),
         $_SERVER['PHP_SELF'], 
         "assets", 
-        'plugin_openmedis_medicalconsumableitem');
+        'PluginOpenmedisMedicalConsumableItem');
     Search::show('PluginOpenmedisMedicalConsumableItem');
     Html::footer();
 }else{

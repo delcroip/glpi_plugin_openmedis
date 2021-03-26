@@ -95,7 +95,10 @@ if (isset($_POST["add"])) {
    Html::back();
 
 } else {
-   Html::header(PluginOpenmedisMedicalConsumable::getTypeName(Session::getPluralNumber()), $_SERVER['PHP_SELF'], "assets", "plugin_openmedis_medicalconsumableitem");
+   Html::header(PluginOpenmedisMedicalConsumable::getTypeName(Session::getPluralNumber()), 
+      $_SERVER['PHP_SELF'], 
+      "assets", 
+      "PluginOpenmedisMedicalConsumableItem");
    $cartype->display(['id' => $_GET["id"],
       'formoptions'  => "data-track-changes=true"]);
    Html::footer();

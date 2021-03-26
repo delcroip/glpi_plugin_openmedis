@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessories`;
-CREATE TABLE  `glpi_plugin_openmedis_medicalaccessories` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_devicemedicalaccessories`;
+CREATE TABLE  `glpi_plugin_openmedis_devicemedicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT, -- AccessoryID
   `designation` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, -- former designation
   `comment` text COLLATE utf8_unicode_ci, 
@@ -91,7 +91,7 @@ CREATE TABLE  `glpi_plugin_openmedis_items_devicemedicalaccessories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_openmedis_medicalaccessories_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_devicemedicalaccessories_id` int(11) NOT NULL DEFAULT '0',
   `manufacturing_date` datetime DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
@@ -103,7 +103,7 @@ CREATE TABLE  `glpi_plugin_openmedis_items_devicemedicalaccessories` (
   `states_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_openmedis_medicaldevices_id` (`items_id`),
-  KEY `plugin_openmedis_medicalaccessories_id` (`plugin_openmedis_medicalaccessories_id`),
+  KEY `plugin_openmedis_devicemedicalaccessories_id` (`plugin_openmedis_devicemedicalaccessories_id`),
   KEY `is_deleted` (`is_deleted`),
   KEY `is_dynamic` (`is_dynamic`),
   KEY `entities_id` (`entities_id`),
@@ -169,10 +169,10 @@ CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
   KEY `is_recursive` (`is_recursive`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-### Dump table glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels
+### Dump table glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels
 
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels`;
-CREATE TABLE `glpi_plugin_openmedis_medicalconsumableItems_medicaldevicemodels` (
+DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels`;
+CREATE TABLE `glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_openmedis_medicalconsumableitems_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
