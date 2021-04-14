@@ -1265,7 +1265,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
 
    static function getIcon() {
-      return "fas fa-fill-drip";
+      return "fas fa-vial";
    }
 
 }
