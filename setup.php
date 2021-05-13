@@ -43,7 +43,8 @@ define('PLUGIN_OPENMEDIS_ROOT', GLPI_ROOT . '/plugins/openmedis');
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
 
-  $plugin = new Plugin();    
+  $plugin = new Plugin();   
+  $CFG_GLPI['devices_in_menu'][]="pluginOpenmedisMedicalDevice"; 
      //$CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessory_Item';
    // to check what it means to be CSRF compatible
   $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
@@ -93,36 +94,39 @@ function plugin_openmedis_registerClasses(){
          'ticket_types'         => true, // enable to link to ticket (device> ... )
          'contract_types'       => true, // enable^to link contract
          'planning_types'        => true, // enable planning reservation
-
+         'state_types'           => true,
          'linkuser_types'        => true,  // enable device in Mydevice on ticket
          'itemdevices_types' => true,
          'itemdevicepowersupply_types' => true,
          // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
          //  devicetype is class name https://github.com/glpi-project/glpi/blob/dc9ff8801377a3fb7c3bf3c9a9337b61eb814982/inc/plugin.class.php#L1298
          'pluginopenmedisitemdevicemedicalaccessory_types' => true,
-         "asset_types" => true
+         "asset_types" => true,
+         "kb_types" => true
    ]); 
 
-   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel');
-   Plugin::registerClass('PluginOpenmedisMedicalDeviceType');
+   Plugin::registerClass('PluginOpenmedisMedicalDeviceModel', ['dictionnary_types' => true]);
+   Plugin::registerClass('PluginOpenmedisMedicalDeviceType', ['dictionnary_types' => true]);
 
 
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
-   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory');
-   Plugin::registerClass('PluginOpenmedisMedicalAccessoryType');
+   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
+   Plugin::registerClass('PluginOpenmedisMedicalAccessoryType', ['dictionnary_types' => true]);
 
    Plugin::registerClass('PluginOpenmedisProfile', [
          'addtabon' => 'Profile',
    ]); 
-   Plugin::registerClass('PluginOpenmedisMedicalConsumable');
+   Plugin::registerClass('PluginOpenmedisMedicalConsumable',[
+      "infocom_types" => true]);
+
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel'); 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem', [
-      "asset_types" => true,
-      "infocom_types" => true,
-       'contract_types'  => true,
+      "location_types" => true,
+      'contract_types'  => true,
+      'link_types'  => true,
       "document_types" => true
    ]); 
-   Plugin::registerClass('PluginOpenmedisMedicalConsumableItemType'); 
+   Plugin::registerClass('PluginOpenmedisMedicalConsumableItemType', ['dictionnary_types' => true]); 
 }
 
 /**
