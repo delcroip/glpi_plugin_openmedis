@@ -49,7 +49,73 @@ class PluginOpenmedisUpgradeTo1_1 {
         }   
         return true;
     }
+    $this->addfieldIfNotExists('glpi_states',
+      'is_visible_pluginopenmedismedicaldevice',"tinyint(1) NOT NULL DEFAULT '1'", true);
+    $this->renameTableifExists('glpi_plugin_openmedis_item_devicemedicalaccessories', 
+      'glpi_plugin_openmedis_item_medicalaccessories');
+    $this->renameTableIfExists('glpi_plugin_openmedis_devicemedicalaccessorie', 
+      'glpi_plugin_openmedis_devicemedicalaccessories');
+    $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
+      'init_usages_counter','int(11) NOT NULL DEFAULT 0');
+    $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
+      'last_usages_counter','int(11) NOT NULL DEFAULT 0');
+    $this->renamefieldIfExists('glpi_plugin_openmedis_items_medicalaccessories',
+     'plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id',
+     'int(11) NOT NULL DEFAULT 0');
+    $this->replaceIndexIfExists('glpi_plugin_openmedis_devicemedicalaccessories_items',
+      'plugin_openmedis_medicaldevice_id', 'plugin_openmedis_medicaldevices_id', 'items_id');
     $this->migration->displayWarning("table to be created by the migration already existing : " . $DB->error(), true);
     return false;
   }
+
+  private function addfieldIfNotExists($table, $field, $fieldOptions, $index = false){
+    global $DB;
+    if(!$DB->fieldExists($table,$field)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .= " ADD `".$field.'` '.$fieldOptions;
+      if($index)$sql .= ", ADD KEY `".$field.'` (`'.$field.'`)';
+      $DB->query($sql);
+    }
+  }
+
+  private function renameTableIfExists($oldTable, $newTable){
+    global $DB;
+    if($DB->tableExists($oldTable)){
+      $sql = "ALTER TABLE ".$oldTable;
+      $sql .= " RENAME ".$newTable;
+      $DB->query($sql);
+    }
+  }
+
+  private function renamefieldIfExists($table, $oldfield,$newfield, $fieldOptions, $index = false, $indexName = ''){
+    global $DB;
+    if($DB->fieldExists($table,$oldfield)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .= " change ".$oldfield.' '.$newfield.' '.$fieldOptions ;
+      if($index){
+        if($indexName == '')$indexName = $newfield;
+        $sql .=' DROP KEY '.$oldfield.', ADD KEY `'.$newfield.'` (`'.$indexName.'`)'; 
+      }
+      $DB->query($sql);
+    }
+  }
+
+  private function indexExists($table, $index){
+    global $DB;
+    $sql = "SELECT COUNT(*) AS index_exists FROM information_schema.statistics 
+      WHERE TABLE_SCHEMA = DATABASE() and table_name =
+      ${table} AND INDEX_NAME = ${index}";
+      if ($DB->query($sql) == 1 ) return true;
+      else return false;
+  }
+
+  private function  replaceIndexIfExists($table, $oldIndex, $field, $newIndex){
+    global $DB;
+    if($this->indexExists($table,$oldIndex)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .=' DROP KEY '.$oldIndex.', ADD KEY `'.$newIndex.'` (`'.$field.'`)'; 
+      $DB->query($sql);
+    }      
+  }
+
 }

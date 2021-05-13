@@ -48,6 +48,9 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
 
+   static public $itemtype_1 = 'pluginOpenmedisMedicalDevice';
+   static public $items_id_1 = 'pluginopenmedismedicaldevice_id';
+
    static $types     = ['PluginOpenmedisDeviceMedicalAccessory'];
    /**
     * Name of the type
@@ -205,7 +208,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       State::dropdown([
          'value'     => $this->fields["states_id"],
          'entity'    => $this->fields["entities_id"],
-         'condition' => ['is_visible_medicaldevice' => 1]
+         'condition' => ['is_visible_pluginopenmedismedicaldevice' => 1]
       ]);
       echo "</td></tr>\n";
 
