@@ -14,6 +14,7 @@ DELETE FROM  glpidb.`glpi_users` WHERE name <> 'glpi' ;
 DELETE FROM  glpidb.`glpi_manufacturers` WHERE 1 =1;
 DELETE FROM  glpidb.`glpi_locations` WHERE 1 =1;
 -- Locations
+-- fix me entity per HF, location inside HF
 ALTER TABLE glpidb.`glpi_locations` ADD COLUMN `old_ID` text DEFAULT NULL;
 
 INSERT INTO glpidb.`glpi_locations` (completename,name, comment, entities_id,level,address,town,state,country,locations_id,old_ID)
@@ -282,7 +283,46 @@ JOIN openmedis_old.assetstatus as s ON a.AssetStatusID = s.AssetStatusID
 join openmedis_old.assetutilization as au on au.AssetUtilizationID = a.AssetUtilizationID
 ) A;
 
---  Remaining fields ``, ``, ``, `AgentID`, ``, ``, ``, ``, `PurchaseDate`, `InstallationDate`, `Year_installed`, `Lifetime`, `PurchasePrice`, `CurrentValue`, ``, `WarrantyContractID`, `MaintenanceContract`, `MaintenanceContractNo`, `MaintenanceContractExpiry`, `WarrantyContractExp`, `WarrantyContractNotes`, `SupplierID`, `DonorID`, `ServiceManual`, `OperatorsManual`, ``, `Picture`, `lastmodified`, `by_user`, `deleted`, `URL_Manual`, `MetrologyDocument`, `MetrologyDate`, `Metrology`, `` 
+--  Remaining fields ``, ``, ``, `AgentID`, ``, ``, ``, ``, ``, ``, 
+-- `Year_installed`, `Lifetime`, ``, ``, ``, `WarrantyContractID`, 
+-- `MaintenanceContract`, `MaintenanceContractNo`, `MaintenanceContractExpiry`, `WarrantyContractExp`, 
+-- ``, ``, `DonorID`, `ServiceManual`, `OperatorsManual`, ``, `Picture`, 
+-- `lastmodified`, `by_user`, `deleted`, `URL_Manual`, `MetrologyDocument`, `MetrologyDate`, `Metrology`, `` 
+
+--- infocom 
+INSERT INTO glpidb.`glpi_infocoms` (
+  `items_id`,
+  `itemtype`,
+  `entities_id`,
+  `buy_date`,
+  `use_date`,
+  `warranty_duration`,
+  `warranty_info`,
+  `suppliers_id` ,
+  `value`,
+  `warranty_value` ,
+  `comment` ,
+  `warranty_date` ,
+  `decommission_date` 
+SELECT 
+md.id,
+'pluginopenmedis_medicaldevices', -- fix me
+0, -- fix me entity per HF, location inside HF
+a.PurchaseDate,
+a.InstallationDate,
+null, -- duration should be calculated
+a.WarrantyContractNotes,
+s.id,
+a.PurchasePrice,
+a.CurrentValue,
+NULL, --comment
+WarrantyContractExp, -- warranty_date
+NULL, --lifetime
+FROM openmedis_old.`assets` as a
+JOIN glpidb.`glpi_plugin_openmedis_medicaldevices` as md ON md.old_ID = a.AssetID
+JOIN glpidb.`glpi_suppliers` as s ON s.old_ID = a.SupplierID
+-- contract
+
 
 
 -- tickets
