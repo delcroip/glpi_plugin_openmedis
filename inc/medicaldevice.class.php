@@ -286,14 +286,9 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
                            'entity' => $this->fields["entities_id"],
                            'right'  => 'all']);
       echo "</td>\n";
-      echo "<td>".__('Management type')."</td>\n";
+      echo "<td>".__('Utilization')."</td>\n";
       echo "<td>";
-  /*    Dropdown::showGlobalSwitch($this->fields["id"],
-                                 ['withtemplate' => $withtemplate,
-                                       'value'        => $this->fields["is_global"],
-                                       'management_restrict'
-                                                      => $CFG_GLPI["medicaldevices_management_restrict"],
-                                       'target'       => $target]);*/
+      PluginOpenmedisUtilization::dropdown(['value' => $this->fields["plugin_openmedis_utilizations_id"]]);
       echo "</td></tr>\n";
 
       $rowspan        = 2;
