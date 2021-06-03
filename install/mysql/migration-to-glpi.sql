@@ -10,7 +10,7 @@ DELETE FROM  glpidb.`glpi_states` WHERE 1 =1;
 
 DELETE FROM  glpidb.`glpi_suppliers` WHERE 1 =1;
 DELETE FROM  glpidb.`glpi_useremails` WHERE 1 =1;
-DELETE FROM  glpidb.`glpi_users` WHERE name <> glpi ;
+DELETE FROM  glpidb.`glpi_users` WHERE name <> 'glpi' ;
 DELETE FROM  glpidb.`glpi_manufacturers` WHERE 1 =1;
 DELETE FROM  glpidb.`glpi_locations` WHERE 1 =1;
 -- Locations
@@ -204,17 +204,23 @@ JOIN openmedis_old.contact as c on s.ContactID = c.ContactID
 JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
 
-
-
-
-
--- AssetStatus (FIXME, new table required)
-
+-- model
 INSERT INTO glpidb.`glpi_states` (name, completename)
 SELECT  AssetStatusDesc,AssetStatusDesc
 FROM openmedis_old.`assetstatus` ;
 
 -- category
+
+ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevicecategories` ADD COLUMN `old_ID` text DEFAULT NULL;
+
+
+INSERT INTO `glpi_plugin_openmedis_medicaldevicecategories` ( `code`, `name`, `comment`, `plugin_openmedis_medicaldevicecategories_id`, `picture`, `level`, 'old_ID') VALUES
+SELECT  AssetCategoryNr,AssetCategoryName, '', 0, '', 0, AssetCategoryID
+FROM openmedis_old.`assetcategory` ;
+
+INSERT INTO `glpi_plugin_openmedis_medicaldevicecategories` ( `code`, `name`, `comment`, `plugin_openmedis_medicaldevicecategories_id`, `picture`, `level`, 'old_ID') VALUES
+SELECT  GenericAssetCode,GenericAssetName, '', AssetCategoryID, GenericPicture, 1, GenericAssetID
+FROM openmedis_old.`assetgenericname` ;
 
 -- models
 INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevicemodels` (name)
@@ -253,7 +259,7 @@ SELECT `old_ID`,
 FROM (
 SELECT a.`AssetID` as old_ID, 
 (SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicemodels WHERE  name  = LOWER(Model) LIMIT 1)  as `plugin_openmedis_medicaldevicemodels_id`,
-(SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicecategories WHERE  name  = ga.GenericAssetName  LIMIT 1) as  plugin_openmedis_medicaldevicecategories_id, 
+(SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicecategories WHERE  old_ID  = a.GenericAssetID  LIMIT 1) as  plugin_openmedis_medicaldevicecategories_id, 
 '0' as entities_id,
 a.`AssetFullName` as name,
 a.ResponsiblePers as contact,
@@ -290,3 +296,4 @@ ALTER TABLE glpidb.`glpi_users` DROP COLUMN `old_ID`;
 ALTER TABLE glpidb.`glpi_suppliers` DROP COLUMN `old_ID`;
 
 ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevices` DROP COLUMN `old_ID`;
+ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevicecategories` DROP COLUMN `old_ID`;
