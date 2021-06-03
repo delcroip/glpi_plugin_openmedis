@@ -42,30 +42,35 @@ class PluginOpenmedisUpgradeTo1_1 {
     */
    public function upgrade(Migration $migration) {
     global $DB;
+    $err = 0;
     if (!$DB->tableExists("glpi_plugin_openmedis_medicalconsomables")) {
         if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_1.sql")){
             $this->migration->displayWarning("Error in migration 1.0 to 1.1 : " . $DB->error(), true);
-            return false;
-        }   
-        return true;
+            $err++;
+        }
     }
-    $this->addfieldIfNotExists('glpi_states',
+    $err += $this->addfieldIfNotExists('glpi_states',
       'is_visible_pluginopenmedismedicaldevice',"tinyint(1) NOT NULL DEFAULT '1'", true);
-    $this->renameTableifExists('glpi_plugin_openmedis_item_devicemedicalaccessories', 
+    $err += $this->renameTableifExists('glpi_plugin_openmedis_item_devicemedicalaccessories', 
       'glpi_plugin_openmedis_item_medicalaccessories');
-    $this->renameTableIfExists('glpi_plugin_openmedis_devicemedicalaccessorie', 
+    $err += $this->renameTableIfExists('glpi_plugin_openmedis_devicemedicalaccessorie', 
       'glpi_plugin_openmedis_devicemedicalaccessories');
-    $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
       'init_usages_counter','int(11) NOT NULL DEFAULT 0');
-    $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
       'last_usages_counter','int(11) NOT NULL DEFAULT 0');
-    $this->renamefieldIfExists('glpi_plugin_openmedis_items_medicalaccessories',
+    $err += $this->renamefieldIfExists('glpi_plugin_openmedis_items_medicalaccessories',
      'plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id',
      'int(11) NOT NULL DEFAULT 0');
-    $this->replaceIndexIfExists('glpi_plugin_openmedis_devicemedicalaccessories_items',
+    $err += $this->replaceIndexIfExists('glpi_plugin_openmedis_devicemedicalaccessories_items',
       'plugin_openmedis_medicaldevice_id', 'plugin_openmedis_medicaldevices_id', 'items_id');
-    $this->migration->displayWarning("table to be created by the migration already existing : " . $DB->error(), true);
-    return false;
+    $err += $this->migration->displayWarning("table to be created by the migration already existing : " . $DB->error(), true);
+    if ($err > 0){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   private function addfieldIfNotExists($table, $field, $fieldOptions, $index = false){
@@ -74,7 +79,15 @@ class PluginOpenmedisUpgradeTo1_1 {
       $sql = "ALTER TABLE ".$table;
       $sql .= " ADD `".$field.'` '.$fieldOptions;
       if($index)$sql .= ", ADD KEY `".$field.'` (`'.$field.'`)';
-      $DB->query($sql);
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : addfieldIfNotExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$field.' exist' , true);
+      return 1;
     }
   }
 
@@ -83,7 +96,15 @@ class PluginOpenmedisUpgradeTo1_1 {
     if($DB->tableExists($oldTable)){
       $sql = "ALTER TABLE ".$oldTable;
       $sql .= " RENAME ".$newTable;
-      $DB->query($sql);
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renameTableIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : table ".$oldTable.'  don\'t exist' , true);
+      return 1;
     }
   }
 
@@ -96,7 +117,15 @@ class PluginOpenmedisUpgradeTo1_1 {
         if($indexName == '')$indexName = $newfield;
         $sql .=' DROP KEY '.$oldfield.', ADD KEY `'.$newfield.'` (`'.$indexName.'`)'; 
       }
-      $DB->query($sql);
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renamefieldIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldfield.'  don\'t exist' , true);
+      return 1;
     }
   }
 
@@ -114,8 +143,16 @@ class PluginOpenmedisUpgradeTo1_1 {
     if($this->indexExists($table,$oldIndex)){
       $sql = "ALTER TABLE ".$table;
       $sql .=' DROP KEY '.$oldIndex.', ADD KEY `'.$newIndex.'` (`'.$field.'`)'; 
-      $DB->query($sql);
-    }      
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : replaceIndexIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldIndex.'  don\'t exist' , true);
+      return 1;
+    }
   }
 
 }
