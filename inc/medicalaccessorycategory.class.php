@@ -55,7 +55,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
    function getAdditionalFields() {
 
       $tab = [['name'      => 'code',
-                         'label'     => __('code of the category'),
+                         'label'     => __('Code'),
                          'type'      => 'text',
                          'list'      => true],
             ['name'      => 'plugin_openmedis_medicalaccessorycategories_id',
@@ -63,7 +63,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
                          'type'      => 'dropdownValue'],
          ['name'      => 'picture',
                          'label'     => __('Picture'),
-                         'type'      => 'picture'],
+                         'type'      => 'picture']
                   ];
 
       if (!Session::haveRightsOr(PluginOpenmedisMedicalAccessoryCategory::$rightname, [CREATE, UPDATE, DELETE])) {
@@ -77,10 +77,27 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
       $tab                       = parent::rawSearchOptions();
 
       $tab[] = [
-         'id'                 => '80',
-         'table'              => 'code',
-         'field'              => 'name',
+         'id'                 => '50',
+         'table'              => $this->getTable(),
+         'field'              => 'code',
          'name'               => __('Code'),
+         'datatype'           => 'text',
+         'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
+      ];
+      $tab[] = [
+         'id'                 => '80',
+         'table'              => $this->getTable(),
+         'field'              => 'name',
+         'name'               => __('Name'),
+         'datatype'           => 'text',
+         'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
+      ];
+
+      $tab[] = [
+         'id'                 => '100',
+         'table'              => $this->getTable(),
+         'field'              => 'comment',
+         'name'               => __('Comment'),
          'datatype'           => 'text',
          'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
       ];

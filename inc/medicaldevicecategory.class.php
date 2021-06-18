@@ -50,15 +50,55 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
    function getAdditionalFields() {
 
-      return [
-         [
-            'name'  => $this->getForeignKeyField(),
-            'label' => __('As child of'),
-            'type'  => 'parent',
-            'list'  => false
-	 ]];
-   }
+      $tab = [['name'      => 'code',
+                         'label'     => __('Code'),
+                         'type'      => 'text',
+                         'list'      => true],
+            ['name'      => 'plugin_openmedis_medicalaccessorycategories_id',
+                         'label'     => __('Parent'),
+                         'type'      => 'dropdownValue'],
+         ['name'      => 'picture',
+                         'label'     => __('Picture'),
+                         'type'      => 'picture'],
+                  ];
 
+      if (!Session::haveRightsOr(PluginOpenmedisMedicalDeviceCategory::$rightname, [CREATE, UPDATE, DELETE])) {
+
+         unset($tab[7]);
+      }
+      return $tab;
+
+   }
+   function rawSearchOptions() {
+      $tab                       = parent::rawSearchOptions();
+
+      $tab[] = [
+         'id'                 => '80',
+         'table'              => $this->getTable(),
+         'field'              => 'name',
+         'name'               => __('Name'),
+         'datatype'           => 'text',
+         'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
+      ];
+      $tab[] = [
+         'id'                 => '50',
+         'table'              => $this->getTable(),
+         'field'              => 'code',
+         'name'               => __('Code'),
+         'datatype'           => 'text',
+         'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
+      ];
+         $tab[] = [
+         'id'                 => '100',
+         'table'              => $this->getTable(),
+         'field'              => 'comment',
+         'name'               => __('Comment'),
+         'datatype'           => 'text',
+         'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
+      ];
+
+      return $tab;
+   }
 
 
 }
