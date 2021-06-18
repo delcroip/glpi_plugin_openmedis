@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
  * \see  medical consumable
 **/
 class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
-
+   use Glpi\Features\DCBreadcrumb;
    // From CommonDBTM
    static protected $forward_entity_to = ['MedicalConsumable', 'Infocom'];
    public $dohistory                   = true;
