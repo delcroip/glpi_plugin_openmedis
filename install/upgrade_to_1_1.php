@@ -36,12 +36,14 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginOpenmedisUpgradeTo1_1 {
-
+   var $migration;
    /**
     * @param Migration $migration
     */
    public function upgrade(Migration $migration) {
-    global $DB;
+	   global $DB;
+
+    $this->migration = $migration;
     if (!$DB->tableExists("glpi_plugin_openmedis_medicalconsomables")) {
         if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_1.sql")){
             $this->migration->displayWarning("Error in migration 1.0 to 1.1 : " . $DB->error(), true);

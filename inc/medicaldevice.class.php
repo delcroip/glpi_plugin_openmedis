@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  * PluginOpenmedisMedicalDevice Class
 **/
 class PluginOpenmedisMedicalDevice extends CommonDBTM {
-   use DCBreadcrumb;
+   use Glpi\Features\DCBreadcrumb; 
 
    // From CommonDBTM
    public $dohistory                   = true;
@@ -178,7 +178,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
     *     - withtemplate boolean : template or basic item
     *
     * @return boolean item found
-   **/
+    **/
+   
    function showForm($ID, $options = []) {
       global $CFG_GLPI;
       $this->initForm($ID, $options);
@@ -288,12 +289,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "<td>".__('Management type')."</td>\n";
       echo "<td>";
-  /*    Dropdown::showGlobalSwitch($this->fields["id"],
-                                 ['withtemplate' => $withtemplate,
-                                       'value'        => $this->fields["is_global"],
-                                       'management_restrict'
-                                                      => $CFG_GLPI["medicaldevices_management_restrict"],
-                                       'target'       => $target]);*/
       echo "</td></tr>\n";
 
       $rowspan        = 2;

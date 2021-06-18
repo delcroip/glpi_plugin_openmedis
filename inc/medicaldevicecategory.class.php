@@ -48,43 +48,15 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
    }
 
 
-   function cleanDBonPurge() {
-      Rule::cleanForItemAction($this);
-   }
-
    function getAdditionalFields() {
 
-      $tab = [['name'      => 'code',
-                         'label'     => __('code of the category'),
-                         'type'      => 'text',
-                         'list'      => true],
-            ['name'      => 'plugin_openmedis_medicaldevicecategories_id',
-                         'label'     => __('Parent'),
-                         'type'      => 'dropdownValue'],
-            ['name'      => 'picture',
-                         'label'     => __('Picture'),
-                         'type'      => 'picture'],
-                  ];
-
-      if (!Session::haveRightsOr('plugin_openmedis_medicaldevicecategory', [CREATE, UPDATE, DELETE])) {
-
-         unset($tab[7]);
-      }
-      return $tab;
-
-   }
-   function rawSearchOptions() {
-      $tab                       = parent::rawSearchOptions();
-
-      $tab[] = [
-         'id'                 => '80',
-         'table'              => 'code',
-         'field'              => 'name',
-         'name'               => __('Code'),
-         'datatype'           => 'text',
-         'right'              => 'plugin_openmedis'
-      ];
-      return $tab;
+      return [
+         [
+            'name'  => $this->getForeignKeyField(),
+            'label' => __('As child of'),
+            'type'  => 'parent',
+            'list'  => false
+	 ]];
    }
 
 
