@@ -10,10 +10,11 @@ DELETE FROM  glpidb.`glpi_states` WHERE 1 =1;
 
 DELETE FROM  glpidb.`glpi_suppliers` WHERE 1 =1;
 DELETE FROM  glpidb.`glpi_useremails` WHERE 1 =1;
-DELETE FROM  glpidb.`glpi_users` WHERE name <> glpi ;
+DELETE FROM  glpidb.`glpi_users` WHERE name <> 'glpi' ;
 DELETE FROM  glpidb.`glpi_manufacturers` WHERE 1 =1;
 DELETE FROM  glpidb.`glpi_locations` WHERE 1 =1;
 -- Locations
+-- fix me entity per HF, location inside HF
 ALTER TABLE glpidb.`glpi_locations` ADD COLUMN `old_ID` text DEFAULT NULL;
 
 INSERT INTO glpidb.`glpi_locations` (completename,name, comment, entities_id,level,address,town,state,country,locations_id,old_ID)
@@ -204,17 +205,23 @@ JOIN openmedis_old.contact as c on s.ContactID = c.ContactID
 JOIN openmedis_old.countries co on c.CountryID = co.CountryID;
 
 
-
-
-
-
--- AssetStatus (FIXME, new table required)
-
+-- model
 INSERT INTO glpidb.`glpi_states` (name, completename)
 SELECT  AssetStatusDesc,AssetStatusDesc
 FROM openmedis_old.`assetstatus` ;
 
 -- category
+
+ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevicecategories` ADD COLUMN `old_ID` text DEFAULT NULL;
+
+
+INSERT INTO `glpi_plugin_openmedis_medicaldevicecategories` ( `code`, `name`, `comment`, `plugin_openmedis_medicaldevicecategories_id`, `picture`, `level`, 'old_ID') VALUES
+SELECT  AssetCategoryNr,AssetCategoryName, '', 0, '', 0, AssetCategoryID
+FROM openmedis_old.`assetcategory` ;
+
+INSERT INTO `glpi_plugin_openmedis_medicaldevicecategories` ( `code`, `name`, `comment`, `plugin_openmedis_medicaldevicecategories_id`, `picture`, `level`, 'old_ID') VALUES
+SELECT  GenericAssetCode,GenericAssetName, '', AssetCategoryID, GenericPicture, 1, GenericAssetID
+FROM openmedis_old.`assetgenericname` ;
 
 -- models
 INSERT INTO glpidb.`glpi_plugin_openmedis_medicaldevicemodels` (name)
@@ -253,7 +260,7 @@ SELECT `old_ID`,
 FROM (
 SELECT a.`AssetID` as old_ID, 
 (SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicemodels WHERE  name  = LOWER(Model) LIMIT 1)  as `plugin_openmedis_medicaldevicemodels_id`,
-(SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicecategories WHERE  name  = ga.GenericAssetName  LIMIT 1) as  plugin_openmedis_medicaldevicecategories_id, 
+(SELECT id FROM glpidb.glpi_plugin_openmedis_medicaldevicecategories WHERE  old_ID  = a.GenericAssetID  LIMIT 1) as  plugin_openmedis_medicaldevicecategories_id, 
 '0' as entities_id,
 a.`AssetFullName` as name,
 a.ResponsiblePers as contact,
@@ -276,7 +283,46 @@ JOIN openmedis_old.assetstatus as s ON a.AssetStatusID = s.AssetStatusID
 join openmedis_old.assetutilization as au on au.AssetUtilizationID = a.AssetUtilizationID
 ) A;
 
---  Remaining fields ``, ``, ``, `AgentID`, ``, ``, ``, ``, `PurchaseDate`, `InstallationDate`, `Year_installed`, `Lifetime`, `PurchasePrice`, `CurrentValue`, ``, `WarrantyContractID`, `MaintenanceContract`, `MaintenanceContractNo`, `MaintenanceContractExpiry`, `WarrantyContractExp`, `WarrantyContractNotes`, `SupplierID`, `DonorID`, `ServiceManual`, `OperatorsManual`, ``, `Picture`, `lastmodified`, `by_user`, `deleted`, `URL_Manual`, `MetrologyDocument`, `MetrologyDate`, `Metrology`, `` 
+--  Remaining fields ``, ``, ``, `AgentID`, ``, ``, ``, ``, ``, ``, 
+-- `Year_installed`, `Lifetime`, ``, ``, ``, `WarrantyContractID`, 
+-- `MaintenanceContract`, `MaintenanceContractNo`, `MaintenanceContractExpiry`, `WarrantyContractExp`, 
+-- ``, ``, `DonorID`, `ServiceManual`, `OperatorsManual`, ``, `Picture`, 
+-- `lastmodified`, `by_user`, `deleted`, `URL_Manual`, `MetrologyDocument`, `MetrologyDate`, `Metrology`, `` 
+
+--- infocom 
+INSERT INTO glpidb.`glpi_infocoms` (
+  `items_id`,
+  `itemtype`,
+  `entities_id`,
+  `buy_date`,
+  `use_date`,
+  `warranty_duration`,
+  `warranty_info`,
+  `suppliers_id` ,
+  `value`,
+  `warranty_value` ,
+  `comment` ,
+  `warranty_date` ,
+  `decommission_date` 
+SELECT 
+md.id,
+'pluginopenmedis_medicaldevices', -- fix me
+0, -- fix me entity per HF, location inside HF
+a.PurchaseDate,
+a.InstallationDate,
+null, -- duration should be calculated
+a.WarrantyContractNotes,
+s.id,
+a.PurchasePrice,
+a.CurrentValue,
+NULL, --comment
+WarrantyContractExp, -- warranty_date
+NULL, --lifetime
+FROM openmedis_old.`assets` as a
+JOIN glpidb.`glpi_plugin_openmedis_medicaldevices` as md ON md.old_ID = a.AssetID
+JOIN glpidb.`glpi_suppliers` as s ON s.old_ID = a.SupplierID
+-- contract
+
 
 
 -- tickets
@@ -290,3 +336,4 @@ ALTER TABLE glpidb.`glpi_users` DROP COLUMN `old_ID`;
 ALTER TABLE glpidb.`glpi_suppliers` DROP COLUMN `old_ID`;
 
 ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevices` DROP COLUMN `old_ID`;
+ALTER TABLE glpidb.`glpi_plugin_openmedis_medicaldevicecategories` DROP COLUMN `old_ID`;
