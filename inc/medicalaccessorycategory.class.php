@@ -42,9 +42,12 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
 
    static $rightname                    = 'plugin_openmedis_medicalaccessorycategory';
 
+   static function getTable($classname = null){
+      return 'glpi_plugin_openmedis_medicalaccessorycategories';
+   }
 
    static function getTypeName($nb = 0) {
-      return _n('Medical accessory category (e.g. UMDS,GMDN)', 'Medical accessory categories (e.g. UMDS,GMDN)', $nb);
+      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb);
    }
 
 
@@ -54,39 +57,100 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
 
    function getAdditionalFields() {
 
-      $tab = [['name'      => 'code',
-                         'label'     => __('code of the category'),
-                         'type'      => 'text',
-                         'list'      => true],
-            ['name'      => 'plugin_openmedis_medicalaccessorycategories_id',
-                         'label'     => __('Parent'),
-                         'type'      => 'dropdownValue'],
-         ['name'      => 'picture',
-                         'label'     => __('Picture'),
-                         'type'      => 'picture'],
-                  ];
+      $tab = [[
+         'name'  => $this->getForeignKeyField(),
+         'label' => __('As child of'),
+         'type'  => 'parent',
+         'list'  => false
+      ],[
+         'name'      => 'code',
+         'label'     => __('Code'),
+         'type'      => 'text',
+         'list'      => true
+      ],[
+         'name'      => 'picture',
+         'label'     => __('Picture'),
+         'type'      => 'picture'
+      ]];
 
-      if (!Session::haveRightsOr(PluginOpenmedisMedicalAccessoryCategory::$rightname, [CREATE, UPDATE, DELETE])) {
+      if (!Session::haveRightsOr('plugin_openmedis_medicalaccessorycategory', [CREATE, UPDATE, DELETE])) {
 
          unset($tab[7]);
       }
       return $tab;
 
    }
+
+   
+   static public function rawSearchOptionsToAdd() {
+      $tab = [];
+
+      $tab[] = [
+         'id'                 => '3',
+         'table'              => $this->getTable(),
+         'field'              => 'completename',
+         'name'               => __('Completename'),
+         'datatype'           => 'dropdown'
+      ];
+      $tab[] = [
+         'id'                 => '93',
+         'table'              => $this->getTable(),
+         'field'              => 'name',
+         'name'               => __('Name'),
+         'datatype'           => 'dropdown'
+      ];
+      $tab[] = [
+         'id'                 => '94',
+         'table'              => $this->getTable(),
+         'field'              => 'code',
+         'name'               => __('Code'),
+         'datatype'           => 'dropdown'
+      ];
+      return $tab;
+   }  
    function rawSearchOptions() {
       $tab                       = parent::rawSearchOptions();
 
+
       $tab[] = [
-         'id'                 => '80',
-         'table'              => 'code',
-         'field'              => 'name',
-         'name'               => __('Code'),
-         'datatype'           => 'text',
-         'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
+         'id'                 => '3',
+         'table'              => $this->getTable(),
+         'field'              => 'completename',
+         'name'               => __('Completename'),
+         'datatype'           => 'dropdown'
       ];
+      $tab[] = [
+         'id'                 => '93',
+         'table'              => $this->getTable(),
+         'field'              => 'name',
+         'name'               => __('Name'),
+         'datatype'           => 'dropdown'
+      ];
+      $tab[] = [
+         'id'                 => '94',
+         'table'              => $this->getTable(),
+         'field'              => 'code',
+         'name'               => __('Code'),
+         'datatype'           => 'dropdown'
+      ];
+
       return $tab;
    }
 
 
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+
+      if ($item->getType() == __CLASS__) {
+         switch ($tabnum) {
+            case 1 :
+               $item->showChildren();
+               break;
+            case 2 :
+               $item->showItems();
+               break;
+         }
+      }
+      return true;
+   }
 
 }

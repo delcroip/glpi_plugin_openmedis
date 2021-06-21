@@ -108,45 +108,48 @@ function plugin_openmedis_AssignToTicket($types) {
 function plugin_openmedis_getDatabaseRelations() {
    $plugin = new Plugin();
    if ($plugin->isActivated("openmedis")) {
-      return [ "glpi_plugin_openmedis_medicalaccessorycategories"
-                      => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorycategories_id"],
-               "glpi_plugin_openmedis_medicalaccessorytypes"
-                      => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorytypes_id"],
-               "glpi_plugin_openmedis_utilizations"
-                      => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_utilizations_id"],
-               "glpi_plugin_openmedis_devicemedicalaccessories"
-                      => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "plugin_openmedis_devicemedicalaccessories_id"],
-               "glpi_plugin_openmedis_medicaldevicecategories"
-                      => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_medicaldevicecategories_id"],
-               "glpi_plugin_openmedis_medicaldevicemodels"
-                      => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_medicaldevicemodels_id"],
-               "glpi_locations"
-                      => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "locations_id",
-                      "glpi_plugin_openmedis_medicaldevices"        => "locations_id"],
-               "glpi_users"
-                      => ["glpi_plugin_openmedis_medicaldevices" => "users_id_tech",
-                           "glpi_plugin_openmedis_medicaldevices" => "users_id"],
-               "glpi_groups"
-                      => ["glpi_plugin_openmedis_medicaldevices" => "groups_id_tech",
-                      "glpi_plugin_openmedis_medicaldevices" => "groups_id"],
-               "glpi_manufacturers"
-                      => ["glpi_plugin_openmedis_openmedis" => "manufacturers_id",
-                           "glpi_plugin_openmedis_devicemedicalaccessories" => "manufacturers_id"],
-               "glpi_entities"
-                     => ["glpi_plugin_openmedis_devicemedicalaccessories"         => "entities_id",
-                              "glpi_plugin_openmedis_items_devicemedicalaccessories" => "entities_id",
-                              "glpi_plugin_openmedis_medicaldevices"        => "entities_id"],
-               "glpi_states"
-                     => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "states_id",
-                     "glpi_plugin_openmedis_medicaldevices" => "states_id"],
-                     "glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels" => [
-                    "glpi_plugin_openmedis_medicalconsumableitems" => "plugin_openmedis_medicalconsumableitems_id",
-                    "glpi_plugin_openmedis_medicaldevicemodels" => "plugin_openmedis_medicaldevicemodels_id"
-                                      ],
-                 "glpi_plugin_openmedis_medicalconsumables" =>
-                 ["glpi_plugin_openmedis_medicaldevice" => "plugin_openmedis_medicaldevices_id",
-                 "glpi_plugin_openmedis_medicalconsumableitems" => "plugin_openmedis_medicalconsumableitems_id"],
-                 "glpi_plugin_openmedis_medicalconsumableitems" => ["glpi_plugin_openmedis_medicalconsumableitemtypes" => "plugin_openmedis_medicalconsumableitemtypes_id"]];
+      return [ 
+         "glpi_plugin_openmedis_medicalaccessorycategories"
+                  => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorycategories_id",
+                  "glpi_plugin_openmedis_medicalaccessorycategories" => "plugin_openmedis_medicalaccessorycategories_id"],
+         "glpi_plugin_openmedis_medicalaccessorytypes"
+                  => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorytypes_id"],
+         "glpi_plugin_openmedis_utilizations"
+                  => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_utilizations_id"],
+         "glpi_plugin_openmedis_devicemedicalaccessories"
+                  => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "plugin_openmedis_devicemedicalaccessories_id"],
+         "glpi_plugin_openmedis_medicaldevicecategories"
+                  => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_medicaldevicecategories_id",
+                  "glpi_plugin_openmedis_medicaldevicecategories" => "plugin_openmedis_medicaldevicecategories_id"],
+         "glpi_plugin_openmedis_medicaldevicemodels"
+                  => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_medicaldevicemodels_id"],
+         "glpi_locations"
+                  => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "locations_id",
+                  "glpi_plugin_openmedis_medicaldevices"        => "locations_id"],
+         "glpi_users"
+                  => ["glpi_plugin_openmedis_medicaldevices" => "users_id_tech",
+                     "glpi_plugin_openmedis_medicaldevices" => "users_id"],
+         "glpi_groups"
+                  => ["glpi_plugin_openmedis_medicaldevices" => "groups_id_tech",
+                  "glpi_plugin_openmedis_medicaldevices" => "groups_id"],
+         "glpi_manufacturers"
+                  => ["glpi_plugin_openmedis_openmedis" => "manufacturers_id",
+                     "glpi_plugin_openmedis_devicemedicalaccessories" => "manufacturers_id"],
+         "glpi_entities"
+               => ["glpi_plugin_openmedis_devicemedicalaccessories"         => "entities_id",
+                  "glpi_plugin_openmedis_items_devicemedicalaccessories" => "entities_id",
+                  "glpi_plugin_openmedis_medicaldevices"        => "entities_id"],
+         "glpi_states"
+               => ["glpi_plugin_openmedis_items_devicemedicalaccessories" => "states_id",
+               "glpi_plugin_openmedis_medicaldevices" => "states_id"],
+               "glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels" => [
+               "glpi_plugin_openmedis_medicalconsumableitems" => "plugin_openmedis_medicalconsumableitems_id",
+               "glpi_plugin_openmedis_medicaldevicemodels" => "plugin_openmedis_medicaldevicemodels_id"
+                                 ],
+            "glpi_plugin_openmedis_medicalconsumables" =>
+            ["glpi_plugin_openmedis_medicaldevice" => "plugin_openmedis_medicaldevices_id",
+            "glpi_plugin_openmedis_medicalconsumableitems" => "plugin_openmedis_medicalconsumableitems_id"],
+            "glpi_plugin_openmedis_medicalconsumableitems" => ["glpi_plugin_openmedis_medicalconsumableitemtypes" => "plugin_openmedis_medicalconsumableitemtypes_id"]];
 
    } else {
       return [];
