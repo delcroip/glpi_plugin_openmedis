@@ -168,9 +168,9 @@ INSERT INTO glpi_tj.`glpi_profiles_users`( `users_id`, `profiles_id`, `entities_
 SELECT 
 (SELECT id FROM glpi_tj.`glpi_users` u WHERE ( e.EmployeeID COLLATE utf8_unicode_ci) = u.old_ID) as users_id,
  (case l.GroupID 
-  WHEN 1 THEN '1' -- self-service
-  WHEN 2 THEN '3' -- admin
-  WHEN 3 THEN '4' -- super-admin
+  WHEN 1 THEN (SELECT id FROM glpi_profiles WHERE name = 'Self-Service') -- self-service
+  WHEN 2 THEN (SELECT id FROM glpi_profiles WHERE name = 'Admin') -- admin
+  WHEN 3 THEN (SELECT id FROM glpi_profiles WHERE name = 'Super-Admin') -- super-admin
   END) AS profiles_id,
   '0' as entities_id
 FROM  medis_old.login as l
