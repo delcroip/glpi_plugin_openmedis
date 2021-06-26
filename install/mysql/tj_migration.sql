@@ -13,13 +13,14 @@ DELETE FROM  glpi_tj.`glpi_entities` WHERE entities_id !=-1;
 -- Locations
 ALTER TABLE glpi_tj.`glpi_entities` ADD COLUMN `old_ID` text DEFAULT NULL;
 
+
 INSERT INTO glpi_tj.`glpi_entities` (id, completename,name, comment, level,address,town,state,country,entities_id,old_ID)
 SELECT 
 ((SELECT MAX(id) FROM glpi_entities) +1) as id,
 c.Country as completename,
 c.Country as name,
 '' as comment,
-'1' AS level,
+'2' AS level,
 '' AS address,
 '' AS town,
 '' AS state,
@@ -31,13 +32,12 @@ INNER JOIN medis_old.province p on p.CountryID = c.CountryID
 GROUP BY c.Country;
 
 
-INSERT INTO glpi_tj.`glpi_entities` (id, completename,name, comment, level,address,town,state,country,entities_id,old_ID)
+INSERT INTO glpi_tj.`glpi_entities` (id, name, comment, level,address,town,state,country,entities_id,old_ID)
 SELECT 
 ((SELECT MAX(id) FROM glpi_entities) + p.`ProvinceID`) as id,
-CONCAT(c.Country,'>',p.ProvinceName)as completename,
 p.ProvinceName as name,
 '' as comment,
-'2' AS level,
+'3' AS level,
 '' AS address,
 '' AS town,
 p.ProvinceName  as state,
@@ -48,13 +48,12 @@ FROM medis_old.province p
 JOIN medis_old.countries c on p.CountryID = c.CountryID;
 
 
-INSERT INTO glpi_tj.`glpi_entities` (id, completename,name, comment, level,address,town,state,country,entities_id,old_ID)
+INSERT INTO glpi_tj.`glpi_entities` (id, name, comment, level,address,town,state,country,entities_id,old_ID)
 SELECT 
 ((SELECT MAX(id) FROM glpi_entities) +d.`DistrictID`) as id,
-CONCAT(p.ProvinceName,'>',d.DistrictName)as completename,
 d.DistrictName as name,
 '' as comment,
-'3' AS level,
+'4' AS level,
 '' AS address,
 '' AS town,
 p.ProvinceName  as state,
@@ -68,12 +67,12 @@ JOIN medis_old.countries c on p.CountryID = c.CountryID;
 
 SET @@group_concat_max_len = 65535  ;
 
-INSERT INTO glpi_tj.`glpi_entities` ( completename,id, name, comment, level,address,town,state,country,entities_id,longitude,latitude,old_ID)
-SELECT f.FacilityName as name,
+INSERT INTO glpi_tj.`glpi_entities` ( id, name, comment, level,address,town,state,country,entities_id,longitude,latitude,old_ID)
+SELECT 
 ((SELECT MAX(id) FROM glpi_entities) + f.`FacilityID`) as id, 
-CONCAT(d.DistrictName,'>',f.FacilityName)as completename,
+f.FacilityName as name,
 '' as comment,
-'4' as level,
+'5' as level,
 f.FacilityAddress as address,
 '' as town,
 p.ProvinceName  as state,
