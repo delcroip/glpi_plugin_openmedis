@@ -36,7 +36,9 @@ CREATE TABLE `glpi_plugin_openmedis_medicaldevicecategories` (
   `level` int(11) NOT NULL DEFAULT '0',
   `ancestors_cache` longtext COLLATE utf8_unicode_ci,
   `sons_cache` longtext COLLATE utf8_unicode_ci,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  KEY `entities_id` (`entities_id`),
   KEY `plugin_openmedis_medicaldevicecategories_id` (`plugin_openmedis_medicaldevicecategories_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -52,7 +54,9 @@ CREATE TABLE `glpi_plugin_openmedis_medicalaccessorycategories` (
   `level` int(11) NOT NULL DEFAULT '0',
   `ancestors_cache` longtext COLLATE utf8_unicode_ci,
   `sons_cache` longtext COLLATE utf8_unicode_ci,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  KEY `entities_id` (`entities_id`),
   KEY `plugin_openmedis_medicalaccessorycategories_id` (`plugin_openmedis_medicalaccessorycategories_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
