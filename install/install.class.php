@@ -255,7 +255,7 @@ class PluginOpenmedisInstall {
       // create profile for guest users
       $profileId = self::getOrCreateProfile(
          __("openMedis technician  users", "openmedis"),
-         __(" openMedis technicla users. Created by openMedis - do NOT modify this comment.",
+         __(" openMedis technical users. Created by openMedis - do NOT modify this comment.",
             "openmedis")
       );
       Config::setConfigurationValues('openmedis', ['agent_profiles_id' => $profileId]);
