@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gpli_plugin_openmedis\n"
-"POT-Creation-Date: 2021-06-27 22:21+0100\n"
-"PO-Revision-Date: 2021-06-27 22:29+0100\n"
+"POT-Creation-Date: 2021-06-27 22:33+0100\n"
+"PO-Revision-Date: 2021-06-27 22:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: english\n"
@@ -15,7 +15,6 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ../inc\n"
-"X-Poedit-SearchPath-2: ../front\n"
 
 #: hook.php:188 inc/medicaldevice.class.php:61 inc/profile.class.php:186
 msgid "Medical Device"
@@ -266,7 +265,7 @@ msgstr ""
 msgid "Average number of printed usages"
 msgstr ""
 
-# just the x as multiplier  "x 5" 
+# just the x as multiplier  "x 5"
 #: inc/medicalconsumable.class.php:920
 msgid "x"
 msgstr "x"
@@ -305,7 +304,7 @@ msgstr ""
 msgid "Medical consumable usages"
 msgstr ""
 
-# Nothing to translate 
+# Nothing to translate
 #: inc/medicalconsumable.class.php:1027
 #: inc/medicalconsumableitem.class.php:602
 #: inc/medicalconsumableitem.class.php:604
@@ -425,6 +424,7 @@ msgid "%1$s%2$s"
 msgstr "%1$s%2$s"
 
 #: inc/medicaldevice.class.php:207 inc/medicaldevice.class.php:429
+#: reports/medicaldevicesbyutilisation/medicaldevicesbyutilisation.php:56
 #: reports/medicaldevicesbyutilisation/medicaldevicesbyutilisation.php:78
 msgid "Status"
 msgstr ""
@@ -600,8 +600,4 @@ msgstr ""
 
 #: reports/medicaldevicesbyutilisation/medicaldevicesbyutilisation.php:40
 msgid "medicaldevicesbyutilisation_report_title"
-msgstr ""
-
-#: reports/medicaldevicesbyutilisation/medicaldevicesbyutilisation.php:56
-msgid "status"
 msgstr ""

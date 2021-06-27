@@ -53,7 +53,7 @@ $category = new PluginReportsDropdownCriteria($report, 'category', 'PluginOpenme
 $category->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_medicaldevicecategories_id`");
 
 
-$statemd = new PluginReportsStatusCriteria($report, 'statemd', __('status', 'reports'));
+$statemd = new PluginReportsStatusCriteria($report, 'statemd', __('Status', 'reports'));
 $statemd->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`states_id`");
 
 $location = new PluginReportsLocationCriteria($report, 'location', _n('Location', 'Locations', 2));
