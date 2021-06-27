@@ -1,7 +1,7 @@
 <?php
 /**
  -------------------------------------------------------------------------
- LICENSE
+  LICENSE
 
  This file is part of openMEDIS plugin for GLPI.
 
@@ -95,7 +95,7 @@ function plugin_openmedis_registerClasses(){
          'infocom_types'        => true, // suplier, vbuy date ...
          'ticket_types'         => true, // enable to link to ticket (device> ... )
          'contract_types'       => true, // enable^to link contract
-         'planning_types'        => true, // enable planning reservation
+
          'state_types'           => true,
          'linkuser_types'        => true,  // enable device in Mydevice on ticket
          'itemdevices_types' => true,
