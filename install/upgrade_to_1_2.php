@@ -50,9 +50,13 @@ class PluginOpenmedisUpgradeTo1_1 {
         }
     }
     $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicecategories',
-    'entities_id', "int(11) NOT NULL DEFAULT '0'");
+    'entities_id', "int(11) NOT NULL DEFAULT '0'", true);
     $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicalaccessorycategories',
-    'entities_id', "int(11) NOT NULL DEFAULT '0'");
+    'entities_id', "int(11) NOT NULL DEFAULT '0'", true);
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicalaccessorycategories',
+    'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", true);
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicecategories',
+    'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", true);   
     $err += $this->migration->displayWarning("table to be created by the migration already existing : " . $DB->error(), true);
     if ($err > 0){
       return false;
