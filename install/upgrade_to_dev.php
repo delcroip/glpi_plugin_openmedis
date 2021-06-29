@@ -29,23 +29,116 @@
  --------------------------------------------------------------------------
  */
 
+
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginOpenmedisUpgradeTodev {
+class PluginOpenmedisUpgradeToDev {
+
    /**
     * @param Migration $migration
     */
-   function upgrade(Migration $migration) {
-      global $DB;
+   public function upgrade(Migration $migration) {
+    global $DB;
+    $err = 0;
+    /*if (!$DB->fieldExists("glpi_states","")) {
+        if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_2.sql")){
+        $this->migration->displayWarning("Error in migration 1.1 to 1.2 : " . $DB->error(), true);
+            $err++;
+        }
+    }*/
+    $err += $this->addfieldIfNotExists('glpi_states',
+    'is_visible_pluginopenmedismedicaldevice', "tinyint(1) NOT NULL DEFAULT '1'", true);
+    if ($err > 0){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 
-      $migration->setVersion(PLUGIN_OPENMEDIS_VERSION);
+  private function addfieldIfNotExists($table, $field, $fieldOptions, $index = false){
+    global $DB;
+    if(!$DB->fieldExists($table,$field)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .= " ADD `".$field.'` '.$fieldOptions;
+      if($index)$sql .= ", ADD KEY `".$field.'` (`'.$field.'`)';
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : addfieldIfNotExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$field.' exist' , true);
+      return 1;
+    }
+  }
 
-      $profileRight = new ProfileRight();
+  private function renameTableIfExists($oldTable, $newTable){
+    global $DB;
+    if($DB->tableExists($oldTable)){
+      $sql = "ALTER TABLE ".$oldTable;
+      $sql .= " RENAME ".$newTable;
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renameTableIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : table ".$oldTable.'  don\'t exist' , true);
+      return 1;
+    }
+  }
 
-   }
+  private function renamefieldIfExists($table, $oldfield,$newfield, $fieldOptions, $index = false, $indexName = ''){
+    global $DB;
+    if($DB->fieldExists($table,$oldfield)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .= " change ".$oldfield.' '.$newfield.' '.$fieldOptions ;
+      if($index){
+        if($indexName == '')$indexName = $newfield;
+        $sql .=' DROP KEY '.$oldfield.', ADD KEY `'.$newfield.'` (`'.$indexName.'`)'; 
+      }
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renamefieldIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldfield.'  don\'t exist' , true);
+      return 1;
+    }
+  }
+
+  private function indexExists($table, $index){
+    global $DB;
+    $sql = "SELECT COUNT(*) AS index_exists FROM information_schema.statistics 
+      WHERE TABLE_SCHEMA = DATABASE() and table_name =
+      ${table} AND INDEX_NAME = ${index}";
+      if ($DB->query($sql) == 1 ) return true;
+      else return false;
+  }
+
+  private function  replaceIndexIfExists($table, $oldIndex, $field, $newIndex){
+    global $DB;
+    if($this->indexExists($table,$oldIndex)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .=' DROP KEY '.$oldIndex.', ADD KEY `'.$newIndex.'` (`'.$field.'`)'; 
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : replaceIndexIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldIndex.'  don\'t exist' , true);
+      return 1;
+    }
+  }
+
 }
-
-
-
