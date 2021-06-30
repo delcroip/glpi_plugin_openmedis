@@ -80,7 +80,7 @@ if ($report->criteriasValidated()) {
    $query = "SELECT `glpi_plugin_openmedis_utilizations`.`name` AS util,
                     `glpi_locations`.`id` AS locat,
                     `glpi_plugin_openmedis_medicaldevices`.`name` AS md,
-                    `glpi_plugin_openmedis_medicaldevicecategories`.`completename` AS cat,
+                    `glpi_plugin_openmedis_medicaldevicecategories`.`name` AS cat,
                     `state_cpt`.`name` AS statemd,
                     `glpi_locations`.`name` as location
 

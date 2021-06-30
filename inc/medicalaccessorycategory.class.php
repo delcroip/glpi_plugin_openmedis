@@ -55,10 +55,14 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
    function getAdditionalFields() {
 
       $tab = [['name'      => 'code',
-                         'label'     => __('Code'),
-                         'type'      => 'text',
-                         'list'      => true],
-            ['name'      => 'plugin_openmedis_medicalaccessorycategories_id',
+      'label'     => __('Code'),
+      'type'      => 'text',
+      'list'      => true],
+      ['name'      => 'label',
+      'label'     => __('Label'),
+      'type'      => 'text',
+      'list'      => true],
+['name'      => 'plugin_openmedis_medicalaccessorycategories_id',
                          'label'     => __('Parent'),
                          'type'      => 'dropdownValue'],
          ['name'      => 'picture',
@@ -87,8 +91,8 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
       $tab[] = [
          'id'                 => '80',
          'table'              => $this->getTable(),
-         'field'              => 'name',
-         'name'               => __('Name'),
+         'field'              => 'label',
+         'name'               => __('Label'),
          'datatype'           => 'text',
          'right'              => PluginOpenmedisMedicalAccessoryCategory::$rightname
       ];

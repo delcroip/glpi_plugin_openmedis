@@ -36,11 +36,12 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginOpenmedisUpgradeTo1_3 {
-
+  var $migration;
    /**
     * @param Migration $migration
     */
    public function upgrade(Migration $migration) {
+    $this->migration = $migration;
     global $DB;
     $err = 0;
     /*if (!$DB->fieldExists("glpi_states","")) {
@@ -80,11 +81,11 @@ class PluginOpenmedisUpgradeTo1_3 {
       if($DB->query($sql)){
         return 0;
       }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : addfieldIfNotExists" . $DB->error(), true);
+        $this->migration->displayWarning("Error in addfieldIfNotExists" . $DB->error(), true);
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$field.' exist' , true);
+      $this->migration->displayWarning("Error : field ".$field.' exist' , true);
       return 1;
     }
   }
@@ -184,7 +185,7 @@ class PluginOpenmedisUpgradeTo1_3 {
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error  field ".$oldIndex.'  don\'t exist' , true);
+      $this->migration->displayWarning("Error  field unicity  don\'t exist' ", true);
       return 1;
     }
   }

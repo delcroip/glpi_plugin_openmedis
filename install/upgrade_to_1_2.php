@@ -35,12 +35,12 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginOpenmedisUpgradeTo1_1 {
+class PluginOpenmedisUpgradeTo1_2 {
 
-   /**
-    * @param Migration $migration
-    */
+    var $migration;
+
    public function upgrade(Migration $migration) {
+    $this->migration = $migration;
     global $DB;
     $err = 0;
     if (!$DB->tableExists("glpi_plugin_openmedis_medicalconsomables")) {
