@@ -262,7 +262,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             $changes = [
                '0',
                '',
-               __('Installing a medicalconsumable'),
+               __('Installing a medical consumable'),
             ];
             Log::history($pID, 'PluginOpenmedisMedicalDevice', $changes, 0, Log::HISTORY_LOG_SIMPLE_MESSAGE);
             return true;
@@ -363,7 +363,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          if (!$nohtml) {
             $out .= "<div class='tab_bg_1_2'><i>".__('No medical consumable')."</i></div>";
          } else {
-            $out .= __('No medicalconsumable');
+            $out .= __('No medical consumable');
          }
       }
       return $out;
