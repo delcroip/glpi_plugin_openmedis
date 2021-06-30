@@ -29,9 +29,9 @@
  --------------------------------------------------------------------------
  */
 // Version of the plugin
-define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc3');
+define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc4');
 // Schema version of this version
-define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.1');
+define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.3');
 // is or is not an official release of the plugin
 define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
 // Minimal GLPI version, inclusive

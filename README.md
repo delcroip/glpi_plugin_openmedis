@@ -45,11 +45,33 @@ This module enable you to create and manage your Medical device
 
 8. Start adding medical consomable type and consomables (if any)
 
+9. to use the custom report, the report module must be installed and the content of the "openmedis/reports" repository must be copied in the report module
+
+## Standard glpi information
+
+  in order to use properly the service support of GLPI there is elements to configure
+
+  ### Ticket template
+
+  Ticket template are created and manage from the ticket page by clicking on the 3 layer icon
+
+  - it will enable to define the mandatory fields.
+  - it will enable to prefill fields, e.g write the content Title or description of the ticket to help the user providing the right information
+  - task template can be added (task template are configure in the dropdown page)
+
+  ### Incident / request / change / problem category
+
+  - can trigger the use of a template
+
+  ### planification
+
+  once a task is added to a ticket (via template or created on the ticket manualy), an intervention can be planned by editing the task (option not avaiable upon task creation)
 ## Traduction
 
-This plugin will be managed on transiflex or lokalise
+https://app.lokalise.com/public/6803907760dcb8c3a08649.77618538/
+
 
 
 ## development
 
-  - dedicate reports
+  - documentation for calibration / checklist (task ?) / intervention report

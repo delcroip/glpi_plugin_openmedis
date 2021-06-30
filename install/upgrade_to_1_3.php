@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginOpenmedisUpgradeToDev {
+class PluginOpenmedisUpgradeTo1_3 {
 
    /**
     * @param Migration $migration
@@ -49,8 +49,20 @@ class PluginOpenmedisUpgradeToDev {
             $err++;
         }
     }*/
+    // allow state
     $err += $this->addfieldIfNotExists('glpi_states',
     'is_visible_pluginopenmedismedicaldevice', "tinyint(1) NOT NULL DEFAULT '1'", true);
+    //update ca
+    $table = 'glpi_plugin_openmedis_medicaldevicecategories';
+    $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicaldevicecategories_id`, `code`");
+    $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
+    $err += $this->renamefieldIfExists($table, 'completename','name', "text AS (CONCAT(code,' - ',label))", true, );
+  // allow update cat
+    $table = 'glpi_plugin_openmedis_medicalaccessorycategories';
+    $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicalaccessorycategories_id`, `code`");
+    $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
+    $err += $this->renamefieldIfExists($table, 'completename','name', "text AS (CONCAT(code,' - ',label))", true, );
+   
     if ($err > 0){
       return false;
     }
@@ -115,6 +127,25 @@ class PluginOpenmedisUpgradeToDev {
     }
   }
 
+  private function removefieldIfExists($table, $oldfield){
+    global $DB;
+    if($DB->fieldExists($table,$oldfield)){
+      $sql = "ALTER TABLE ".$table;
+      $sql .= " DROP COLUMN ".$oldfield ;
+
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renamefieldIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldfield.'  don\'t exist' , true);
+      return 1;
+    }
+  }
+  
+
   private function indexExists($table, $index){
     global $DB;
     $sql = "SELECT COUNT(*) AS index_exists FROM information_schema.statistics 
@@ -132,11 +163,28 @@ class PluginOpenmedisUpgradeToDev {
       if($DB->query($sql)){
         return 0;
       }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : replaceIndexIfExists" . $DB->error(), true);
+        $this->migration->displayWarning("Error in replaceIndexIfExists" . $DB->error(), true);
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldIndex.'  don\'t exist' , true);
+      $this->migration->displayWarning("Error  field ".$oldIndex.'  don\'t exist' , true);
+      return 1;
+    }
+  }
+
+  private function  replaceUnicityIndexIfExists($table,  $fields){
+    global $DB;
+    if($this->indexExists($table,'unicity')){
+      $sql = "ALTER TABLE ".$table;
+      $sql .=' DROP INDEX `unicity` , ADD UNIQUE INDEX `unicity` ('.$fields.')'; 
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in replaceIndexIfExists" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error  field ".$oldIndex.'  don\'t exist' , true);
       return 1;
     }
   }
