@@ -58,12 +58,13 @@ class PluginOpenmedisUpgradeTo1_3 {
     $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicaldevicecategories_id`, `code`");
     $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
     $err += $this->renamefieldIfExists($table, 'completename','name', "text AS (CONCAT(code,' - ',label))", true, );
-  // allow update cat
+    $err += $this->addfieldIfNotExists($table,'completename',"varchar(255)  DEFAULT ''");  
+    // allow update cat
     $table = 'glpi_plugin_openmedis_medicalaccessorycategories';
     $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicalaccessorycategories_id`, `code`");
     $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
     $err += $this->renamefieldIfExists($table, 'completename','name', "text AS (CONCAT(code,' - ',label))", true, );
-   
+    $err += $this->addfieldIfNotExists($table,'completename',"varchar(255)  DEFAULT ''");
     if ($err > 0){
       return false;
     }
