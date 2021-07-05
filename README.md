@@ -3,9 +3,22 @@
 This module enable you to create and manage your Medical device
 > * Medical device details (in addition to std gélpi device) : install date, Nomencalure.
 
+
 ## Getting started
 
 1. [Install project-GLPI](https://wiki.glpi-project.org/doku.php?id=en:install)
+
+	before GLPI 10 a patch need to be applied to make the medical accessories working
+
+	download the patch: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/8280.patch
+
+	then copy it on glpi/ folder
+
+	then apply it: 
+
+	```
+		patch -p1 < 8280.patch
+	```
 
 2. Configure project-GLPI:
 
