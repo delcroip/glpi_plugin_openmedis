@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginOpenmedisInstall {
 
-    protected static $currentVersion = null;
+   protected static $currentVersion = null;
 
    protected $migration;
 
@@ -169,11 +169,13 @@ class PluginOpenmedisInstall {
     */
    public function getSchemaVersion() {
       if ($this->isPluginInstalled()) {
-         $config = Config::getConfigurationValues('openmedis', ['schema_version']);
+         $config = Config::getConfigurationValues('plugin:openmedis');
          if (!isset($config['schema_version'])) {
             return '1.0'; // first schema verison was not saved
          }
          return $config['schema_version'];
+      }else{
+         return null;
       }
 
       return null;
