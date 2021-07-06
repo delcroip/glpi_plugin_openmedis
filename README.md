@@ -8,7 +8,7 @@ This module enable you to create and manage your Medical device
 
 1. [Install project-GLPI](https://wiki.glpi-project.org/doku.php?id=en:install)
 
-	before GLPI 10 a patch need to be applied to make the medical accessories working
+	before GLPI 10, a patch need to be applied to make the medical accessories working (without this patch GLPI plugins cannot add component type)
 
 	download the patch: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/8280.patch
 
