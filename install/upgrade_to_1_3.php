@@ -34,9 +34,10 @@
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
-
-class PluginOpenmedisUpgradeTo1_3 {
+include_once(PLUGIN_OPENMEDIS_ROOT.'/install/upgradeStep.class.php');
+class PluginOpenmedisUpgradeTo1_3 extends PluginOpenmedisUpgradeStep {
   var $migration;
+
    /**
     * @param Migration $migration
     */
@@ -50,6 +51,7 @@ class PluginOpenmedisUpgradeTo1_3 {
             $err++;
         }
     }*/
+    $this->migrationStep = '1.2 -> 1.3';
     // allow state
     $err += $this->addfieldIfNotExists('glpi_states',
     'is_visible_pluginopenmedismedicaldevice', "tinyint(1) NOT NULL DEFAULT '1'", true);
@@ -57,14 +59,20 @@ class PluginOpenmedisUpgradeTo1_3 {
     $table = 'glpi_plugin_openmedis_medicaldevicecategories';
     $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicaldevicecategories_id`, `code`");
     $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
-    $err += $this->renamefieldIfExists($table, 'completename','name', "text AS (CONCAT(code,' - ',label))", true, );
-    $err += $this->addfieldIfNotExists($table,'completename',"varchar(255)  DEFAULT ''");  
+    $err += $this->removefieldIfExists($table, 'completename');
+    $err += $this->addfieldIfNotExists($table, 'name', "text AS (CONCAT(code,' - ',label))", true );
+    $err += $this->addfieldIfNotExists($table,'completename',"text COLLATE utf8_unicode_ci",true);  
     // allow update cat
     $table = 'glpi_plugin_openmedis_medicalaccessorycategories';
     $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicalaccessorycategories_id`, `code`");
     $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
-    $err += $this->renamefieldIfExists($table, 'completename','name', "text AS (CONCAT(code,' - ',label))", true, );
-    $err += $this->addfieldIfNotExists($table,'completename',"varchar(255)  DEFAULT ''");
+    $err += $this->removefieldIfExists($table, 'completename');
+    $err += $this->addfieldIfNotExists($table, 'name', "text AS (CONCAT(code,' - ',label))", true );
+    $err += $this->addfieldIfNotExists($table,'completename',"text COLLATE utf8_unicode_ci",true);  
+    // reverte mistake in 1.1
+    $err += $this->renameTableifExists('glpi_plugin_openmedis_items_medicalaccessories', 
+      'glpi_plugin_openmedis_items_devicemedicalaccessories');
+
     if ($err > 0){
       return false;
     }
@@ -73,122 +81,5 @@ class PluginOpenmedisUpgradeTo1_3 {
     }
   }
 
-  private function addfieldIfNotExists($table, $field, $fieldOptions, $index = false){
-    global $DB;
-    if(!$DB->fieldExists($table,$field)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .= " ADD `".$field.'` '.$fieldOptions;
-      if($index)$sql .= ", ADD KEY `".$field.'` (`'.$field.'`)';
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in addfieldIfNotExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error : field ".$field.' exist' , true);
-      return 1;
-    }
-  }
-
-  private function renameTableIfExists($oldTable, $newTable){
-    global $DB;
-    if($DB->tableExists($oldTable)){
-      $sql = "ALTER TABLE ".$oldTable;
-      $sql .= " RENAME ".$newTable;
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renameTableIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : table ".$oldTable.'  don\'t exist' , true);
-      return 1;
-    }
-  }
-
-  private function renamefieldIfExists($table, $oldfield,$newfield, $fieldOptions, $index = false, $indexName = ''){
-    global $DB;
-    if($DB->fieldExists($table,$oldfield)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .= " change ".$oldfield.' '.$newfield.' '.$fieldOptions ;
-      if($index){
-        if($indexName == '')$indexName = $newfield;
-        $sql .=' DROP KEY '.$oldfield.', ADD KEY `'.$newfield.'` (`'.$indexName.'`)'; 
-      }
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renamefieldIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldfield.'  don\'t exist' , true);
-      return 1;
-    }
-  }
-
-  private function removefieldIfExists($table, $oldfield){
-    global $DB;
-    if($DB->fieldExists($table,$oldfield)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .= " DROP COLUMN ".$oldfield ;
-
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renamefieldIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldfield.'  don\'t exist' , true);
-      return 1;
-    }
-  }
-  
-
-  private function indexExists($table, $index){
-    global $DB;
-    $sql = "SELECT COUNT(*) AS index_exists FROM information_schema.statistics 
-      WHERE TABLE_SCHEMA = DATABASE() and table_name =
-      ${table} AND INDEX_NAME = ${index}";
-      if ($DB->query($sql) == 1 ) return true;
-      else return false;
-  }
-
-  private function  replaceIndexIfExists($table, $oldIndex, $field, $newIndex){
-    global $DB;
-    if($this->indexExists($table,$oldIndex)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .=' DROP KEY '.$oldIndex.', ADD KEY `'.$newIndex.'` (`'.$field.'`)'; 
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in replaceIndexIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error  field ".$oldIndex.'  don\'t exist' , true);
-      return 1;
-    }
-  }
-
-  private function  replaceUnicityIndexIfExists($table,  $fields){
-    global $DB;
-    if($this->indexExists($table,'unicity')){
-      $sql = "ALTER TABLE ".$table;
-      $sql .=' DROP INDEX `unicity` , ADD UNIQUE INDEX `unicity` ('.$fields.')'; 
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in replaceIndexIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error  field unicity  don\'t exist' ", true);
-      return 1;
-    }
-  }
 
 }

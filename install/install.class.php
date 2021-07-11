@@ -94,7 +94,6 @@ class PluginOpenmedisInstall {
    public function install(Migration $migration) {
       $this->migration = $migration;
       spl_autoload_register([__CLASS__, 'autoload']);
-
       $this->installSchema();
       $this->createInitialConfig();
       $this->migration->executeMigration();
@@ -119,6 +118,29 @@ class PluginOpenmedisInstall {
             if (!$DB->runFile(__DIR__ ."/mysql/data-1.0.sql")){
                 $this->migration->displayWarning("Error loading the data : " . $DB->error(), true);
                 return false;
+            }else{
+               $query = "SELECT id, name FROM ".PluginOpenmedisMedicalDeviceCategory::getTable()." WHERE level=1";
+               if ($result=$DB->query($query)) {
+                  if ($DB->numrows($result)>0) {
+                     $dropdown = new PluginOpenmedisMedicalDeviceCategory();
+                     while ($data=$DB->fetchArray($result)) {
+               // get the list on the level 1 cat
+
+                        $dropdown->regenerateTreeUnderID($data['id'],$data['name'],false);
+                      }
+                      //complete name for level 1 FIXME
+                      $query = "UPDATE ".PluginOpenmedisMedicalDeviceCategory::getTable()." t SET t.completename = t.name WHERE level=1";
+                      if (!$DB->query($query)) {
+                        $this->migration->displayWarning("Error setting medical device category level 1 : " . $DB->error(), true);
+                      }
+
+                  }
+                  
+               }else{
+                  $this->migration->displayWarning("Error setting medical device category level > 1 : " . $DB->error(), true);
+               }
+               
+               
             }
         }    
       /*
@@ -138,7 +160,6 @@ class PluginOpenmedisInstall {
     */
    protected static function getOrCreateProfile($name, $comment) {
       global $DB;
-
       $comment = $DB->escape($comment);
       $profile = new Profile();
       if (version_compare(GLPI_VERSION, '9.4') < 0) {
@@ -205,6 +226,8 @@ class PluginOpenmedisInstall {
     * Give all rights on the plugin to the profile of the current user
     */
    protected function createFirstAccess() {
+      $this->migration->displayMessage("Create write access for current user for the openMedis plugin");
+
       $profileRight = new ProfileRight();
 
       $newRights = [
@@ -230,6 +253,7 @@ class PluginOpenmedisInstall {
     * Create a profile for guest users
     */
    protected function createGuestProfileAccess() {
+      $this->migration->displayMessage("Create guest profile for the openMedis plugin");
       // create profile for guest users
       $profileId = self::getOrCreateProfile(
          __("openMedis guest users", "openmedis"),
@@ -255,6 +279,7 @@ class PluginOpenmedisInstall {
     * Create a profile for agent user accounts
     */
    protected function createAgentProfileAccess() {
+      $this->migration->displayMessage("Create technician profile for the openMedis plugin");
       // create profile for guest users
       $profileId = self::getOrCreateProfile(
          __("openMedis technician  users", "openmedis"),
@@ -285,7 +310,6 @@ class PluginOpenmedisInstall {
     */
    public function upgrade(Migration $migration) {
       spl_autoload_register([__CLASS__, 'autoload']);
-
       $this->migration = $migration;
       if (isset($_SESSION['plugin_openmedis']['cli']) && $_SESSION['plugin_openmedis']['cli'] == 'force-upgrade') {
          // Might return false
@@ -293,17 +317,19 @@ class PluginOpenmedisInstall {
       } else {
          $fromSchemaVersion = $this->getSchemaVersion();
       }
-
+     
       // Prevent problem of execution time
       ini_set("max_execution_time", "0");
       ini_set("memory_limit", "-1");
 
       while ($fromSchemaVersion && isset($this->upgradeSteps[$fromSchemaVersion])) {
+         $this->migration->displayMessage("Upgrade DB schema from  ".$fromSchemaVersion." to ".$this->upgradeSteps[$fromSchemaVersion]);         
          $this->upgradeOneStep($this->upgradeSteps[$fromSchemaVersion]);
          $fromSchemaVersion = $this->upgradeSteps[$fromSchemaVersion];
       }
 
       if (!PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE) {
+         $this->migration->displayMessage("Applying dev updates");                 
          $this->upgradeOneStep('dev');
       }
       $this->installUpgradeCommonTasks();
@@ -402,6 +428,7 @@ class PluginOpenmedisInstall {
     * Generate default configuration for the plugin
     */
    protected function createInitialConfig() {
+      $this->migration->displayMessage("Generate default configuration for te openMedis plugin");
       /*
       no config yet for the module 
       example can be found here https://github.com/flyve-mdm/glpi-plugin/blob/develop/install/install.class.php#L646
@@ -466,7 +493,7 @@ class PluginOpenmedisInstall {
    }
 
    protected function deleteProfiles() {
-      $config = Config::getConfigurationValues('openmedis', ['guest_profiles_id', 'agent_profiles_id']);
+      $config = Config::getConfigurationValues('plugin:openmedis');
 
       foreach ($config as $profileId) {
          $profile = new Profile();

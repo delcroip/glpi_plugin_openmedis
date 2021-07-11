@@ -34,13 +34,14 @@
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
-
-class PluginOpenmedisUpgradeTo1_2 {
+include_once(PLUGIN_OPENMEDIS_ROOT.'/install/upgradeStep.class.php');
+class PluginOpenmedisUpgradeTo1_2 extends PluginOpenmedisUpgradeStep{
 
     var $migration;
 
    public function upgrade(Migration $migration) {
     $this->migration = $migration;
+    $this->migrationStep = '1.1 -> 1.2';
     global $DB;
     $err = 0;
     if (!$DB->tableExists("glpi_plugin_openmedis_medicalconsomables")) {
@@ -66,86 +67,5 @@ class PluginOpenmedisUpgradeTo1_2 {
     }
   }
 
-  private function addfieldIfNotExists($table, $field, $fieldOptions, $index = false){
-    global $DB;
-    if(!$DB->fieldExists($table,$field)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .= " ADD `".$field.'` '.$fieldOptions;
-      if($index)$sql .= ", ADD KEY `".$field.'` (`'.$field.'`)';
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : addfieldIfNotExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$field.' exist' , true);
-      return 1;
-    }
-  }
-
-  private function renameTableIfExists($oldTable, $newTable){
-    global $DB;
-    if($DB->tableExists($oldTable)){
-      $sql = "ALTER TABLE ".$oldTable;
-      $sql .= " RENAME ".$newTable;
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renameTableIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : table ".$oldTable.'  don\'t exist' , true);
-      return 1;
-    }
-  }
-
-  private function renamefieldIfExists($table, $oldfield,$newfield, $fieldOptions, $index = false, $indexName = ''){
-    global $DB;
-    if($DB->fieldExists($table,$oldfield)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .= " change ".$oldfield.' '.$newfield.' '.$fieldOptions ;
-      if($index){
-        if($indexName == '')$indexName = $newfield;
-        $sql .=' DROP KEY '.$oldfield.', ADD KEY `'.$newfield.'` (`'.$indexName.'`)'; 
-      }
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : renamefieldIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldfield.'  don\'t exist' , true);
-      return 1;
-    }
-  }
-
-  private function indexExists($table, $index){
-    global $DB;
-    $sql = "SELECT COUNT(*) AS index_exists FROM information_schema.statistics 
-      WHERE TABLE_SCHEMA = DATABASE() and table_name =
-      ${table} AND INDEX_NAME = ${index}";
-      if ($DB->query($sql) == 1 ) return true;
-      else return false;
-  }
-
-  private function  replaceIndexIfExists($table, $oldIndex, $field, $newIndex){
-    global $DB;
-    if($this->indexExists($table,$oldIndex)){
-      $sql = "ALTER TABLE ".$table;
-      $sql .=' DROP KEY '.$oldIndex.', ADD KEY `'.$newIndex.'` (`'.$field.'`)'; 
-      if($DB->query($sql)){
-        return 0;
-      }else{
-        $this->migration->displayWarning("Error in migration 1.0 to 1.1 : replaceIndexIfExists" . $DB->error(), true);
-        return 1;
-      }
-    }else {
-      $this->migration->displayWarning("Error in migration 1.0 to 1.1 : field ".$oldIndex.'  don\'t exist' , true);
-      return 1;
-    }
-  }
 
 }
