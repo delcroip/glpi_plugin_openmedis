@@ -77,29 +77,31 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
    }
    function rawSearchOptions() {
-      $tab                       = [];
-      $tab =[[
+      $tab                       =  parent::rawSearchOptions();
+      $tab[] =[
          'id'                 => '60',
          'table'              => $this->getTable(),
          'field'              => 'code',
          'name'               => __('Code'),
          'datatype'           => 'itemlink',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
-      ],[
+      ];
+      $tab[] = [
          'id'                 => '80',
          'table'              => $this->getTable(),
          'field'              => 'label',
          'name'               => __('Label'),
          'datatype'           => 'text',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
-      ],[
+      ];
+      $tab[] = [
          'id'                 => '100',
          'table'              => $this->getTable(),
          'field'              => 'comment',
          'name'               => __('Comment'),
          'datatype'           => 'text',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
-      ]];
+      ];
 
       return $tab;
    }
@@ -195,5 +197,9 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
       return true;
    }
-
+   function post_updateItem($history = 1) {
+      // define the "name" to generate the "completename"
+      $this->updates['name'] = $this->updates['code'].' - '.$this->updates['label'];
+      parent::post_updateItem($history);
+   }
 }
