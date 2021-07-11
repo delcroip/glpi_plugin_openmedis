@@ -1,35 +1,37 @@
 <?php
-/*
- * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
+/**
  -------------------------------------------------------------------------
- openmedis plugin for GLPI
- Copyright (C) 2014-2016 by the openmedis Development Team.
+  LICENSE
 
- https://github.com/InfotelGLPI/openmedis
- -------------------------------------------------------------------------
+ This file is part of openMEDIS plugin for GLPI.
 
- LICENSE
-
- This file is part of openmedis.
-
- openmedis is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
+ Reports is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- openmedis is distributed in the hope that it will be useful,
+ openMEDIS is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Affero General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with openmedis. If not, see <http://www.gnu.org/licenses/>.
+ You should have received a copy of the GNU Affero General Public License
+ along with Reports. If not, see <http://www.gnu.org/licenses/>.
+
+ @package   openmedis
+ @authors   Patrick Delcroix
+ @copyright Copyright (c) 2009-2021 Reports plugin team
+ @license   AGPL License 3.0 or (at your option) any later version
+            http://www.gnu.org/licenses/agpl-3.0-standalone.html
+ @link      https://github.com/delcroip/glpi_open_medis
+ @link      http://www.glpi-project.org/
+ @since     2021
  --------------------------------------------------------------------------
  */
 // Version of the plugin
-define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc3');
+define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc4');
 // Schema version of this version
-define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.1');
+define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.3');
 // is or is not an official release of the plugin
 define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
 // Minimal GLPI version, inclusive
@@ -93,7 +95,7 @@ function plugin_openmedis_registerClasses(){
          'infocom_types'        => true, // suplier, vbuy date ...
          'ticket_types'         => true, // enable to link to ticket (device> ... )
          'contract_types'       => true, // enable^to link contract
-         'planning_types'        => true, // enable planning reservation
+
          'state_types'           => true,
          'linkuser_types'        => true,  // enable device in Mydevice on ticket
          'itemdevices_types' => true,
