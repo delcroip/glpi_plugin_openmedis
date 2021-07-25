@@ -460,20 +460,7 @@ class PluginOpenmedisInstall {
     protected function deleteTables() {
       global $DB;
 
-      $tables = [
-        PluginOpenmedisMedicalDevice::getTable(),
-        PluginOpenmedisMedicalDeviceModel::getTable(),
-        PluginOpenmedisMedicalDeviceCategory::getTable(),
-        PluginOpenmedisDeviceMedicalAccessory::getTable(),
-        PluginOpenmedisMedicalAccessoryType::getTable(),
-        PluginOpenmedisMedicalAccessoryCategory::getTable(),
-        PluginOpenmedisMedicalConsumable::getTable(),
-        PluginOpenmedisMedicalConsumableItem::getTable(),
-        PluginOpenmedisMedicalConsumableItemType::getTable(),
-        PluginOpenmedisUtilization::getTable(),
-        PluginOpenmedisItem_DeviceMedicalAccessory::getTable(),
-        PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel::getTable(),
-      ];
+      $tables = $this->getTables();
 
       foreach ($tables as $table) {
          $DB->query("DROP TABLE IF EXISTS `$table`");
@@ -491,6 +478,29 @@ class PluginOpenmedisInstall {
         $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE '%luginOpenmedis%';");
         }
       }
+
+   /**
+    *   getTablelist
+    **/
+protected function getTables(){
+   return [
+      PluginOpenmedisMedicalDevice::getTable(),
+      PluginOpenmedisMedicalDeviceModel::getTable(),
+      PluginOpenmedisMedicalDeviceCategory::getTable(),
+      PluginOpenmedisDeviceMedicalAccessory::getTable(),
+      PluginOpenmedisMedicalAccessoryType::getTable(),
+      PluginOpenmedisMedicalAccessoryCategory::getTable(),
+      PluginOpenmedisMedicalConsumable::getTable(),
+      PluginOpenmedisMedicalConsumableItem::getTable(),
+      PluginOpenmedisMedicalConsumableItemType::getTable(),
+      PluginOpenmedisUtilization::getTable(),
+      PluginOpenmedisItem_DeviceMedicalAccessory::getTable(),
+      PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel::getTable(),
+    ];
+     
+
+}
+
 
    protected function deleteProfiles() {
       $config = Config::getConfigurationValues('plugin:openmedis');
