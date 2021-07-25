@@ -3,7 +3,7 @@
    <name>Health technology management</name>
    <key>racks</key>
    <state>stable</state>
-   <logo>https://github.com/delcroip/glpi_open_medis/raw/master/pics/login_logo_glpi.png</logo>
+   <logo>https://github.com/delcroip/glpi_plugin_openmedis/raw/master/pics/login_logo_glpi.png</logo>
    <description>
       <short>
          <fr><![CDATA[Gestion des équipement médicaux]]></fr>
@@ -14,10 +14,10 @@
          <en><![CDATA[This plugin allows you to create medical device assets]]></en>
       </long>
    </description>
-   <homepage>https://github.com/delcroip/glpi_open_medis</homepage>
-   <download>https://github.com/delcroip/glpi_open_medis/releases</download>
-   <issues>https://github.com/delcroip/glpi_open_medis/issues</issues>
-   <readme>https://github.com/delcroip/glpi_open_medis/raw/master/README.md</readme>
+   <homepage>https://github.com/delcroip/glpi_plugin_openmedis</homepage>
+   <download>https://github.com/delcroip/glpi_plugin_openmedis/releases</download>
+   <issues>https://github.com/delcroip/glpi_plugin_openmedis/issues</issues>
+   <readme>https://github.com/delcroip/glpi_plugin_openmedis/raw/master/README.md</readme>
    <authors>
      <author>Patrick Delcroix</author>
       <author>SwissTPH</author>
