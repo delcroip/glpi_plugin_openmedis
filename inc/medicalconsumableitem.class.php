@@ -42,7 +42,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    use Glpi\Features\DCBreadcrumb;
    // From CommonDBTM
-   static protected $forward_entity_to = ['MedicalConsumable', 'Infocom'];
+   static protected $forward_entity_to = ['PluginOpenmedisMedicalConsumable', 'Infocom'];
    public $dohistory                   = true;
    protected $usenotepad               = true;
 
