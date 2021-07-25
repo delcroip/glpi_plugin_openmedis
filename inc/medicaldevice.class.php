@@ -43,7 +43,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    // From CommonDBTM
    public $dohistory                   = true;
 
-   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem','Item_Devices'];
+   static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem'];
 
    static $rightname                   = 'plugin_openmedis';
    protected $usenotepad               = true;
