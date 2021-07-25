@@ -201,7 +201,7 @@ function plugin_openmedis_getAddSearchOptions($itemtype) {
  * @param string $itemtype
  * @return string
  */
-function plugin_flyvemdm_addDefaultSelect($itemtype) {
+function plugin_openmedis_addDefaultSelect($itemtype) {
    $selected = '';
 
    return $selected;
@@ -234,7 +234,7 @@ function plugin_openmedis_addLeftJoin($type, $ref_table, $new_table,
 
 
 // Hook done on purge item case
-function plugin_item_purge_openmedis($item) {
+function plugin_openmedis_item_purge($item) {
    $type = get_class($item);
    $temp = new   PluginOpenmedisItem_DeviceMedicalAccessory();
    $temp->deleteByCriteria(['itemtype' => $type."Model",
