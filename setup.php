@@ -98,6 +98,7 @@ function plugin_openmedis_registerClasses(){
 
          'state_types'           => true,
          'linkuser_types'        => true,  // enable device in Mydevice on ticket
+         'itemdevices_types' => true,  // enamble the component left menu
          'networkport_types' => true,
          'itemdevicepowersupply_types' => true,
          // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
