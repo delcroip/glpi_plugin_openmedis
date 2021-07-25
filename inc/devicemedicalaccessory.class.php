@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 
 class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
-   static protected $forward_entity_to = ['PluginOpenmedisItem_DevicesMedicalAccessory', 'Infocom'];
+   static protected $forward_entity_to = ['PluginOpenmedisItem_DeviceMedicalAccessory', 'Infocom'];
    static $rightname                   = 'plugin_openmedis_devicemedicalaccessory';
    static function getTypeName($nb = 0) {
       return _n('Medical Accessory', 'Medical accessories', $nb);
