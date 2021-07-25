@@ -29,7 +29,7 @@
  --------------------------------------------------------------------------
  */
 // Version of the plugin
-define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc4');
+define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc5');
 // Schema version of this version
 define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.3');
 // is or is not an official release of the plugin
