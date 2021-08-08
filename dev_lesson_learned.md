@@ -5,6 +5,26 @@ Glpi rely a lot on the database schema a naming, therefore tables or class name 
 Table should have this form: glpi_plugin_[pluginname (all lower and without _)]_[elementname (all lower)]
 The class should have this form Plugin[Pluginname(only first letter in CAP)][ElementName (singular form, start with CAP, may have CAP in it)]
 
+## Asset
+
+### Schema fields
+when creating an asset there is fields that must be created
+ticket_tco
+is_deleted
+name
+id
+...
+
+if you want to have devices per entity
+is_recursive
+entity_id
+
+
+### other schema
+
+<AssetClass>Type is a std class expected by some reports
+
+
 ## component
 
 add the "component/ itemDevice" types you want while registering the function 
