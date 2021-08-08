@@ -83,6 +83,11 @@ This module enable you to create and manage your Medical device
 
 https://app.lokalise.com/public/6803907760dcb8c3a08649.77618538/
 
+Once the po files are updated, on Linux system you can execute in the plugin repository
+```
+../../vendor/bin/robo compile_locales
+```
+
 
 
 ## development
