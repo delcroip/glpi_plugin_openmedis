@@ -44,7 +44,9 @@ define('PLUGIN_OPENMEDIS_ROOT', GLPI_ROOT . '/plugins/openmedis');
 
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
-
+   //AssetType is a default class
+   $CFG_GLPI['glpitablesitemtype']['PluginOpenmedisMedicalDeviceType'] = 'glpi_plugin_openmedis_medicaldevicecategories';
+   
   $plugin = new Plugin();   
   $CFG_GLPI['devices_in_menu'][]="pluginOpenmedisMedicalDevice"; 
      //$CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessory_Item';
@@ -109,8 +111,8 @@ function plugin_openmedis_registerClasses(){
    ]); 
 
    Plugin::registerClass('PluginOpenmedisMedicalDeviceModel', ['dictionnary_types' => true]);
-   Plugin::registerClass('PluginOpenmedisMedicalDeviceType', ['dictionnary_types' => true]);
-
+   Plugin::registerClass('PluginOpenmedisMedicalDeviceCategory', ['dictionnary_types' => true]);
+   class_alias('PluginOpenmedisMedicalDeviceCategory','PluginOpenmedisMedicalDeviceType');
 
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
