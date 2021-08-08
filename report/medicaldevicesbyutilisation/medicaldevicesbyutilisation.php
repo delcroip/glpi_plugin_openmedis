@@ -54,7 +54,7 @@ $fields = [
 
 $utilisation = new PluginReportsDropdownCriteria($report, 'utilization','glpi_plugin_openmedis_utilizations' , PluginOpenmedisUtilization::getTypeName());
 $utilisation->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`");
-if (class_exists('PluginReportsToggleCriteria')) { 
+if (class_exists('PluginOpenmedisToggleCriteria')) { 
      $report->startColumn();
      $report->endColumn();
      $report->startColumn();
@@ -62,21 +62,21 @@ if (class_exists('PluginReportsToggleCriteria')) {
 }
 $category = new PluginReportsDropdownCriteria($report, 'category', 'PluginOpenmedisMedicalDeviceCategory' , PluginOpenmedisMedicalDeviceCategory::getTypeName());
 $category->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_medicaldevicecategories_id`");
-if (class_exists('PluginReportsToggleCriteria')) {
-     $category_group = new PluginReportsToggleCriteria($report, 'category_group', 'Group categories');
+if (class_exists('PluginOpenmedisToggleCriteria')) {
+     $category_group = new PluginOpenmedisToggleCriteria($report, 'category_group', 'Group categories');
      $category_group->setSqlField("");
 }
 $statemd = new PluginReportsStatusCriteria($report, 'statemd', __('Status', 'reports'));
 $statemd->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`states_id`");
-if (class_exists('PluginReportsToggleCriteria')) {
-     $category_group = new PluginReportsToggleCriteria($report, 'statemd_group', 'Group states');
+if (class_exists('PluginOpenmedisToggleCriteria')) {
+     $category_group = new PluginOpenmedisToggleCriteria($report, 'statemd_group', 'Group states');
      $category_group->setSqlField("");
 }
 
 $location = new PluginReportsLocationCriteria($report, 'location', _n('Location', 'Locations', 2));
 $location->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`locations_id`");
-if (class_exists('PluginReportsToggleCriteria')) {
-     $category_group = new PluginReportsToggleCriteria($report, 'location_group', 'Group location');
+if (class_exists('PluginOpenmedisToggleCriteria')) {
+     $category_group = new PluginOpenmedisToggleCriteria($report, 'location_group', 'Group location');
      $category_group->setSqlField("");
 }
 

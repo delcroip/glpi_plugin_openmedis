@@ -38,7 +38,7 @@
 /**
  * Priority selection criteria
 **/
-class PluginReportsToggleCriteria extends PluginReportsAutoCriteria {
+class PluginOpenmedisToggleCriteria extends PluginReportsAutoCriteria {
 
 
    private $defaultValue;

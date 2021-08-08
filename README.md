@@ -58,7 +58,7 @@ This module enable you to create and manage your Medical device
 
 8. Start adding medical consomable type and consomables (if any)
 
-9. to use the custom report, the report module must be installed and access must be givent to the openMedis specific reports (group options available if the report module have the PluginReportsToggleCriteria class)
+9. to use the custom report, the report module must be installed and access must be givent to the openMedis specific reports (group options available if the report module have the PluginOpenmedisToggleCriteria class)
 
 ## Standard glpi information
 
