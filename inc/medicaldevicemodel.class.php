@@ -39,5 +39,8 @@ class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
    static function getTypeName($nb = 0) {
       return _n('Medical Device model', 'Medical Devices models', $nb);
    }
-
+   static function getIcon() {
+      return "fas fa-laptop-medical";
+   }
 }
+

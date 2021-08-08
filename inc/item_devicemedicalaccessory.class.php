@@ -72,5 +72,7 @@ class PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
 
    }*/
 
-   
+   static function getIcon() {
+      return "fas fa-screwdriver";
+   }
 }

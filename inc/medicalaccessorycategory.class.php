@@ -195,5 +195,7 @@ class PluginOpenmedisMedicalAccessoryCategory extends CommonTreeDropdown {
 
       return true;
    }
-
+   static function getIcon() {
+      return "fas fa-screwdriver";
+   }
 }

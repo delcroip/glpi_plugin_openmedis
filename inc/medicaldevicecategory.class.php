@@ -202,4 +202,8 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       $this->updates['name'] = $this->updates['code'].' - '.$this->updates['label'];
       parent::post_updateItem($history);
    }
+
+   static function getIcon() {
+      return "fas fa-laptop-medical";
+   }
 }
