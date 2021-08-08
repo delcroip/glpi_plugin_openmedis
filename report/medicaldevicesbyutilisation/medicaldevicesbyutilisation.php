@@ -46,46 +46,61 @@ $report = new PluginReportsAutoReport(__('medicaldevicesbyutilisation_report_tit
 //$software = new PluginReportsSoftwareCriteria($report, 'software', __('Applications', 'reports'));
 //$software->setSqlField("`glpi_softwares`.`id`");
 
+$fields = [
+     '`glpi_locations`.`name`' => 'location',  
+     '`glpi_plugin_openmedis_medicaldevicecategories`.`name`' => 'category', 
+     '`state_cpt`.`name`' => 'statemd'
+];
+
 $utilisation = new PluginReportsDropdownCriteria($report, 'utilization','glpi_plugin_openmedis_utilizations' , PluginOpenmedisUtilization::getTypeName());
 $utilisation->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`");
-
+if (class_exists('PluginReportsToggleCriteria')) { 
+     $report->startColumn();
+     $report->endColumn();
+     $report->startColumn();
+     $report->endColumn();
+}
 $category = new PluginReportsDropdownCriteria($report, 'category', 'PluginOpenmedisMedicalDeviceCategory' , PluginOpenmedisMedicalDeviceCategory::getTypeName());
 $category->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_medicaldevicecategories_id`");
-
-
+if (class_exists('PluginReportsToggleCriteria')) {
+     $category_group = new PluginReportsToggleCriteria($report, 'category_group', 'Group categories');
+     $category_group->setSqlField("");
+}
 $statemd = new PluginReportsStatusCriteria($report, 'statemd', __('Status', 'reports'));
 $statemd->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`states_id`");
+if (class_exists('PluginReportsToggleCriteria')) {
+     $category_group = new PluginReportsToggleCriteria($report, 'statemd_group', 'Group states');
+     $category_group->setSqlField("");
+}
 
 $location = new PluginReportsLocationCriteria($report, 'location', _n('Location', 'Locations', 2));
 $location->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`locations_id`");
-
+if (class_exists('PluginReportsToggleCriteria')) {
+     $category_group = new PluginReportsToggleCriteria($report, 'location_group', 'Group location');
+     $category_group->setSqlField("");
+}
 
 $report->displayCriteriasForm();
 
-// Form validate and only one software with license
+
 if ($report->criteriasValidated()) {
 
-   $report->setSubNameAuto();
+     $report->setSubNameAuto();
 
-   $report->setColumns([new PluginReportsColumnLink('util', PluginOpenmedisUtilization::getTypeName(1),
-                                   'Utilization', ['sorton' => 'util']),
-                         new PluginReportsColumnLink('cat', PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
-                                   'Category', ['sorton' => 'cat']),
-                         new PluginReportsColumnLink('locat', _n('Location', 'Locations', 1),
+     $report->setColumns([new PluginReportsColumnLink('utilization', PluginOpenmedisUtilization::getTypeName(1),
+                                   'Utilization', ['sorton' => 'utilization']),
+                         new PluginReportsColumnLink('category', PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
+                                   'Category', ['sorton' => 'category']),
+                         new PluginReportsColumnLink('location', _n('Location', 'Locations', 1),
                                    'Location', ['sorton' => 'glpi_locations.name']),
-                        new PluginReportsColumnLink('md', PluginOpenmedisMedicalDevice::getTypeName(1),
-                                   'Medical Device', ['sorton' => 'glpi_computers.name']),
+                        new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(1),1),
                         new PluginReportsColumn('statemd', _n('Status', 'Statuses', 1))]);
 
-   $query = "SELECT `glpi_plugin_openmedis_utilizations`.`name` AS util,
-                    `glpi_locations`.`id` AS locat,
-                    `glpi_plugin_openmedis_medicaldevices`.`name` AS md,
-                    `glpi_plugin_openmedis_medicaldevicecategories`.`name` AS cat,
-                    `state_cpt`.`name` AS statemd,
-                    `glpi_locations`.`name` as location
-
-             FROM `glpi_plugin_openmedis_medicaldevices`
-             INNER JOIN `glpi_plugin_openmedis_utilizations`
+     $query = "SELECT COUNT(`glpi_plugin_openmedis_medicaldevices`.`id`) AS md,
+          `glpi_plugin_openmedis_utilizations`.`name` AS utilization,".
+             selectUnfiltered($report, $fields).
+            " FROM `glpi_plugin_openmedis_medicaldevices`
+             LEFT JOIN `glpi_plugin_openmedis_utilizations`
                    ON (`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id` = `glpi_plugin_openmedis_utilizations`.`id`)
              LEFT JOIN `glpi_plugin_openmedis_medicaldevicecategories`
                   ON (`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_medicaldevicecategories_id` = `glpi_plugin_openmedis_medicaldevicecategories`.`id`)
@@ -94,11 +109,36 @@ if ($report->criteriasValidated()) {
              LEFT JOIN `glpi_states` state_cpt
                   ON (`state_cpt`.`id` = `glpi_plugin_openmedis_medicaldevices`.`states_id`) ".
              $dbu->getEntitiesRestrictRequest('WHERE', 'glpi_plugin_openmedis_medicaldevices') .
-             $report->addSqlCriteriasRestriction().
-             "ORDER BY util ASC, locat ASC";
+             $report->addSqlCriteriasRestriction();
+             groupUnfiltered($report, $fields);
 
-   $report->setSqlRequest($query);
-   $report->execute();
+     $report->setSqlRequest($query);
+     $report->execute();
 } else {
    Html::footer();
+}
+
+function groupUnfiltered($report, $fields) {
+     foreach ($fields as $field) {
+          if (isset($_POST[$field.'_group']) && $_POST[$field.'_group'] == 'on'){
+               $report->setGroupBy($field);
+          }
+     }
+}
+/** Function that fetch the details only if no specific value selected FIXME ad checkbog "group" next to critertias
+ * 
+ */
+
+function selectUnfiltered($report, $fields) {
+     $sql = '';
+     foreach ($fields as $key =>  $field) {
+          if (isset($_POST[$field.'_group']) && $_POST[$field.'_group'] == 'on'){
+               if($sql != '')$sql .= ',';
+               $sql .= "'' AS ".$field;              
+          }else {
+               if($sql != '')$sql .= ',';
+               $sql .= $key.' AS '.$field;
+          }
+     }
+     return $sql;
 }
