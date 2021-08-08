@@ -95,7 +95,7 @@ function plugin_openmedis_registerClasses(){
          'infocom_types'        => true, // suplier, vbuy date ...
          'ticket_types'         => true, // enable to link to ticket (device> ... )
          'contract_types'       => true, // enable^to link contract
-
+         'report_types'          => true,
          'state_types'           => true,
          'linkuser_types'        => true,  // enable device in Mydevice on ticket
          'itemdevices_types' => true,  // enamble the component left menu
@@ -120,7 +120,8 @@ function plugin_openmedis_registerClasses(){
          'addtabon' => 'Profile',
    ]); 
    Plugin::registerClass('PluginOpenmedisMedicalConsumable',[
-      "infocom_types" => true]);
+      "infocom_types" => true,
+      "consumables_types" => true,]);
 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel'); 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem', [
