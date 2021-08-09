@@ -38,7 +38,7 @@ class PluginOpenmedisMedicalConsumableItemType extends CommonDropdown {
 
    static $rightname  = 'plugin_openmedis_medicalconsumabletype';
    static function getTypeName($nb = 0) {
-      return _n('Medical consumable type', 'Medical consumable types', $nb);
+      return _n('Medical consumable type', 'Medical consumable types', $nb, 'openmedis');
    }
 
 }

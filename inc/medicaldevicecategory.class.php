@@ -44,7 +44,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb);
+      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb, 'openmedis');
    }
 
 
@@ -60,7 +60,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       'list'      => true],
       
             ['name'      => 'plugin_openmedis_medicaldevicecategories_id',
-                         'label'     => __('Parent'),
+                         'label'     => __('Parent', 'openmedis'),
                          'type'      => 'dropdownValue',
                          'permit_select_parent' => true,
                          'displaywith' => ['code','label']],
@@ -151,7 +151,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
       echo "</tr>\n";
       echo "<tr>\n";
-      echo "<td>".__('Parent')."</td>\n";
+      echo "<td>".__('Parent', 'openmedis')."</td>\n";
       echo "<td>";
 
       PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"],

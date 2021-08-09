@@ -58,7 +58,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
     * @param $nb : number of item in the type
    **/
    static function getTypeName($nb = 0) {
-      return _n('Medical Device', 'Medical Devices', $nb);
+      return _n('Medical Device', 'Medical Devices', $nb, 'openmedis');
    }
 
    static function getFormURL($full = true) {
@@ -257,7 +257,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alternate user contact number')."</td>\n";
+      echo "<td>".__('Alternate user contact number', 'openmedis')."</td>\n";
       echo "<td>";
       Html::autocompletionTextField($this, "contact_num");
       echo "</td>";
@@ -267,7 +267,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alternate user name')."</td>\n";
+      echo "<td>".__('Alternate user name', 'openmedis')."</td>\n";
       echo "<td>";
       Html::autocompletionTextField($this, "contact");
       echo "</td>\n";
@@ -289,7 +289,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
                            'entity' => $this->fields["entities_id"],
                            'right'  => 'all']);
       echo "</td>\n";
-      echo "<td>".__('Utilization')."</td>\n";
+      echo "<td>".__('Utilization', 'openmedis')."</td>\n";
       echo "<td>";
 
       PluginOpenmedisUtilization::dropdown(['value' => $this->fields["plugin_openmedis_utilizations_id"]]);
@@ -455,7 +455,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'id'                 => '7',
          'table'              => $this->getTable(),
          'field'              => 'contact',
-         'name'               => __('Alternate user name'),
+         'name'               => __('Alternate user name', 'openmedis'),
          'datatype'           => 'string',
          'autocomplete'       => true,
       ];
@@ -464,7 +464,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'id'                 => '8',
          'table'              => $this->getTable(),
          'field'              => 'contact_num',
-         'name'               => __('Alternate user contact number'),
+         'name'               => __('Alternate user contact number', 'openmedis'),
          'datatype'           => 'string',
          'autocomplete'       => true,
       ];

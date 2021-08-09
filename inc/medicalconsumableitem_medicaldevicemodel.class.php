@@ -116,7 +116,7 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
 
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
-         echo "<th colspan='6'>".__('Add a compatible medical device model')."</th></tr>";
+         echo "<th colspan='6'>".__('Add a compatible medical device model', 'openmedis')."</th></tr>";
 
          echo "<tr><td class='tab_bg_2 center'>";
          echo "<input type='hidden' name='plugin_openmedis_medicalconsumableitems_id' value='$instID'>";

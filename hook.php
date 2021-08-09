@@ -185,9 +185,7 @@ function plugin_openmedis_getAddSearchOptions($itemtype) {
       if (PluginOpenmedisMedicalDevice::canView()) {
          $sopt[8610]['table']         = 'glpi_plugin_openmedis_medicaldevices';
          $sopt[8610]['field']         = 'name';
-         $sopt[8610]['name']          = _n('Medical Device',
-                                           'Medical Devices', 2, 'openmedis')
-                                        . " - ". __('Name');
+         $sopt[8610]['name']          = PluginOpenmedisMedicalDevice::getTypeName(2). " - ". __('Name');
          $sopt[8610]['forcegroupby']  = '1';
          $sopt[8610]['datatype']      = 'itemlink';
          $sopt[8610]['itemlink_type'] = 'MedicalDevice';

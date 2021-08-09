@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
    static $rightname  = 'plugin_openmedis_medicaldevicemodel';
    static function getTypeName($nb = 0) {
-      return _n('Medical Device model', 'Medical Devices models', $nb);
+      return _n('Medical Device model', 'Medical Devices models', $nb, 'openmedis');
    }
    static function getIcon() {
       return "fas fa-laptop-medical";

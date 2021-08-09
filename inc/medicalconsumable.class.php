@@ -87,7 +87,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical consumable', 'Medical consumables', $nb);
+      return _n('Medical consumable', 'Medical consumables', $nb, 'openmedis');
    }
 
 
@@ -262,14 +262,14 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             $changes = [
                '0',
                '',
-               __('Installing a medical consumable'),
+               __('Installing a medical consumable', 'openmedis'),
             ];
             Log::history($pID, 'PluginOpenmedisMedicalDevice', $changes, 0, Log::HISTORY_LOG_SIMPLE_MESSAGE);
             return true;
          }
 
       } else {
-         Session::addMessageAfterRedirect(__('No free medical consumable'), false, ERROR);
+         Session::addMessageAfterRedirect(__('No free medical consumable', 'openmedis'), false, ERROR);
       }
       return false;
    }
@@ -305,7 +305,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             $changes = [
                '0',
                '',
-               __('Uninstalling a medical consumable'),
+               __('Uninstalling a medical consumable', 'openmedis'),
             ];
             Log::history($this->getField("plugin_openmedis_medicaldevices_id"), 'PluginOpenmedisMedicalDevice', $changes,
                          0, Log::HISTORY_LOG_SIMPLE_MESSAGE);
@@ -355,15 +355,15 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          } else {
             //TRANS : for display medicalconsumables count : %1$d is the total number,
             //        %2$d the new one, %3$d the used one, %4$d worn one
-            $out .= sprintf(__('Total: %1$d (%2$d new, %3$d used, %4$d worn)'),
+            $out .= sprintf(__('Total: %1$d (%2$d new, %3$d used, %4$d worn)', 'openmedis'),
                             $total, $unused, $used, $old);
          }
 
       } else {
          if (!$nohtml) {
-            $out .= "<div class='tab_bg_1_2'><i>".__('No medical consumable')."</i></div>";
+            $out .= "<div class='tab_bg_1_2'><i>".__('No medical consumable', 'openmedis')."</i></div>";
          } else {
-            $out .= __('No medical consumable');
+            $out .= __('No medical consumable', 'openmedis');
          }
       }
       return $out;
@@ -406,14 +406,14 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          } else {
             //TRANS : for display medicalconsumables count : %1$d is the total number,
             //        %2$d the used one, %3$d the worn one
-            $out .= sprintf(__('Total: %1$d (%2$d used, %3$d worn)'), $total, $used, $old);
+            $out .= sprintf(__('Total: %1$d (%2$d used, %3$d worn)', 'openmedis'), $total, $used, $old);
          }
 
       } else {
          if (!$nohtml) {
-            $out .= "<div class='tab_bg_1_2'><i>".__('No medical consumable')."</i></div>";
+            $out .= "<div class='tab_bg_1_2'><i>".__('No medical consumable', 'openmedis')."</i></div>";
          } else {
-            $out .= __('No medical consumable');
+            $out .= __('No medical consumable', 'openmedis');
          }
       }
       return $out;
@@ -685,7 +685,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                self::getCount($tID, -1)."</th>";
          echo "</tr>";
       } else { // Old
-         echo "<tr class='noHover'><th colspan='".($canedit?'9':'8')."'>".__('Worn medical consumables');
+         echo "<tr class='noHover'><th colspan='".($canedit?'9':'8')."'>".__('Worn medical consumables', 'openmedis');
          echo "</th></tr>";
       }
 
@@ -707,7 +707,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
       if ($show_old) {
          $header_end .= "<th>".__('End date')."</th>";
-         $header_end .= "<th>".__('Medical device counter')."</th>";
+         $header_end .= "<th>".__('Medical device counter', 'openmedis')."</th>";
       }
 
       $header_end .= "<th width='18%'>".__('Financial and administrative information')."</th>";
@@ -738,7 +738,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                if ($data["printID"] > 0) {
                   $printname = $data["printname"];
                   if ($_SESSION['glpiis_ids_visible'] || empty($printname)) {
-                     $printname = sprintf(__('%1$s (%2$s)'), $printname, $data["printID"]);
+                     $printname = sprintf(__('%1$s (%2$s)', 'openmedis'), $printname, $data["printID"]);
                   }
                   echo "<a href='".PluginOpenmedisMedicalDevice::getFormURLWithID($data["printID"])."'><span class='b'>".$printname."</span></a>";
                } else {
@@ -771,10 +771,10 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                   $use_done   += $data['usages']-$usages[$medicaldevice];
                   $nb_use_done++;
                   $pp               = $data['usages']-$usages[$medicaldevice];
-                  printf(_n('%d usage', '%d  usages', $pp), $pp);
+                  printf(_n('%d usage', '%d  usages', $pp, 'openmedis'), $pp);
                   $usages[$medicaldevice]  = $data['usages'];
                } else if ($data['usages'] != 0) {
-                  echo "<span class='tab_bg_1_2'>".__('Counter error')."</span>";
+                  echo "<span class='tab_bg_1_2'>".__('Counter error', 'openmedis')."</span>";
                }
                echo "</td>";
             }
@@ -794,7 +794,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             echo "<td>&nbsp;</td>";
             echo "<td class='center b'>".__('Average time in use')."<br>";
             echo round($use_time/$number/60/60/24/30.5, 1)." "._n('month', 'months', 1)."</td>";
-            echo "<td class='center b'>".__('Average number of printed usages')."<br>";
+            echo "<td class='center b'>".__('Average number of usages', 'openmedis')."<br>";
             echo round($use_done/$nb_use_done)."</td>";
             echo "<td colspan='".($canedit?'3':'1')."'>&nbsp;</td></tr>";
          } else {
@@ -835,7 +835,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                                               'min'   => 1,
                                               'max'   => 100]);
          echo "</td><td>";
-         echo " <input type='submit' name='add' value=\"".__s('Add medical consumables')."\"
+         echo " <input type='submit' name='add' value=\"".__('Add medical consumables', 'openmedis')."\"
                 class='submit'>";
          echo "</td></tr>";
          echo "</table>";
@@ -917,7 +917,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          echo "<input type='hidden' name='plugin_openmedis_medicaldevices_id' value='$instID'>\n";
          if (PluginOpenmedisMedicalConsumableItem::dropdownForMedicalDevice($medicaldevice)) {
             //TRANS : multiplier
-            echo "</td><td>".__('x')."&nbsp;";
+            echo "</td><td>".__('x', 'openmedis')."&nbsp;";
             Dropdown::showNumber("nbcart", ['value' => 1,
                                                  'min'   => 1,
                                                  'max'   => 5]);
@@ -925,7 +925,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                                   class='submit'>";
 
          } else {
-            echo __('No medical consumable available');
+            echo __('No medical consumable available', 'openmedis');
          }
 
          echo "</td></tr>";
@@ -948,7 +948,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                             ];
          } else {
             $actions = [__CLASS__.MassiveAction::CLASS_ACTION_SEPARATOR.'updateusages'
-                                      => __('Update medical device counter'),
+                                      => __('Update medical device counter', 'openmedis'),
                              'purge' => _x('button', 'Delete permanently')];
          }
          $massiveactionparams = ['num_displayed'    => min($_SESSION['glpilist_limit'], $number),
@@ -962,9 +962,9 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       echo "<table class='tab_cadre_fixehov'>";
       echo "<tr class='noHover'>";
       if ($old == 0) {
-         echo "<th colspan='".($canedit?'6':'5')."'>".__('Used medcial consumable')."</th>";
+         echo "<th colspan='".($canedit?'6':'5')."'>".__('Used medical consumable', 'openmedis')."</th>";
       } else {
-         echo "<th colspan='".($canedit?'9':'8')."'>".__('Worn medcial consumable')."</th>";
+         echo "<th colspan='".($canedit?'9':'8')."'>".__('Worn medical consumable', 'openmedis')."</th>";
       }
       echo "</tr>";
 
@@ -977,14 +977,14 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          $header_top    .= Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand);
          $header_end    .= "</th>";
       }
-      $header_end .= "<th>".__('ID')."</th><th>"._n('Medical consumable model', 'Medical consumables models', 1)."</th>";
-      $header_end .= "<th>"._n('Medical consumable type', 'Medical consumable types', 1)."</th>";
+      $header_end .= "<th>".__('ID')."</th><th>"._n('Medical consumable model', 'Medical consumables models', 1, 'openmedis')."</th>";
+      $header_end .= "<th>"._n('Medical consumable type', 'Medical consumable types', 1, 'openmedis')."</th>";
       $header_end .= "<th>".__('Add date')."</th>";
       $header_end .= "<th>".__('Use date')."</th>";
       if ($old != 0) {
          $header_end .= "<th>".__('End date')."</th>";
-         $header_end .= "<th>".__('Medical device counter')."</th>";
-         $header_end .= "<th>".__('Medical consumable usages')."</th>";
+         $header_end .= "<th>".__('Medical device counter', 'openmedis')."</th>";
+         $header_end .= "<th>".__('Medical consumable usages', 'openmedis')."</th>";
       }
       $header_end .= "</tr>";
       echo $header_begin.$header_top.$header_end;
@@ -1071,10 +1071,10 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             echo "<tr class='tab_bg_2'><td colspan='".($canedit?"4":'3')."'>&nbsp;</td>";
             echo "<td class='center b'>".__('Average time in stock')."<br>";
             $time_stock = round($stock_time/$number/60/60/24/30.5, 1);
-            echo sprintf(_n('%d month', '%d months', $time_stock), $time_stock)."</td>";
+            echo sprintf(_n('%d month', '%d months', $time_stock, 'openmedis'), $time_stock)."</td>";
             echo "<td class='center b'>".__('Average time in use')."<br>";
             $time_use = round($use_time/$number/60/60/24/30.5, 1);
-            echo sprintf(_n('%d month', '%d months', $time_use), $time_use)."</td>";
+            echo sprintf(_n('%d month', '%d months', $time_use, 'openmedis'), $time_use)."</td>";
             echo "<td class='center b' colspan='2'>".__('Average number of  usages')."<br>";
             echo round($use_done/$nb_use_done)."</td>";
             echo "</tr>";
@@ -1124,13 +1124,13 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._n('Medical device', 'Medical devices', 1)."</td><td>";
+      echo "<td>"._n('Medical device', 'Medical devices', 1, 'openmedis')."</td><td>";
       echo $medicaldevice->getLink();
       echo "<input type='hidden' name='plugin_openmedis_medicaldevices_id' value='".$this->getField('plugin_openmedis_medicaldevices_id')."'>\n";
       echo "<input type='hidden' name='plugin_openmedis_medicalconsumableitems_id' value='".
              $this->getField('plugin_openmedis_medicalconsumableitems_id')."'>\n";
       echo "</td>\n";
-      echo "<td>"._n('Medical consumable model', 'Medical consumable models', 1)."</td>";
+      echo "<td>"._n('Medical consumable model', 'Medical consumable models', 1, 'openmedis')."</td>";
       echo "<td>".$cartitem->getLink()."</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -1156,7 +1156,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                                                'canedit'    => true,
                                                'min'        => $this->fields["date_use"]]);
          echo "</td>";
-         echo "<td>".__('Medical device counter')."</td><td>";
+         echo "<td>".__('Medical device counter', 'openmedis')."</td><td>";
          echo "<input type='text' name='usages' value=\"".$this->fields['usages']."\">";
          echo "</td></tr>\n";
       }

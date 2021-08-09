@@ -55,7 +55,7 @@ if (isset($_POST["add"])) {
 
    if ($newID = $medicaldevice->add($_POST)) {
       Event::log($newID, "PluginOpenMedisMedicalDevice", 4, "inventory",
-                 sprintf(__('%1$s adds the item %2$s'), $_SESSION["glpiname"], $_POST["name"]));
+                 sprintf(__('%1$s adds the item %2$s', 'openmedis'), $_SESSION["glpiname"], $_POST["name"]));
       if ($_SESSION['glpibackcreated']) {
          Html::redirect($medicaldevice->getLinkURL());
       }
@@ -68,7 +68,7 @@ if (isset($_POST["add"])) {
 
    Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
-              sprintf(__('%s deletes an item'), $_SESSION["glpiname"]));
+              sprintf(__('%s deletes an item', 'openmedis'), $_SESSION["glpiname"]));
    $medicaldevice->redirectToList();
 
 } else if (isset($_POST["restore"])) {
@@ -77,7 +77,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->restore($_POST);
    Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
-              sprintf(__('%s restores an item'), $_SESSION["glpiname"]));
+              sprintf(__('%s restores an item', 'openmedis'), $_SESSION["glpiname"]));
    $medicaldevice->redirectToList();
 
 } else if (isset($_POST["purge"])) {
@@ -86,7 +86,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->delete($_POST, 1);
    Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
-              sprintf(__('%s purges an item'), $_SESSION["glpiname"]));
+              sprintf(__('%s purges an item', 'openmedis'), $_SESSION["glpiname"]));
    $medicaldevice->redirectToList();
 
 } else if (isset($_POST["update"])) {
@@ -95,7 +95,7 @@ if (isset($_POST["add"])) {
    $medicaldevice->update($_POST);
    Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
               //TRANS: %s is the user login
-              sprintf(__('%s updates an item'), $_SESSION["glpiname"]));
+              sprintf(__('%s updates an item', 'openmedis'), $_SESSION["glpiname"]));
    Html::back();
 
 } else if (isset($_POST["unglobalize"])) {
@@ -104,7 +104,7 @@ if (isset($_POST["add"])) {
    Computer_Item::unglobalizeItem($medicaldevice);
    Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
                //TRANS: %s is the user login
-               sprintf(__('%s sets unitary management'), $_SESSION["glpiname"]));
+               sprintf(__('%s sets unitary management', 'openmedis'), $_SESSION["glpiname"]));
 
    Html::redirect($medicaldevice->getFormURLWithID($_POST["id"]));
 

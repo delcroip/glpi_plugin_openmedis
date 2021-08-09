@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginOpenmedisUtilization extends CommonDropdown {
    static $rightname  = 'plugin_openmedis_medicaldeviceutilisation';
    static function getTypeName($nb = 0) {
-      return _n('Medical Device Utilisation', 'Medical Devices Utilisations', $nb);
+      return _n('Medical Device Utilisation', 'Medical Devices Utilisations', $nb, 'openmedis');
    }
 
 }

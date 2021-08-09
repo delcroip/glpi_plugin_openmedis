@@ -376,7 +376,7 @@ class PluginOpenmedisInstall {
    }
 
    protected function createJobs() {
-      CronTask::Register(PluginOpenmedisMedicalConsumableItem::class, 'cronMedicalConsumable', MINUTE_TIMESTAMP,
+      CronTask::Register(PluginOpenmedisMedicalConsumableItem::class, 'MedicalConsumable', MINUTE_TIMESTAMP,
          [
             'comment' => PluginOpenmedisMedicalConsumableItem::cronInfo()['description'],
             'mode'    => CronTask::MODE_EXTERNAL,
