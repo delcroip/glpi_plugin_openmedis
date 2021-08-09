@@ -476,6 +476,7 @@ class PluginOpenmedisInstall {
         foreach ($tables_glpi as $table_glpi) {
         //fixme to be checked
         $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE '%luginOpenmedis%';");
+        $DB->query("ALTER TABLE glpi_states DROP COLUMN is_visible_pluginopenmedismedicaldevice;");
         }
       }
 

@@ -265,3 +265,5 @@ CREATE TABLE `glpi_plugin_openmedis_medicalconsumableitems` (
   KEY `date_mod` (`date_mod`),
   KEY `date_creation` (`date_creation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `glpi_states` ADD COLUMN `is_visible_pluginopenmedismedicaldevice` tinyint(1) NOT NULL DEFAULT '1';
