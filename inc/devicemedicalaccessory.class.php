@@ -48,17 +48,17 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          [
             [
                'name'  => 'plugin_openmedis_medicalaccessorytypes_id',
-               'label' => _n('Type','Types',1),
+               'label' => __('Type'),
                'type'  => 'dropdownValue'
             ],
             [
                'name'  => 'plugin_openmedis_medicalaccessorycategories_id',
-               'label' => _n('Category', 'Categories', 1, 'openmedis'),
+               'label' => $this>getTypeName(1),
                'type'  => 'dropdownValue'
             ],
             [
                'name'   => 'part_number',
-               'label'  => _n('Part Number','part_numbers',1),
+               'label'  => __('Part Number'),
                'type'   => 'text'
             ],
             [

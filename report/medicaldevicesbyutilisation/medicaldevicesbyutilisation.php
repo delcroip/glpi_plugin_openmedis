@@ -91,10 +91,10 @@ if ($report->criteriasValidated()) {
                                    'Utilization', ['sorton' => 'utilization']),
                          new PluginReportsColumnLink('category', PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
                                    'Category', ['sorton' => 'category']),
-                         new PluginReportsColumnLink('location', _n('Location', 'Locations', 1),
+                         new PluginReportsColumnLink('location', __('Location'),
                                    'Location', ['sorton' => 'glpi_locations.name']),
                         new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(1),1),
-                        new PluginReportsColumn('statemd', _n('Status', 'Statuses', 1))]);
+                        new PluginReportsColumn('statemd', __('Status'))]);
 
      $query = "SELECT COUNT(`glpi_plugin_openmedis_medicaldevices`.`id`) AS md,
           `glpi_plugin_openmedis_utilizations`.`name` AS utilization,".

@@ -64,6 +64,9 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       return $forbidden;
    }
 
+   static function getTypeName($n = 0) {
+      return _n('Medical consumable model', 'Medical consumables models', 1, 'openmedis')
+   }
 
    static function showMassiveActionsSubForm(MassiveAction $ma) {
 
@@ -83,11 +86,6 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
    static function getNameField() {
       return 'id';
-   }
-
-
-   static function getTypeName($nb = 0) {
-      return _n('Medical consumable', 'Medical consumables', $nb, 'openmedis');
    }
 
 
@@ -790,10 +788,12 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             }
             echo "<tr class='tab_bg_2'><td colspan='".($canedit?'4':'3')."'>&nbsp;</td>";
             echo "<td class='center b'>".__('Average time in stock')."<br>";
-            echo round($stock_time/$number/60/60/24/30.5, 1)." "._n('month', 'months', 1)."</td>";
+            $rounded_stock_time = round($stock_time/$number/60/60/24/30.5, 1);
+            echo $rounded_stock_time." "._n('month', 'months', $rounded_stock_time)."</td>";
             echo "<td>&nbsp;</td>";
             echo "<td class='center b'>".__('Average time in use')."<br>";
-            echo round($use_time/$number/60/60/24/30.5, 1)." "._n('month', 'months', 1)."</td>";
+            $rounded_use_time = round($use_time/$number/60/60/24/30.5, 1);
+            echo $rounded_use_time." "._n('month', 'months', $rounded_use_time)."</td>";
             echo "<td class='center b'>".__('Average number of usages', 'openmedis')."<br>";
             echo round($use_done/$nb_use_done)."</td>";
             echo "<td colspan='".($canedit?'3':'1')."'>&nbsp;</td></tr>";
@@ -977,8 +977,8 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          $header_top    .= Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand);
          $header_end    .= "</th>";
       }
-      $header_end .= "<th>".__('ID')."</th><th>"._n('Medical consumable model', 'Medical consumables models', 1, 'openmedis')."</th>";
-      $header_end .= "<th>"._n('Medical consumable type', 'Medical consumable types', 1, 'openmedis')."</th>";
+      $header_end .= "<th>".__('ID')."</th><th>".$this->getTypeName(1)."</th>";
+      $header_end .= "<th>".PluginOpenmedisMedicalConsumableItemType::getTypeName(1)."</th>";
       $header_end .= "<th>".__('Add date')."</th>";
       $header_end .= "<th>".__('Use date')."</th>";
       if ($old != 0) {
@@ -1124,13 +1124,13 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._n('Medical device', 'Medical devices', 1, 'openmedis')."</td><td>";
+      echo "<td>".PluginOpenmedisMedicalDevice::getTypeName(1)."</td><td>";
       echo $medicaldevice->getLink();
       echo "<input type='hidden' name='plugin_openmedis_medicaldevices_id' value='".$this->getField('plugin_openmedis_medicaldevices_id')."'>\n";
       echo "<input type='hidden' name='plugin_openmedis_medicalconsumableitems_id' value='".
              $this->getField('plugin_openmedis_medicalconsumableitems_id')."'>\n";
       echo "</td>\n";
-      echo "<td>"._n('Medical consumable model', 'Medical consumable models', 1, 'openmedis')."</td>";
+      echo "<td>".__('Medical consumable model',  'openmedis')."</td>";
       echo "<td>".$cartitem->getLink()."</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";

@@ -49,7 +49,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    static $rightname                   = 'plugin_openmedis_medicalconsumableitem';
 
    static function getTypeName($nb = 0) {
-      return _n('Medical consumable model', 'Medical consumable models', $nb, 'openmedis');
+      return _n('Medical consumable', 'Medical consumables', $nb, 'openmedis');
    }
 
 
@@ -275,7 +275,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'id'                 => '4',
          'table'              => 'glpi_plugin_openmedis_medicalconsumableitemtypes',
          'field'              => 'name',
-         'name'               => _n('Type', 'Types', 1),
+         'name'               => __('Type'),
          'datatype'           => 'dropdown'
       ];
 
@@ -291,7 +291,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'id'                 => '9',
          'table'              => $this->getTable(),
          'field'              => '_virtual',
-         'name'               => _n('Medical consumable', 'Medical consumables', Session::getPluralNumber(), 'openmedis'),
+         'name'               => $this->getTypeName(Session::getPluralNumber()),
          'datatype'           => 'specific',
          'massiveaction'      => false,
          'nosearch'           => true,
@@ -401,7 +401,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'table'              => 'glpi_plugin_openmedis_medicaldevicemodels',
          'field'              => 'name',
          'datatype'           => 'dropdown',
-         'name'               => _n('Medical Device model', 'Medical Device models', Session::getPluralNumber(), 'openmedis'),
+         'name'               => _PluginOpenmedisMedicalDeviceModel::getTypeName(Session::getPluralNumber()),
          'forcegroupby'       => true,
          'massiveaction'      => false,
          'joinparams'         => [

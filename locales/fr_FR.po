@@ -5,19 +5,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: openmedis\n"
-"PO-Revision-Date: 2021-08-09 19:15\n"
+"PO-Revision-Date: 2021-08-10 17:42\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: fr_FR\n"
 
-msgid "Medical Device"
-msgstr "Dispositif médical"
-
 msgid "Name"
 msgstr "Nom"
 
+#, fuzzy
 msgid "Health technologies management"
-msgstr "Gestion des technologies de la santé"
+msgid_plural "Health technologies management"
+msgstr[0] "Gestion de technologie de santé"
+msgstr[1] "Gestion des technologies de la santé"
 
 msgid "%s adds medical consumables"
 msgstr "%s ajoute des consommables médicaux"
@@ -53,7 +53,9 @@ msgid "%s sets unitary management"
 msgstr "%s fixe la gestion unitaire"
 
 msgid "Medical Accessory"
-msgstr "Accessoire médical"
+msgid_plural "Medical Accessory"
+msgstr[0] ""
+msgstr[1] "Accessoire médical"
 
 msgid "Type"
 msgstr "Type"
@@ -73,9 +75,6 @@ msgstr "Date de fabrication"
 msgid "Date"
 msgstr "Date"
 
-msgid "Medical accessory category (e.g. UMDS,GMDN)"
-msgstr "Catégorie d'accessoire médical (par exemple UMDS, GMDN)"
-
 msgid "Code"
 msgstr "Code"
 
@@ -85,11 +84,10 @@ msgstr "Parent"
 msgid "Comment"
 msgstr "Commentaire"
 
-msgid "Medical Accessories type"
-msgstr "Type d'accessoires médicaux"
-
 msgid "Medical consumable"
-msgstr "Consommable médical"
+msgid_plural "Medical consumable"
+msgstr[0] "Consommable médical"
+msgstr[1] "Consommables médicaux"
 
 msgid "Installing a medicalconsumable"
 msgstr "Installation d'un consommable médical"
@@ -185,10 +183,9 @@ msgid "Worn medcial consumable"
 msgstr "Consommable médical usé"
 
 msgid "Medical consumable model"
-msgstr "Modèle de consommable médical"
-
-msgid "Medical consumable type"
-msgstr "Type de consommable médical"
+msgid_plural "Medical consumable model"
+msgstr[0] "Modèle de consommable médical"
+msgstr[1] "Modèles de consommable médical"
 
 msgid "Medical consumable usages"
 msgstr "Utilisations de consommables médicaux"
@@ -202,8 +199,10 @@ msgstr "%d mois"
 msgid "Average number of  usages"
 msgstr "Nombre moyen d'utilisations"
 
-msgid "Medical device"
-msgstr "Dispositif médical"
+msgid "Medical Device"
+msgid_plural "Medical Device"
+msgstr[0] "Dispositif médical"
+msgstr[1] "Dispositif médicaux"
 
 msgid "Reference"
 msgstr "Référence"
@@ -235,8 +234,11 @@ msgstr "Nombre de consommables médicaux usagés"
 msgid "Number of new medical consumables"
 msgstr "Nombre de nouveaux consommables médicaux"
 
+#, fuzzy
 msgid "Medical Device model"
-msgstr "Modèle de dispositif médical"
+msgid_plural "Medical Device model"
+msgstr[0] "Modèle de dispositif médical"
+msgstr[1] "Modèles de dispositif médical"
 
 msgid "Send alarms on medical consumables"
 msgstr "Envoyer des alarmes sur les consommables médicaux"
@@ -316,8 +318,10 @@ msgstr "Entité"
 msgid "Global management"
 msgstr "Gestion globale"
 
-msgid "Medical device category (e.g. UMDS,GMDN)"
-msgstr "Catégorie de dispositif médical (par ex. UMDS, GMDN)"
+msgid "Medical device category"
+msgid_plural "Medical device category"
+msgstr[0] "Catégorie de dispositif médical (CND)"
+msgstr[1] "Catégories de dispositif médical (CND)"
 
 msgid "Health technology"
 msgstr "Technologie de la santé"
@@ -325,17 +329,20 @@ msgstr "Technologie de la santé"
 msgid "Medical Device asset"
 msgstr "Actif dans le domaine des dispositifs médicaux"
 
-msgid "Medical Device Models"
-msgstr "Modèles de dispositifs médicaux"
-
 msgid "Medical Device Category"
-msgstr "Catégorie de dispositif médical"
+msgid_plural "Medical Device Category"
+msgstr[0] "Catégorie de dispositif médical"
+msgstr[1] "Catégories de dispositif médical"
 
 msgid "Medical Accessory Type"
-msgstr "Type d'accessoire médical"
+msgid_plural "Medical Accessory Type"
+msgstr[0] "Type d'accessoire médical"
+msgstr[1] "Types d'accessoire médical"
 
 msgid "Medical Accessory Model"
-msgstr "Modèle d'accessoire médical"
+msgid_plural "Medical Accessory Model"
+msgstr[0] "Modèle d'accessoire médical"
+msgstr[1] "Modèles d'accessoire médical"
 
 msgid "OpenTicket for Medical Device"
 msgstr "OpenTicket pour les dispositifs médicaux"
@@ -355,29 +362,19 @@ msgstr "Général"
 msgid "Medical Device Categories "
 msgstr "Catégories de dispositifs médicaux "
 
-msgid "Medical Device Model"
-msgstr "Modèle de dispositif médical"
-
-msgid "Medical Accessory "
-msgstr "Accessoire médical "
-
-msgid "Medical Accessory Category"
-msgstr "Catégorie des accessoires médicaux"
-
-msgid "Medical Accessory Type "
-msgstr "Type d'accessoire médical "
-
-msgid "Medical consumable Type"
-msgstr "Consommable médical Type"
-
-msgid "Medical consumable item"
-msgstr "Article médical consommable"
+msgid "Medical consumable type"
+msgid_plural "Medical consumable type"
+msgstr[0] "Type de consommable médical"
+msgstr[1] "Types de consommable médical"
 
 msgid "Associable items to a ticket"
 msgstr "Éléments associables à un ticket"
 
+#, fuzzy
 msgid "Medical Device Utilisation"
-msgstr "Utilisation des dispositifs médicaux"
+msgid_plural "Medical Device Utilisation"
+msgstr[0] "Utilisation des dispositifs médicaux"
+msgstr[1] "Utilisations des dispositifs médicaux"
 
 msgid "openMedis guest users"
 msgstr "Utilisateurs invités d'openMedis"
@@ -391,5 +388,6 @@ msgstr "Utilisateurs du technicien openMedis"
 msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
 msgstr " Utilisateurs techniques d'openMedis. Créé par openMedis - ne pas modifier ce commentaire."
 
+#, fuzzy
 msgid "medicaldevicesbyutilisation_report_title"
 msgstr "Dispositifs médicaux par utilisation"

@@ -42,5 +42,6 @@ class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
    static function getIcon() {
       return "fas fa-laptop-medical";
    }
+
 }
 

@@ -44,7 +44,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb, 'openmedis');
+      return _n('Medical device category', 'Medical device categories', $nb, 'openmedis');
    }
 
 
