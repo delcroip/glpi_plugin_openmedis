@@ -301,7 +301,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '17',
-         'table'              => 'glpi_plugin_openmedis_medicalconsumable',
+         'table'              => 'glpi_plugin_openmedis_medicalconsumables',
          'field'              => 'id',
          'name'               => __('Number of used medical consumables', 'openmedis'),
          'datatype'           => 'count',
@@ -317,7 +317,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '18',
-         'table'              => 'glpi_plugin_openmedis_medicalconsumable',
+         'table'              => 'glpi_plugin_openmedis_medicalconsumables',
          'field'              => 'id',
          'name'               => __('Number of worn medical consumables', 'openmedis'),
          'datatype'           => 'count',
@@ -332,7 +332,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '19',
-         'table'              => 'glpi_plugin_openmedis_medicalconsumable',
+         'table'              => 'glpi_plugin_openmedis_medicalconsumables',
          'field'              => 'id',
          'name'               => __('Number of new medical consumables', 'openmedis'),
          'datatype'           => 'count',
