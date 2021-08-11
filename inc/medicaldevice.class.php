@@ -58,7 +58,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
     * @param $nb : number of item in the type
    **/
    static function getTypeName($nb = 0) {
-      return _n('Medical Device', 'Medical Devices', $nb, 'openmedis');
+      return _n('Medical device', 'Medical devices', $nb, 'openmedis');
    }
 
    static function getFormURL($full = true) {

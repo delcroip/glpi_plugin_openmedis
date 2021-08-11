@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: openmedis\n"
-"PO-Revision-Date: 2021-08-10 17:42\n"
+"PO-Revision-Date: 2021-08-11 09:07\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgid "Name"
 msgstr "Nom"
 
 #, fuzzy
-msgid "Health technologies management"
+msgid "Health technology management"
 msgid_plural "Health technologies management"
 msgstr[0] "Gestion de technologie de santé"
 msgstr[1] "Gestion des technologies de la santé"
@@ -52,10 +52,10 @@ msgstr "%s associe un type"
 msgid "%s sets unitary management"
 msgstr "%s fixe la gestion unitaire"
 
-msgid "Medical Accessory"
-msgid_plural "Medical Accessory"
-msgstr[0] ""
-msgstr[1] "Accessoire médical"
+msgid "Medical accessory"
+msgid_plural "Medical accessories"
+msgstr[0] "Accessoire médical"
+msgstr[1] "Accessoires médical"
 
 msgid "Type"
 msgstr "Type"
@@ -85,7 +85,7 @@ msgid "Comment"
 msgstr "Commentaire"
 
 msgid "Medical consumable"
-msgid_plural "Medical consumable"
+msgid_plural "Medical consumables"
 msgstr[0] "Consommable médical"
 msgstr[1] "Consommables médicaux"
 
@@ -183,7 +183,7 @@ msgid "Worn medcial consumable"
 msgstr "Consommable médical usé"
 
 msgid "Medical consumable model"
-msgid_plural "Medical consumable model"
+msgid_plural "Medical consumable models"
 msgstr[0] "Modèle de consommable médical"
 msgstr[1] "Modèles de consommable médical"
 
@@ -199,8 +199,8 @@ msgstr "%d mois"
 msgid "Average number of  usages"
 msgstr "Nombre moyen d'utilisations"
 
-msgid "Medical Device"
-msgid_plural "Medical Device"
+msgid "Medical device"
+msgid_plural "Medical device"
 msgstr[0] "Dispositif médical"
 msgstr[1] "Dispositif médicaux"
 
@@ -235,8 +235,8 @@ msgid "Number of new medical consumables"
 msgstr "Nombre de nouveaux consommables médicaux"
 
 #, fuzzy
-msgid "Medical Device model"
-msgid_plural "Medical Device model"
+msgid "Medical device model"
+msgid_plural "Medical device models"
 msgstr[0] "Modèle de dispositif médical"
 msgstr[1] "Modèles de dispositif médical"
 
@@ -319,7 +319,7 @@ msgid "Global management"
 msgstr "Gestion globale"
 
 msgid "Medical device category"
-msgid_plural "Medical device category"
+msgid_plural "Medical device categories"
 msgstr[0] "Catégorie de dispositif médical (CND)"
 msgstr[1] "Catégories de dispositif médical (CND)"
 
@@ -329,13 +329,9 @@ msgstr "Technologie de la santé"
 msgid "Medical Device asset"
 msgstr "Actif dans le domaine des dispositifs médicaux"
 
-msgid "Medical Device Category"
-msgid_plural "Medical Device Category"
-msgstr[0] "Catégorie de dispositif médical"
-msgstr[1] "Catégories de dispositif médical"
-
-msgid "Medical Accessory Type"
-msgid_plural "Medical Accessory Type"
+#, fuzzy
+msgid "Medical accessory type"
+msgid_plural "Medical accessory types"
 msgstr[0] "Type d'accessoire médical"
 msgstr[1] "Types d'accessoire médical"
 
@@ -359,11 +355,9 @@ msgstr "Type de consommable pour dispositif médical"
 msgid "General"
 msgstr "Général"
 
-msgid "Medical Device Categories "
-msgstr "Catégories de dispositifs médicaux "
-
+#, fuzzy
 msgid "Medical consumable type"
-msgid_plural "Medical consumable type"
+msgid_plural "Medical consumable types"
 msgstr[0] "Type de consommable médical"
 msgstr[1] "Types de consommable médical"
 
@@ -371,8 +365,8 @@ msgid "Associable items to a ticket"
 msgstr "Éléments associables à un ticket"
 
 #, fuzzy
-msgid "Medical Device Utilisation"
-msgid_plural "Medical Device Utilisation"
+msgid "Medical device utilization"
+msgid_plural "Medical device utilizations"
 msgstr[0] "Utilisation des dispositifs médicaux"
 msgstr[1] "Utilisations des dispositifs médicaux"
 
@@ -391,3 +385,8 @@ msgstr " Utilisateurs techniques d'openMedis. Créé par openMedis - ne pas modi
 #, fuzzy
 msgid "medicaldevicesbyutilisation_report_title"
 msgstr "Dispositifs médicaux par utilisation"
+
+msgid "Medical accessory category"
+msgid_plural "Medical accessory categories"
+msgstr[0] "Categorie d'accessoire médical"
+msgstr[1] "Categories d'accessoire médical"

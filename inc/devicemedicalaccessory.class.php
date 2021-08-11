@@ -38,7 +38,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
    static protected $forward_entity_to = ['PluginOpenmedisItem_DeviceMedicalAccessory', 'Infocom'];
    static $rightname                   = 'plugin_openmedis_devicemedicalaccessory';
    static function getTypeName($nb = 0) {
-      return _n('Medical Accessory', 'Medical accessories', $nb, 'openmedis');
+      return _n('Medical accessory', 'Medical accessories', $nb, 'openmedis');
    }
 
 
