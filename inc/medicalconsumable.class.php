@@ -977,7 +977,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          $header_top    .= Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand);
          $header_end    .= "</th>";
       }
-      $header_end .= "<th>".__('ID')."</th><th>".$this->getTypeName(1)."</th>";
+      $header_end .= "<th>".__('ID')."</th><th>".SELF::getTypeName(1)."</th>";
       $header_end .= "<th>".PluginOpenmedisMedicalConsumableItemType::getTypeName(1)."</th>";
       $header_end .= "<th>".__('Add date')."</th>";
       $header_end .= "<th>".__('Use date')."</th>";
