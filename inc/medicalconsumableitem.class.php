@@ -401,7 +401,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'table'              => 'glpi_plugin_openmedis_medicaldevicemodels',
          'field'              => 'name',
          'datatype'           => 'dropdown',
-         'name'               => _PluginOpenmedisMedicalDeviceModel::getTypeName(Session::getPluralNumber()),
+         'name'               => PluginOpenmedisMedicalDeviceModel::getTypeName(Session::getPluralNumber()),
          'forcegroupby'       => true,
          'massiveaction'      => false,
          'joinparams'         => [
