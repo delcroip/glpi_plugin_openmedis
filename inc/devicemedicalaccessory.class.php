@@ -52,8 +52,8 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
                'type'  => 'dropdownValue'
             ],
             [
-               'name'  => 'plugin_openmedis_medicalaccessorycategories_id',
-               'label' => $this>getTypeName(1),
+               'name'  => 'plugin_openmedis_medicaldevicecategories_id',
+               'label' => __('Category'),
                'type'  => 'dropdownValue'
             ],
             [
@@ -114,7 +114,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       Manufacturer::getHTMLTableHeader(__CLASS__, $base, $super, $father, $options);
       $base->addHeader('medicalaccessory_type', __('Type'), $super, $father);
-      $base->addHeader('medicalaccessory_category', __('Category'), $super, $father);
+      $base->addHeader('medicaldevice_category', __('Category'), $super, $father);
       $base->addHeader('part_number', sprintf('%1$s', __('Part Number')), $super, $father);
    }
 
@@ -138,11 +138,11 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          );
       }
 
-      if ($this->fields["plugin_openmedis_medicalaccessorycategories_id"]) {
+      if ($this->fields["plugin_openmedis_medicaldevicecategories_id"]) {
          $row->addCell(
-            $row->getHeaderByName('medicalaccessory_category'),
-            Dropdown::getDropdownName("glpi_plugin_openmedis_medicalaccessorycategories",
-            $this->fields["plugin_openmedis_medicalaccessorycategories_id"]),
+            $row->getHeaderByName('medicaldevice_category'),
+            Dropdown::getDropdownName("glpi_plugin_openmedis_medicaldevicecategories",
+            $this->fields["plugin_openmedis_medicaldevicecategories_id"]),
             $father
          );
       }
@@ -164,7 +164,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          'designation'           => 'equal',
          'plugin_openmedis_medicalaccessorytypes_id' => 'equal',
          'manufacturers_id'      => 'equal',
-         'plugin_openmedis_medicalaccessorycategories_id' => 'equal',
+         'plugin_openmedis_medicaldevicecategories_id' => 'equal',
          'voltage'               => 'delta:10'
       ];
    }

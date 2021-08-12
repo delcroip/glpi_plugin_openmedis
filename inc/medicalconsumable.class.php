@@ -65,7 +65,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
    }
 
    static function getTypeName($n = 0) {
-      return _n('Medical consumable model', 'Medical consumables models', 1, 'openmedis');
+      return _n('Medical consumable', 'Medical consumables', 1, 'openmedis');
    }
 
    static function showMassiveActionsSubForm(MassiveAction $ma) {
