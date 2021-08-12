@@ -43,5 +43,9 @@ class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
       return "fas fa-laptop-medical";
    }
 
+   static function getFieldLabel() {
+      return _n('Model', 'Models', 1);
+   }
+
 }
 

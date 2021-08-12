@@ -41,4 +41,7 @@ class  PluginOpenmedisMedicalAccessoryType extends CommonDeviceType {
    static function getIcon() {
       return "fas fa-screwdriver";
    }
+   static function getFieldLabel() {
+      return _n('Type', 'Types', 1);
+   }
 }

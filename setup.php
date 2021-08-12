@@ -181,7 +181,7 @@ function plugin_openmedis_addHooks() {
 function plugin_version_openmedis() {
    $author = '<a href="https://github.com/delcroip">Patrick Delcroix</a>';
    
-   $requirements =  ['name'           => _n('Health technology management', 'Health technologies management', 2
+   $requirements =  ['name'           => _n('Health technology management', 'Health technologies management', 1
                                         , 'openmedis'),
                   'version'        => PLUGIN_OPENMEDIS_VERSION,
                   'license'        => 'GPLv2+',
