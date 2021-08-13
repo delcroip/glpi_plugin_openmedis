@@ -110,6 +110,7 @@ if ($report->criteriasValidated()) {
                   ON (`state_cpt`.`id` = `glpi_plugin_openmedis_medicaldevices`.`states_id`) ".
              $dbu->getEntitiesRestrictRequest('WHERE', 'glpi_plugin_openmedis_medicaldevices') .
              $report->addSqlCriteriasRestriction();
+             $report->setGroupBy('utilization');
              groupUnfiltered($report, $fields);
 
      $report->setSqlRequest($query);
