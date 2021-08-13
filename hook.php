@@ -163,7 +163,7 @@ function plugin_openmedis_getDropdown() {
    $plugin = new Plugin();
    if ($plugin->isActivated("openmedis")) {
       return [
-            PluginOpenmedisMedicalAccessoryType::class    =>  PluginOpenmedisMedicalAccessoryType::getTypeName(0),
+            PluginOpenmedisMedicalDeviceAccessoryType::class    =>  PluginOpenmedisMedicalAccessoryType::getTypeName(0),
             PluginOpenmedisMedicalDeviceCategory::class   => PluginOpenmedisMedicalDeviceCategory::getTypeName(0),
             PluginOpenmedisMedicalDeviceModel::class   => PluginOpenmedisMedicalDeviceModel::getTypeName(0),
             //PluginOpenmedisMedicalAccessoryCategory::class =>  PluginOpenmedisMedicalAccessoryCategory::getTypeName(0),
