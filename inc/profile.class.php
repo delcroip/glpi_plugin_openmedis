@@ -65,8 +65,7 @@ class PluginOpenmedisProfile extends Profile
                 'plugin_openmedis_medicaldevicemodel' => PluginOpenmedisMedicalDeviceModel::getTypeName(1),
                 'plugin_openmedis_medicaldevicecategory' => PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
                 'plugin_openmedis_devicemedicalaccessory' => PluginOpenmedisDeviceMedicalAccessory::getTypeName(1),
-                'plugin_openmedis_medicalaccessory_type' => PluginOpenmedsiMedicalAccessoryType::getTypeName(1),
-                'plugin_openmedis_medicalaccessorycategorie' => PluginOpenmedisMedicalAccessoryModel::getTypeName(1),
+                'plugin_openmedis_medicalaccessory_type' => PluginOpenmedisMedicalAccessoryType::getTypeName(1),
                 'plugin_openmedis_openticket' => __('OpenTicket for Medical Device', 'openmedis'),
                 'plugin_openmedis_medicalconsumable' => PluginOpenmedisMedicalConsumable::getTypeName(1)]);
             $prof->showForm($ID);
