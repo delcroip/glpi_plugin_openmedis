@@ -166,7 +166,7 @@ function plugin_openmedis_getDropdown() {
             PluginOpenmedisMedicalAccessoryType::class    =>  PluginOpenmedisMedicalAccessoryType::getTypeName(0),
             PluginOpenmedisMedicalDeviceCategory::class   => PluginOpenmedisMedicalDeviceCategory::getTypeName(0),
             PluginOpenmedisMedicalDeviceModel::class   => PluginOpenmedisMedicalDeviceModel::getTypeName(0),
-            PluginOpenmedisMedicalAccessoryCategory::class =>  PluginOpenmedisMedicalAccessoryCategory::getTypeName(0),
+            //PluginOpenmedisMedicalAccessoryCategory::class =>  PluginOpenmedisMedicalAccessoryCategory::getTypeName(0),
             PluginOpenmedisUtilization::class =>  PluginOpenmedisUtilization::getTypeName(0),
             PluginOpenmedisMedicalConsumableItemType::class => PluginOpenmedisMedicalConsumableItemType::getTypeName(0)];
    } else {

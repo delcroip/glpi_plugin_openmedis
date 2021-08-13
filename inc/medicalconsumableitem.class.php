@@ -49,7 +49,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    static $rightname                   = 'plugin_openmedis_medicalconsumableitem';
 
    static function getTypeName($nb = 0) {
-      return _n('Medical consumable', 'Medical consumables', $nb, 'openmedis');
+      return _n('Medical consumable item', 'Medical consumable items', $nb, 'openmedis');
    }
 
 
