@@ -110,7 +110,6 @@ if ($report->criteriasValidated()) {
                   ON (`state_cpt`.`id` = `glpi_plugin_openmedis_medicaldevices`.`states_id`) ".
              $dbu->getEntitiesRestrictRequest('WHERE', 'glpi_plugin_openmedis_medicaldevices') .
              $report->addSqlCriteriasRestriction();
-             $report->setGroupBy('utilization');
              groupUnfiltered($report, $fields);
 
      $report->setSqlRequest($query);
@@ -120,11 +119,13 @@ if ($report->criteriasValidated()) {
 }
 
 function groupUnfiltered($report, $fields) {
+     $group[] = '`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`';
      foreach ($fields as $field) {
           if (!(isset($_POST[$field.'_group']) && $_POST[$field.'_group'] == 'on')){
-               $report->setGroupBy($field);
+               $group[] = $key;
           }
      }
+     $report->setGroupBy($group);
 }
 /** Function that fetch the details only if no specific value selected FIXME ad checkbog "group" next to critertias
  * 
