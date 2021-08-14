@@ -37,7 +37,7 @@ include ("../../../../inc/includes.php");
 $dbu = new DbUtils();
 
 //TRANS: The name of the report = Applications by locations and versions
-$report = new PluginReportsAutoReport(__('medicaldevicesbyutilisation_report_title', 'reports'));
+$report = new PluginReportsAutoReport(__('medicaldevicesbyutilisation_report_title', 'openmedis'));
 
 //$softwarecategories = new PluginReportsSoftwareCategoriesCriteria($report, 'softwarecategories',
 //                                                                  __('Software category'));
