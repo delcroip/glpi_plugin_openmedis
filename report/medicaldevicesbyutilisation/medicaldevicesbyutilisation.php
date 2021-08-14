@@ -49,7 +49,8 @@ $report = new PluginReportsAutoReport(__('medicaldevicesbyutilisation_report_tit
 $fields = [
      '`glpi_locations`.`name`' => 'location',  
      '`glpi_plugin_openmedis_medicaldevicecategories`.`name`' => 'category', 
-     '`state_cpt`.`name`' => 'statemd'
+     '`state_cpt`.`name`' => 'statemd',
+     '`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`' => 'utilization'
 ];
 
 $utilisation = new PluginReportsDropdownCriteria($report, 'utilization','glpi_plugin_openmedis_utilizations' , PluginOpenmedisUtilization::getTypeName());
@@ -96,8 +97,7 @@ if ($report->criteriasValidated()) {
                         new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(1),1),
                         new PluginReportsColumn('statemd', __('Status'))]);
 
-     $query = "SELECT COUNT(`glpi_plugin_openmedis_medicaldevices`.`id`) AS md,
-          `glpi_plugin_openmedis_utilizations`.`name` AS utilization,".
+     $query = "SELECT COUNT(`glpi_plugin_openmedis_medicaldevices`.`id`) AS md, `glpi_plugin_openmedis_utilizations`.`name` as utilization,".
              selectUnfiltered($report, $fields).
             " FROM `glpi_plugin_openmedis_medicaldevices`
              LEFT JOIN `glpi_plugin_openmedis_utilizations`
@@ -109,23 +109,30 @@ if ($report->criteriasValidated()) {
              LEFT JOIN `glpi_states` state_cpt
                   ON (`state_cpt`.`id` = `glpi_plugin_openmedis_medicaldevices`.`states_id`) ".
              $dbu->getEntitiesRestrictRequest('WHERE', 'glpi_plugin_openmedis_medicaldevices') .
-             $report->addSqlCriteriasRestriction();
-             groupUnfiltered($report, $fields);
-
+             $report->addSqlCriteriasRestriction().
+             groupUnfiltered($fields);
+     $report->setGroupBy('utzationilization');
      $report->setSqlRequest($query);
      $report->execute();
 } else {
    Html::footer();
 }
 
-function groupUnfiltered($report, $fields) {
-     $group[] = '`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`';
-     foreach ($fields as $field) {
+function groupUnfiltered($fields) {
+     $sql = 'GROUP BY  ';
+     $first = true;
+     foreach ($fields as $key => $field) {
           if (!(isset($_POST[$field.'_group']) && $_POST[$field.'_group'] == 'on')){
-               $group[] = $key;
+               if ($first) {
+                    $first = false;           
+               } else {
+                    $sql .= ', ';
+               }
+               $sql .= $key.' ';
           }
      }
-     $report->setGroupBy($group);
+     return $sql;
+     
 }
 /** Function that fetch the details only if no specific value selected FIXME ad checkbog "group" next to critertias
  * 
@@ -134,13 +141,16 @@ function groupUnfiltered($report, $fields) {
 function selectUnfiltered($report, $fields) {
      $sql = '';
      foreach ($fields as $key =>  $field) {
-          if (!(isset($_POST[$field.'_group']) && $_POST[$field.'_group'] == 'on')){
-               if($sql != '')$sql .= ',';
-               $sql .= "'' AS ".$field;              
-          }else {
-               if($sql != '')$sql .= ',';
-               $sql .= $key.' AS '.$field;
-          }
+          if ($field != 'utilization' )
+          {
+		if ((isset($_POST[$field.'_group']) && $_POST[$field.'_group'] == 'on')  ){
+               		if($sql != '')$sql .= ',';
+               		$sql .= "'' AS ".$field;              
+          	}else {
+               		if($sql != '')$sql .= ',';
+               		$sql .= $key.' AS '.$field;
+          	}
+	 }
      }
      return $sql;
 }
