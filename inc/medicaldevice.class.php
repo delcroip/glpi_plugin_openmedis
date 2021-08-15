@@ -221,7 +221,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       Location::dropdown(['value'  => $this->fields["locations_id"],
                                'entity' => $this->fields["entities_id"]]);
       echo "</td>\n";
-      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldName()."</td>\n";
+      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldLabel()."</td>\n";
       echo "<td>";
       PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"],
       'permit_select_parent' => true,
@@ -289,7 +289,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
                            'entity' => $this->fields["entities_id"],
                            'right'  => 'all']);
       echo "</td>\n";
-      echo "<td>".__('Utilization', 'openmedis')."</td>\n";
+      echo "<td>".PluginOpenmedisUtilization::getFieldLabel()."</td>\n";
       echo "<td>";
 
       PluginOpenmedisUtilization::dropdown(['value' => $this->fields["plugin_openmedis_utilizations_id"]]);
@@ -412,7 +412,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'id'                 => '4',
          'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
          'field'              => 'name',
-         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldName(),
+         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(),
          'datatype'           => 'dropdown'
       ];
 

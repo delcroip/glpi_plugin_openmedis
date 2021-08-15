@@ -469,9 +469,8 @@ class PluginOpenmedisInstall {
       $result = $DB->query("SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'");
       if ($result) {
          if ($DB->numrows($result) > 0) {
-            $this->migration->displayWarning(" Some of the module tables were not removed,".
-            " please clean the database: SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'", true);
-            return true;
+            //$this->migration->displayWarning(" Some of the module tables were not removed,".
+            //" please clean the database: SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'", true);
          }
       }
 

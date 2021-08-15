@@ -39,5 +39,8 @@ class PluginOpenmedisUtilization extends CommonDropdown {
    static function getTypeName($nb = 0) {
       return _n('Medical device utilization', 'Medical device utilizations', $nb, 'openmedis');
    }
+   static function getFieldLabel($nb = 0) {
+      return __('Utilization', 'Utilizations', $nb, 'openmedis');
+   }
 
 }

@@ -64,20 +64,20 @@ if (class_exists('PluginOpenmedisToggleCriteria')) {
 $category = new PluginReportsDropdownCriteria($report, 'category', 'PluginOpenmedisMedicalDeviceCategory' , PluginOpenmedisMedicalDeviceCategory::getTypeName());
 $category->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_medicaldevicecategories_id`");
 if (class_exists('PluginOpenmedisToggleCriteria')) {
-     $category_group = new PluginOpenmedisToggleCriteria($report, 'category_group', 'Group categories');
+     $category_group = new PluginOpenmedisToggleCriteria($report, 'category_group', __('Group'));
      $category_group->setSqlField("");
 }
-$statemd = new PluginReportsStatusCriteria($report, 'statemd', __('Status', 'reports'));
+$statemd = new PluginReportsStatusCriteria($report, 'statemd', __('Status'));
 $statemd->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`states_id`");
 if (class_exists('PluginOpenmedisToggleCriteria')) {
-     $category_group = new PluginOpenmedisToggleCriteria($report, 'statemd_group', 'Group states');
+     $category_group = new PluginOpenmedisToggleCriteria($report, 'statemd_group', __('Group'));
      $category_group->setSqlField("");
 }
 
 $location = new PluginReportsLocationCriteria($report, 'location', _n('Location', 'Locations', 2));
 $location->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`locations_id`");
 if (class_exists('PluginOpenmedisToggleCriteria')) {
-     $category_group = new PluginOpenmedisToggleCriteria($report, 'location_group', 'Group location');
+     $category_group = new PluginOpenmedisToggleCriteria($report, 'location_group', __('Group'));
      $category_group->setSqlField("");
 }
 
@@ -89,9 +89,9 @@ if ($report->criteriasValidated()) {
      $report->setSubNameAuto();
 
      $report->setColumns([new PluginReportsColumnLink('utilization', PluginOpenmedisUtilization::getTypeName(1),
-                                   'Utilization', ['sorton' => 'utilization']),
+     PluginOpenmedisUtilization::getFieldLabel(), ['sorton' => 'utilization']),
                          new PluginReportsColumnLink('category', PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
-                                   'Category', ['sorton' => 'category']),
+                         PluginOpenmedisMedicalDeviceCategory::getFieldLabel(), ['sorton' => 'category']),
                          new PluginReportsColumnLink('location', __('Location'),
                                    'Location', ['sorton' => 'glpi_locations.name']),
                         new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(1),1),

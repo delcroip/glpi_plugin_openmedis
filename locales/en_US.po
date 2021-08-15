@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpli_plugin_openmedis\n"
 "POT-Creation-Date: 2021-06-27 22:33+0100\n"
-"PO-Revision-Date: 2021-06-27 22:34+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2021-08-15 19:17+0100\n"
+"Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
+"Language-Team: Lokalise <httu.admin@swisstph.ch>\n"
 "Language: english\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,6 +13,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _;__;_n\n"
 "X-Poedit-Basepath: ../\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ../inc\n"
 
@@ -74,9 +75,10 @@ msgid_plural "Medical accessories"
 msgstr[0] "Medical accessory"
 msgstr[1] "Medical accessories"
 
-#, fuzzy
 msgid "Type"
-msgstr "Type"
+msgid_plural "Types"
+msgstr[0] "Type"
+msgstr[1] "Types"
 
 #, fuzzy
 msgid "Category"
@@ -237,11 +239,6 @@ msgstr "Used medcial consumable"
 msgid "Worn medcial consumable"
 msgstr "Worn medcial consumable"
 
-msgid "Medical consumable model"
-msgid_plural "Medical consumable models"
-msgstr[0] "Medical consumable model"
-msgstr[1] "Medical consumable models"
-
 #, fuzzy
 msgid "Medical consumable usages"
 msgstr "Medical consumable usages"
@@ -312,8 +309,12 @@ msgid "Send alarms on medical consumables"
 msgstr "Send alarms on medical consumables"
 
 #, fuzzy
-msgid "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
-msgstr "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
+msgid ""
+"Threshold of alarm reached for the type of medical consumable: %1$s - "
+"Reference %2$s - Remaining %3$d"
+msgstr ""
+"Threshold of alarm reached for the type of medical consumable: %1$s - "
+"Reference %2$s - Remaining %3$d"
 
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -330,9 +331,10 @@ msgstr "Send alarms on medical consumable"
 msgid "Add a compatible medical device model"
 msgstr "Add a compatible medical device model"
 
-#, fuzzy
 msgid "Model"
-msgstr "Model"
+msgid_plural "Models"
+msgstr[0] "Model"
+msgstr[1] "Models"
 
 #, fuzzy
 msgid "No item found"
@@ -373,9 +375,10 @@ msgstr "Inventory number"
 msgid "User"
 msgstr "User"
 
-#, fuzzy
 msgid "Utilization"
-msgstr "Utilization"
+msgid_plural "Utilizations"
+msgstr[0] "Utilization"
+msgstr[1] "Utilizations"
 
 #, fuzzy
 msgid "Group"
@@ -427,26 +430,9 @@ msgid_plural "Medical accessory types"
 msgstr[0] "Medical accessory type"
 msgstr[1] "Medical accessory types"
 
-msgid "Medical Accessory Model"
-msgid_plural "Medical Accessory Model"
-msgstr[0] "Medical Accessory Model"
-msgstr[1] "Medical Accessory Models"
-
 #, fuzzy
 msgid "OpenTicket for Medical Device"
 msgstr "OpenTicket for Medical Device"
-
-#, fuzzy
-msgid "Medical Device consumable"
-msgstr "Medical Device consumable"
-
-#, fuzzy
-msgid "Medical Device item"
-msgstr "Medical Device item"
-
-#, fuzzy
-msgid "Medical Device consumable type"
-msgstr "Medical Device consumable type"
 
 #, fuzzy
 msgid "General"
@@ -471,16 +457,22 @@ msgid "openMedis guest users"
 msgstr "openMedis guest users"
 
 #, fuzzy
-msgid "guest openMedis users. Created by openMedis - do NOT modify this comment."
-msgstr "guest openMedis users. Created by openMedis - do NOT modify this comment."
+msgid ""
+"guest openMedis users. Created by openMedis - do NOT modify this comment."
+msgstr ""
+"guest openMedis users. Created by openMedis - do NOT modify this comment."
 
 #, fuzzy
 msgid "openMedis technician  users"
 msgstr "openMedis technician  users"
 
 #, fuzzy
-msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
-msgstr " openMedis technical users. Created by openMedis - do NOT modify this comment."
+msgid ""
+" openMedis technical users. Created by openMedis - do NOT modify this "
+"comment."
+msgstr ""
+" openMedis technical users. Created by openMedis - do NOT modify this "
+"comment."
 
 msgid "medicaldevicesbyutilisation_report_title"
 msgstr "Medical devices by utilzation"
