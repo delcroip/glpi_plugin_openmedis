@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpli_plugin_openmedis\n"
 "POT-Creation-Date: 2021-06-27 22:33+0100\n"
-"PO-Revision-Date: 2021-08-15 19:17+0100\n"
+"PO-Revision-Date: 2021-08-15 20:30+0100\n"
 "Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
 "Language-Team: Lokalise <httu.admin@swisstph.ch>\n"
 "Language: english\n"
@@ -21,6 +21,7 @@ msgstr ""
 msgid "Name"
 msgstr "Name"
 
+#, fuzzy
 msgid "Health technology management"
 msgid_plural "Health technologies management"
 msgstr[0] "Health technology management"
@@ -70,11 +71,13 @@ msgstr "%s associates a type"
 msgid "%s sets unitary management"
 msgstr "%s sets unitary management"
 
+#, fuzzy
 msgid "Medical accessory"
 msgid_plural "Medical accessories"
 msgstr[0] "Medical accessory"
 msgstr[1] "Medical accessories"
 
+#, fuzzy
 msgid "Type"
 msgid_plural "Types"
 msgstr[0] "Type"
@@ -82,7 +85,9 @@ msgstr[1] "Types"
 
 #, fuzzy
 msgid "Category"
-msgstr "Category"
+msgid_plural "Categories"
+msgstr[0] "Category"
+msgstr[1] "Categories"
 
 #, fuzzy
 msgid "Part Number"
@@ -112,6 +117,7 @@ msgstr "Parent"
 msgid "Comment"
 msgstr "Comment"
 
+#, fuzzy
 msgid "Medical consumable"
 msgid_plural "Medical consumables"
 msgstr[0] "Medical consumable"
@@ -254,6 +260,7 @@ msgstr "%d month"
 msgid "Average number of  usages"
 msgstr "Average number of  usages"
 
+#, fuzzy
 msgid "Medical device"
 msgid_plural "Medical device"
 msgstr[0] "Medical device"
@@ -299,6 +306,7 @@ msgstr "Number of worn medical consumables"
 msgid "Number of new medical consumables"
 msgstr "Number of new medical consumables"
 
+#, fuzzy
 msgid "Medical device model"
 msgid_plural "Medical device models"
 msgstr[0] "Medical device model"
@@ -331,6 +339,7 @@ msgstr "Send alarms on medical consumable"
 msgid "Add a compatible medical device model"
 msgstr "Add a compatible medical device model"
 
+#, fuzzy
 msgid "Model"
 msgid_plural "Models"
 msgstr[0] "Model"
@@ -375,6 +384,7 @@ msgstr "Inventory number"
 msgid "User"
 msgstr "User"
 
+#, fuzzy
 msgid "Utilization"
 msgid_plural "Utilizations"
 msgstr[0] "Utilization"
@@ -412,6 +422,7 @@ msgstr "Entity"
 msgid "Global management"
 msgstr "Global management"
 
+#, fuzzy
 msgid "Medical device category"
 msgid_plural "Medical device categories"
 msgstr[0] "Medical device category (CND)"
@@ -425,6 +436,7 @@ msgstr "Health technology"
 msgid "Medical Device asset"
 msgstr "Medical Device asset"
 
+#, fuzzy
 msgid "Medical accessory type"
 msgid_plural "Medical accessory types"
 msgstr[0] "Medical accessory type"
@@ -438,6 +450,7 @@ msgstr "OpenTicket for Medical Device"
 msgid "General"
 msgstr "General"
 
+#, fuzzy
 msgid "Medical consumable type"
 msgid_plural "Medical consumable types"
 msgstr[0] "Medical consumable type"
@@ -447,6 +460,7 @@ msgstr[1] "Medical consumable types"
 msgid "Associable items to a ticket"
 msgstr "Associable items to a ticket"
 
+#, fuzzy
 msgid "Medical device utilization"
 msgid_plural "Medical device utilizations"
 msgstr[0] "Medical device utilisation"
@@ -477,6 +491,7 @@ msgstr ""
 msgid "medicaldevicesbyutilisation_report_title"
 msgstr "Medical devices by utilzation"
 
+#, fuzzy
 msgid "Medical accessory category"
 msgid_plural "Medical accessory categories"
 msgstr[0] "Medical accessory category"

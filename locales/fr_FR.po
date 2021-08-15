@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 "Project-Id-Version: openmedis\n"
-"PO-Revision-Date: 2021-08-15 19:16+0100\n"
+"PO-Revision-Date: 2021-08-15 20:30+0100\n"
 "Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
 "Language-Team: lokalise.com <httu-admin@swisstph.ch>\n"
 "Language: fr_FR\n"
@@ -55,18 +55,23 @@ msgstr "%s associe un type"
 msgid "%s sets unitary management"
 msgstr "%s fixe la gestion unitaire"
 
+#, fuzzy
 msgid "Medical accessory"
 msgid_plural "Medical accessories"
 msgstr[0] "Accessoire médical"
 msgstr[1] "Accessoires médical"
 
+#, fuzzy
 msgid "Type"
 msgid_plural "Types"
 msgstr[0] "Type"
 msgstr[1] "Types"
 
+#, fuzzy
 msgid "Category"
-msgstr "Catégorie"
+msgid_plural "Categories"
+msgstr[0] "Catégorie"
+msgstr[1] "Catégories"
 
 msgid "Part Number"
 msgstr "Numéro de pièce"
@@ -89,6 +94,7 @@ msgstr "Parent"
 msgid "Comment"
 msgstr "Commentaire"
 
+#, fuzzy
 msgid "Medical consumable"
 msgid_plural "Medical consumables"
 msgstr[0] "Consommable médical"
@@ -199,6 +205,7 @@ msgstr "%d mois"
 msgid "Average number of  usages"
 msgstr "Nombre moyen d'utilisations"
 
+#, fuzzy
 msgid "Medical device"
 msgid_plural "Medical device"
 msgstr[0] "Dispositif médical"
@@ -262,6 +269,7 @@ msgstr "Envoyer des alarmes sur les consommables médicaux"
 msgid "Add a compatible medical device model"
 msgstr "Ajouter un modèle de dispositif médical compatible"
 
+#, fuzzy
 msgid "Model"
 msgid_plural "Models"
 msgstr[0] "Modèle"
@@ -297,6 +305,7 @@ msgstr "Numéro d'inventaire"
 msgid "User"
 msgstr "Utilisateur"
 
+#, fuzzy
 msgid "Utilization"
 msgid_plural "Utilizations"
 msgstr[0] "Utilisation"
@@ -326,6 +335,7 @@ msgstr "Entité"
 msgid "Global management"
 msgstr "Gestion globale"
 
+#, fuzzy
 msgid "Medical device category"
 msgid_plural "Medical device categories"
 msgstr[0] "Catégorie de dispositif médical (CND)"
@@ -387,6 +397,7 @@ msgstr ""
 msgid "medicaldevicesbyutilisation_report_title"
 msgstr "Dispositifs médicaux par utilisation"
 
+#, fuzzy
 msgid "Medical accessory category"
 msgid_plural "Medical accessory categories"
 msgstr[0] "Categorie d'accessoire médical"

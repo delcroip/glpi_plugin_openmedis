@@ -111,7 +111,7 @@ if ($report->criteriasValidated()) {
              $dbu->getEntitiesRestrictRequest('WHERE', 'glpi_plugin_openmedis_medicaldevices') .
              $report->addSqlCriteriasRestriction().
              groupUnfiltered($fields);
-     $report->setGroupBy('utzationilization');
+     $report->setGroupBy('utilization');
      $report->setSqlRequest($query);
      $report->execute();
 } else {

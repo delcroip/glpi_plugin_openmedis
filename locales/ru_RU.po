@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 "Project-Id-Version: openmedis\n"
-"PO-Revision-Date: 2021-08-15 19:14+0100\n"
+"PO-Revision-Date: 2021-08-15 20:31+0100\n"
 "Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
 "Language-Team: lokalise.com <httu-admin@swisstph.ch>\n"
 "Language: ru_RU\n"
@@ -85,9 +85,12 @@ msgstr[1] "Тип"
 msgstr[2] "Тип"
 msgstr[3] "Тип"
 
-#, fuzzy
 msgid "Category"
-msgstr "Категория"
+msgid_plural "Categories"
+msgstr[0] "Категория"
+msgstr[1] "категорий"
+msgstr[2] "Категории"
+msgstr[3] "категорий"
 
 #, fuzzy
 msgid "Part Number"
