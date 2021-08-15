@@ -22,7 +22,7 @@ entity_id
 
 ### other schema
 
-<AssetClass>Type is a std class expected by some reports
+<AssetClass>Type is a std class expected by some reports, alias works when the class have a differnet name
 
 
 ## component
@@ -33,7 +33,7 @@ eg. pluginopenmedisitemdevicemedicalaccessory_types
 
 and "$this->addStandardTab('Item_Devices', $ong, $options);" in defineTabs function
 
-## consomable
+## consumable
 
 you may use the std consomable or create your own class then, in both cases you will have to add the left menu
 

@@ -483,9 +483,7 @@ msgid " openMedis technical users. Created by openMedis - do NOT modify this com
 msgstr " openMedis technical users. Created by openMedis - do NOT modify this comment."
 
 msgid "medicaldevicesbyutilisation_report_title"
-msgstr ""
-"Medical devices by utilz"
-"ation"
+msgstr "Medical devices by utilzation"
 
 msgid "Medical accessory category"
 msgid_plural "Medical accessory categories"

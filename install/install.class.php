@@ -66,7 +66,8 @@ class PluginOpenmedisInstall {
    private $upgradeSteps = [
       '1.0'    => '1.1',
       '1.1'    => '1.2',
-      '1.2'    => '1.3'
+      '1.2'    => '1.3',
+      '1.3'    => '1.4'
    ];
 
    /**
@@ -464,6 +465,14 @@ class PluginOpenmedisInstall {
 
       foreach ($tables as $table) {
          $DB->query("DROP TABLE IF EXISTS `$table`");
+      }      // GARBAGE COLLECTOR
+      $result = $DB->query("SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'");
+      if ($result) {
+         if ($DB->numrows($result) > 0) {
+            $this->migration->displayWarning(" Some of the module tables were not removed,".
+            " please clean the database: SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'", true);
+            return true;
+         }
       }
 
       $tables_glpi = ["glpi_displaypreferences",
