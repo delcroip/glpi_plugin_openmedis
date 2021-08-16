@@ -53,7 +53,7 @@ $fields = [
      '`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`' => 'utilization'
 ];
 
-$utilisation = new PluginReportsDropdownCriteria($report, 'utilization','glpi_plugin_openmedis_utilizations' , PluginOpenmedisUtilization::getTypeName());
+$utilisation = new PluginReportsDropdownCriteria($report, 'utilization','glpi_plugin_openmedis_utilizations' , PluginOpenmedisUtilization::getTypeName(0));
 $utilisation->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_utilizations_id`");
 if (class_exists('PluginOpenmedisToggleCriteria')) { 
      $report->startColumn();
@@ -61,7 +61,7 @@ if (class_exists('PluginOpenmedisToggleCriteria')) {
      $report->startColumn();
      $report->endColumn();
 }
-$category = new PluginReportsDropdownCriteria($report, 'category', 'PluginOpenmedisMedicalDeviceCategory' , PluginOpenmedisMedicalDeviceCategory::getTypeName());
+$category = new PluginReportsDropdownCriteria($report, 'category', 'PluginOpenmedisMedicalDeviceCategory' , PluginOpenmedisMedicalDeviceCategory::getTypeName(0));
 $category->setSqlField("`glpi_plugin_openmedis_medicaldevices`.`plugin_openmedis_medicaldevicecategories_id`");
 if (class_exists('PluginOpenmedisToggleCriteria')) {
      $category_group = new PluginOpenmedisToggleCriteria($report, 'category_group', __('Group'));
@@ -88,13 +88,13 @@ if ($report->criteriasValidated()) {
 
      $report->setSubNameAuto();
 
-     $report->setColumns([new PluginReportsColumnLink('utilization', PluginOpenmedisUtilization::getTypeName(1),
+     $report->setColumns([new PluginReportsColumnLink('utilization', PluginOpenmedisUtilization::getTypeName(0),
      PluginOpenmedisUtilization::getFieldLabel(0), ['sorton' => 'utilization']),
-                         new PluginReportsColumnLink('category', PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
+                         new PluginReportsColumnLink('category', PluginOpenmedisMedicalDeviceCategory::getTypeName(0),
                          PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0), ['sorton' => 'category']),
                          new PluginReportsColumnLink('location', __('Location'),
                                    'Location', ['sorton' => 'glpi_locations.name']),
-                        new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(1),1),
+                        new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(0),1),
                         new PluginReportsColumn('statemd', __('Status'))]);
 
      $query = "SELECT COUNT(`glpi_plugin_openmedis_medicaldevices`.`id`) AS md, `glpi_plugin_openmedis_utilizations`.`name` as utilization,".
