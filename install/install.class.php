@@ -191,7 +191,7 @@ class PluginOpenmedisInstall {
     */
    public function getSchemaVersion() {
       if ($this->isPluginInstalled()) {
-         $config = Config::getConfigurationValues('plugin:openmedis');
+         $config = Config::getConfigurationValues('openmedis');
          if (!isset($config['schema_version'])) {
             return '1.0'; // first schema verison was not saved
          }
