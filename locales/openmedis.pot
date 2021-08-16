@@ -263,7 +263,7 @@ msgid "Average number of  usages"
 msgstr "Average number of  usages"
 
 msgid "Medical device"
-msgid_plural "Medical device"
+msgid_plural "Medical devices"
 msgstr[0] "Medical device"
 msgstr[1] "Medical devices"
 

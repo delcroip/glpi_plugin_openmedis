@@ -3,20 +3,19 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 3.0\n"
 "Project-Id-Version: openmedis\n"
-"PO-Revision-Date: 2021-08-15 20:30+0100\n"
+"PO-Revision-Date: 2021-08-16 10:44+0200\n"
 "Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
 "Language-Team: lokalise.com <httu-admin@swisstph.ch>\n"
 "Language: fr_FR\n"
 "POT-Creation-Date: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Name"
 msgstr "Nom"
 
-#, fuzzy
 msgid "Health technology management"
 msgid_plural "Health technologies management"
 msgstr[0] "Gestion de technologie de santé"
@@ -55,19 +54,16 @@ msgstr "%s associe un type"
 msgid "%s sets unitary management"
 msgstr "%s fixe la gestion unitaire"
 
-#, fuzzy
 msgid "Medical accessory"
 msgid_plural "Medical accessories"
 msgstr[0] "Accessoire médical"
 msgstr[1] "Accessoires médical"
 
-#, fuzzy
 msgid "Type"
 msgid_plural "Types"
 msgstr[0] "Type"
 msgstr[1] "Types"
 
-#, fuzzy
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Catégorie"
@@ -207,7 +203,7 @@ msgstr "Nombre moyen d'utilisations"
 
 #, fuzzy
 msgid "Medical device"
-msgid_plural "Medical device"
+msgid_plural "Medical devices"
 msgstr[0] "Dispositif médical"
 msgstr[1] "Dispositif médicaux"
 
@@ -250,12 +246,8 @@ msgstr[1] "Modèles de dispositif médical"
 msgid "Send alarms on medical consumables"
 msgstr "Envoyer des alarmes sur les consommables médicaux"
 
-msgid ""
-"Threshold of alarm reached for the type of medical consumable: %1$s - "
-"Reference %2$s - Remaining %3$d"
-msgstr ""
-"Seuil d'alarme atteint pour le type de consommable médical : %1$s - "
-"Référence %2$s - Restant %3$d"
+msgid "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
+msgstr "Seuil d'alarme atteint pour le type de consommable médical : %1$s - Référence %2$s - Restant %3$d"
 
 msgid "%1$s: %2$s"
 msgstr "%1$s : %2$s"
@@ -377,21 +369,14 @@ msgstr[1] "Utilisations des dispositifs médicaux"
 msgid "openMedis guest users"
 msgstr "Utilisateurs invités d'openMedis"
 
-msgid ""
-"guest openMedis users. Created by openMedis - do NOT modify this comment."
-msgstr ""
-"utilisateurs invités d'openMedis. Créé par openMedis - ne pas modifier ce "
-"commentaire."
+msgid "guest openMedis users. Created by openMedis - do NOT modify this comment."
+msgstr "utilisateurs invités d'openMedis. Créé par openMedis - ne pas modifier ce commentaire."
 
 msgid "openMedis technician  users"
 msgstr "Utilisateurs du technicien openMedis"
 
-msgid ""
-" openMedis technical users. Created by openMedis - do NOT modify this "
-"comment."
-msgstr ""
-" Utilisateurs techniques d'openMedis. Créé par openMedis - ne pas modifier "
-"ce commentaire."
+msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
+msgstr " Utilisateurs techniques d'openMedis. Créé par openMedis - ne pas modifier ce commentaire."
 
 #, fuzzy
 msgid "medicaldevicesbyutilisation_report_title"
