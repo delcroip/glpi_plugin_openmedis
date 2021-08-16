@@ -53,7 +53,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
             ],
             [
                'name'  => 'plugin_openmedis_medicaldevicecategories_id',
-               'label' => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(),
+               'label' => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0),
                'type'  => 'dropdownValue'
             ],
             [
@@ -87,7 +87,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
          'id'                 => '12',
          'table'              => 'glpi_plugin_openmedis_medicalaccessorycategories',
          'field'              => 'name',
-         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(),
+         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0),
          'datatype'           => 'dropdown'
       ];
 
@@ -114,7 +114,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       Manufacturer::getHTMLTableHeader(__CLASS__, $base, $super, $father, $options);
       $base->addHeader('medicalaccessory_type', __('Type'), $super, $father);
-      $base->addHeader('medicaldevice_category', PluginOpenmedisMedicalDeviceCategory::getFieldLabel(), $super, $father);
+      $base->addHeader('medicaldevice_category', PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0), $super, $father);
       $base->addHeader('part_number', sprintf('%1$s', __('Part Number')), $super, $father);
    }
 

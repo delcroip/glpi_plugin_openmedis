@@ -89,9 +89,9 @@ if ($report->criteriasValidated()) {
      $report->setSubNameAuto();
 
      $report->setColumns([new PluginReportsColumnLink('utilization', PluginOpenmedisUtilization::getTypeName(1),
-     PluginOpenmedisUtilization::getFieldLabel(), ['sorton' => 'utilization']),
+     PluginOpenmedisUtilization::getFieldLabel(0), ['sorton' => 'utilization']),
                          new PluginReportsColumnLink('category', PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
-                         PluginOpenmedisMedicalDeviceCategory::getFieldLabel(), ['sorton' => 'category']),
+                         PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0), ['sorton' => 'category']),
                          new PluginReportsColumnLink('location', __('Location'),
                                    'Location', ['sorton' => 'glpi_locations.name']),
                         new PluginReportsColumn('md', PluginOpenmedisMedicalDevice::getTypeName(1),1),
