@@ -37,6 +37,7 @@ if (!defined('GLPI_ROOT')) {
  * Relation between item and devices
 **/
 class PluginOpenmedisItem_DeviceMedicalAccessory extends Item_Devices {
+   static $rightname  = 'plugin_openmedis_devicemedicalaccessory';
 
    static public $itemtype_2 = 'PluginOpenmedisDeviceMedicalAccessory';
    static public $items_id_2 = 'plugin_openmedis_devicemedicalaccessories_id';
