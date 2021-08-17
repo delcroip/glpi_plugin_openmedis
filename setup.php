@@ -83,7 +83,8 @@ function plugin_init_openmedis() {
 
 function plugin_openmedis_registerClasses(){
    Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
-         'device_types' => true
+         'device_types' => true,
+         'infocom_types'        => true,
          ]);
       // add the type in the config so other module could register 
       //$CFG_GLPI['itemPluginOpenmedisMedicalAccessory_types'] = array();
@@ -103,6 +104,7 @@ function plugin_openmedis_registerClasses(){
          'itemdevices_types' => true,  // enamble the component left menu
          'networkport_types' => true,
          'itemdevicepowersupply_types' => true,
+         'globalsearch_types' => true,
          // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
          //  devicetype is class name https://github.com/glpi-project/glpi/blob/dc9ff8801377a3fb7c3bf3c9a9337b61eb814982/inc/plugin.class.php#L1298
          'pluginopenmedisitemdevicemedicalaccessory_types' => true,
@@ -112,9 +114,9 @@ function plugin_openmedis_registerClasses(){
 
    Plugin::registerClass('PluginOpenmedisMedicalDeviceModel', ['dictionnary_types' => true]);
    Plugin::registerClass('PluginOpenmedisMedicalDeviceCategory', ['dictionnary_types' => true]);
-   class_alias('PluginOpenmedisMedicalDeviceCategory','PluginOpenmedisMedicalDeviceType');
+   class_alias('PluginOpenmedisMedicalDeviceCategory','PluginOpenmedisMedicalDeviceType', false);
 
-   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
+   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory'), ['item_device_types' => true];
 //   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType', ['dictionnary_types' => true]);
 
