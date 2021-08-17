@@ -46,7 +46,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    public $dohistory                   = true;
    protected $usenotepad               = true;
 
-   static $rightname                   = 'plugin_openmedis_medicalconsumableitem';
+   static $rightname                   = 'plugin_openmedis_medicalconsumable';
 
    static function getTypeName($nb = 0) {
       return _n('Medical consumable item', 'Medical consumable items', $nb, 'openmedis');
