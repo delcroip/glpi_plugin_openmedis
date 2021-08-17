@@ -257,7 +257,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alternate user contact number', 'openmedis')."</td>\n";
+      echo "<td>".__('Alternate username number')."</td>\n";
       echo "<td>";
       Html::autocompletionTextField($this, "contact_num");
       echo "</td>";
@@ -267,7 +267,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Alternate user name', 'openmedis')."</td>\n";
+      echo "<td>".__('Alternate username')."</td>\n";
       echo "<td>";
       Html::autocompletionTextField($this, "contact");
       echo "</td>\n";
