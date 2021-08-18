@@ -100,7 +100,7 @@ function plugin_openmedis_hook_pre_profileuser_purge(CommonDBTM $item) {
 
 function plugin_openmedis_AssignToTicket($types) {
 
-   if (Session::haveRight("plugin_openmedis_openticket", CREATE)) {
+   if (Session::haveRight(PluginOpenmedisMedicalDevice::$rightname, READ)) {
       $types['PluginOpenmedisMedicalDevice'] = PluginOpenmedisMedicalDevice::getTypeName(2);
    }
    return $types;

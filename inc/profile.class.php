@@ -61,13 +61,14 @@ class PluginOpenmedisProfile extends Profile
             $prof = new self();
 
             self::addDefaultProfileInfos($ID,
-                ['plugin_openmedis' => __('Medical Device asset', 'openmedis'),
-                'plugin_openmedis_medicaldevicemodel' => PluginOpenmedisMedicalDeviceModel::getTypeName(1),
-                'plugin_openmedis_medicaldevicecategory' => PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
-                'plugin_openmedis_devicemedicalaccessory' => PluginOpenmedisDeviceMedicalAccessory::getTypeName(1),
-                'plugin_openmedis_medicalaccessory_type' => PluginOpenmedisMedicalAccessoryType::getTypeName(1),
-                'plugin_openmedis_openticket' => __('OpenTicket for Medical Device', 'openmedis'),
-                'plugin_openmedis_medicalconsumable' => PluginOpenmedisMedicalConsumable::getTypeName(1)]);
+                [PluginOpenmedisMedicalDevice::$rightname => PluginOpenmedisMedicalDevice::getTypeName(1),
+                PluginOpenmedisMedicalDeviceModel::$rightname => PluginOpenmedisMedicalDeviceModel::getTypeName(1),
+                PluginOpenmedisMedicalDeviceCategory::$rightname => PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
+                PluginOpenmedisDeviceMedicalAccessory::$rightname => PluginOpenmedisDeviceMedicalAccessory::getTypeName(1),
+                PluginOpenmedisMedicalConsumableItemType::$rightname => PluginOpenmedisMedicalConsumableItemType::getTypeName(1),
+                PluginOpenmedisMedicalAccessoryType::$rightname => PluginOpenmedisMedicalAccessoryType::getTypeName(1),
+                PluginOpenmedisMedicalConsumable::$rightname=> PluginOpenmedisMedicalConsumable::getTypeName(1),
+                ]);
             $prof->showForm($ID);
         }
         return true;
@@ -80,14 +81,13 @@ class PluginOpenmedisProfile extends Profile
     {
         //85
         self::addDefaultProfileInfos($ID,
-        ['plugin_openmedis' => 7,
-        'plugin_openmedis_medicaldevicemodel' => 7,
-        'plugin_openmedis_medicaldevicecategory' => 7,
-        'plugin_openmedis_devicemedicalaccessory' => 7,
-        'plugin_openmedis_medicalaccessory_type' => 7,
-        //'plugin_openmedis_medicalaccessorycategory' => 7,
-        'plugin_openmedis_medicalconsumable' => 7,
-        'plugin_openmedis_openticket' => 7], true);
+        [PluginOpenmedisMedicalDevice::$rightname => 7,
+        PluginOpenmedisMedicalDeviceModel::$rightname => 7,
+        PluginOpenmedisMedicalDeviceCategory::$rightname => 7,
+        PluginOpenmedisMedicalAccessoryType::$rightname => 7,
+        PluginOpenmedisMedicalConsumableItemType::$rightname => 7,
+        PluginOpenmedisDeviceMedicalAccessory::$rightname => 7,
+        PluginOpenmedisMedicalConsumable::$rightname => 7,
     }
 
     /**
@@ -179,31 +179,28 @@ class PluginOpenmedisProfile extends Profile
         $rights = [
                 ['itemtype' => 'PluginOpenmedisMedicalDevice',
                 'label' => PluginOpenmedisMedicalDevice::getTypeName(1),
-                'field' => 'plugin_openmedis'],
+                'field' => PluginOpenmedisMedicalDevice::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalDeviceCategory',
                 'label' => PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
-                'field' => 'plugin_openmedis_medicaldevicecategory'],
+                'field' => PluginOpenmedisMedicalDeviceCategory::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalDeviceModel',
                 'label' => PluginOpenmedisMedicalDeviceModel::getTypeName(1),
-                'field' => 'plugin_openmedis_medicaldevicemodel'],
+                'field' => PluginOpenmedisMedicalDeviceModel::$rightname],
                 ['itemtype' => 'PluginOpenmedisDeviceMedicalAccessory',
                 'label' => PluginOpenmedisDeviceMedicalAccessory::getTypeName(1),
-                'field' => 'plugin_openmedis_devicemedicalaccessory'],
-                //['itemtype' => 'PluginOpenmedisMedicalAccessoryCategory',
-                //'label' => PluginOpenmedisMedicalAccessoryCategory::getTypeName(1),
-                //'field' => 'plugin_openmedis_medicalaccessorycategory'],
+                'field' => PluginOpenmedisDeviceMedicalAccessory::$rightname],
+                ['itemtype' => 'PluginOpenmedisMedicalConsumableItemType',
+                'label' => PluginOpenmedisMedicalConsumableItemType::getTypeName(1),
+                'field' => PluginOpenmedisMedicalConsumableItemType::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalAccessoryType',
                 'label' => PluginOpenmedisMedicalAccessoryType::getTypeName(1),
-                'field' => 'plugin_openmedis_medicalaccessory_type'],
+                'field' => PluginOpenmedisMedicalAccessoryType::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalConsumable',
                 'label' => PluginOpenmedisMedicalConsumable::getTypeName(1),
-                'field' => 'plugin_openmedis_medicalconsumable']
+                'field' => PluginOpenmedisMedicalConsumable::$rightname]
         ];
-        if ($all) {
-            $rights[] = ['itemtype' => 'PluginOpenmedisMedicalDevice',
-                         'label'    =>  __('Associable items to a ticket'),
-                         'field'    => 'plugin_openmedis_openticket'];
-         }
+
+         
         return $rights;
     }
 
@@ -249,7 +246,6 @@ class PluginOpenmedisProfile extends Profile
                              ['id' => $profiles_id]) as $profile_data) {
 
           $matching = ['openmedis'  => 'plugin_openmedis',
-                       'openmedis_openticket' => 'plugin_openmedis_openticket',
                        'openmedis_type' => 'plugin_openmedis_category',
                        'openmedis_model' => 'plugin_openmedis_model'
                     ];
