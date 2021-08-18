@@ -116,7 +116,7 @@ function plugin_openmedis_registerClasses(){
    Plugin::registerClass('PluginOpenmedisMedicalDeviceCategory', ['dictionnary_types' => true]);
    class_alias('PluginOpenmedisMedicalDeviceCategory','PluginOpenmedisMedicalDeviceType', false);
 
-   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory'), ['item_device_types' => true];
+   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
 //   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType', ['dictionnary_types' => true]);
 
