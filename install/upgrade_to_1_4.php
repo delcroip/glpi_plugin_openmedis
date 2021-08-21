@@ -55,7 +55,7 @@ class PluginOpenmedisUpgradeTo1_4 extends PluginOpenmedisUpgradeStep {
     $this->migrationStep = '1.3 -> 1.4';
     // repalce accessorycat by device cat
     $err += $this->removeTableIfExists('glpi_plugin_openmedis_medicalaccessorycategories');
-    $err += $this->renamefieldIfExists('glpi_plugin_openmedis_devicemedicalaccessories', '`plugin_openmedis_medicalaccessorycategories_id`','`plugin_openmedis_medicaldevicecategories_id`', "int(11) DEFAULT NULL", true );
+    $err += $this->renamefieldIfExists('`plugin_openmedis_medicalaccessorycategories_id`', 'glpi_plugin_openmedis_devicemedicalaccessories', '`plugin_openmedis_medicaldevicecategories_id`', "int(11) DEFAULT NULL", true );
     if ($err > 0){
       return false;
     }
