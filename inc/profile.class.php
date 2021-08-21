@@ -87,7 +87,7 @@ class PluginOpenmedisProfile extends Profile
         PluginOpenmedisMedicalAccessoryType::$rightname => 7,
         PluginOpenmedisMedicalConsumableItemType::$rightname => 7,
         PluginOpenmedisDeviceMedicalAccessory::$rightname => 7,
-        PluginOpenmedisMedicalConsumable::$rightname => 7,
+        PluginOpenmedisMedicalConsumable::$rightname => 7]);
     }
 
     /**
