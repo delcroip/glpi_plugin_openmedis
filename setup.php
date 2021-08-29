@@ -35,7 +35,7 @@ define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.4');
 // is or is not an official release of the plugin
 define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
 // Minimal GLPI version, inclusive
-define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '9.5.5');
+define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '9.5.4');
 // Maximum GLPI version, exclusive
 //define('PLUGIN_OPENMEDIS_GLPI_MAX_VERSION', '9.5');
 
