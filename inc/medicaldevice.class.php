@@ -42,6 +42,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
 
    // From CommonDBTM
    public $dohistory                   = true;
+   // used to filter the categories
+   private $category                   = '';
 
    static protected $forward_entity_to = ['Infocom', 'NetworkPort', 'ReservationItem'];
 
@@ -190,20 +192,32 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          //display per default
          $options['display'] = true;
       }
+
+
+
       $params = $options;
       //do not display called elements per default; they'll be displayed or returned here
       $params['display'] = false;
-      $tplmark = $this->getAutofillMark('name', $options);
       echo "<tr class='tab_bg_1'>";
-      //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-      echo "<td>".sprintf(__('%1$s%2$s'), __('Name'), $tplmark);
-      echo "</td>";
+      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0)."</td>\n";
       echo "<td>";
-      $objectName = autoName($this->fields["name"], "name",
-                             (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
-                             $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, "name", ['value' => $objectName]);
-      echo "</td>\n";
+      //$this->category =  is_null($_POST['category'] ? $_POST['category'] : '');
+      $rand =  mt_rand();
+      $parent_name = 'plugin_openmedis_medicaldevicecategories_parent_id';
+      $parent_field_id = Html::cleanId("dropdown_".$parent_name.$rand);
+      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->category ,
+      'name' => $parent_name,
+      'displaywith' => ['code','label'],
+      'condition' => [ 'level' => 1],
+      'rand' => $rand]);
+      echo '<br>';
+      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"],
+      'permit_select_parent' => true,
+      'displaywith' => ['code','label'],
+      'parentfieldid'   =>  $parent_field_id ]);
+      echo "</td>";
+      
+      
       echo "<td>".__('Status')."</td>\n";
       echo "<td>";
       State::dropdown([
@@ -216,17 +230,30 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $this->showDcBreadcrumb();
 
       echo "<tr class='tab_bg_1'>";
+      $tplmark = $this->getAutofillMark('name', $options);
+      
+      //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
+      echo "<td>".sprintf(__('%1$s%2$s'), __('Name'), $tplmark);
+      echo "</td>";
+      echo "<td>";
+      //$this->fields['withtemplate'] = 2 ;
+      $objectName = autoName($this->fields["name"], "name",
+                             (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
+                             $this->getType(), $this->fields["entities_id"]);
+      Html::autocompletionTextField($this, "name", ['value' => $objectName]);
+      echo "</td>\n";
       echo "<td>".__('Location')."</td>\n";
       echo "<td>";
       Location::dropdown(['value'  => $this->fields["locations_id"],
                                'entity' => $this->fields["entities_id"]]);
       echo "</td>\n";
-      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0)."</td>\n";
-      echo "<td>";
-      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"],
-      'permit_select_parent' => true,
-      'displaywith' => ['code','label']]);
-      echo "</td></tr>\n";
+
+
+
+      echo "</tr>\n";
+      
+
+
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Technician in charge of the hardware')."</td>\n";
