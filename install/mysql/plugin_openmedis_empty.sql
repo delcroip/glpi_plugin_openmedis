@@ -119,6 +119,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
   `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locations_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_medicaldevicecategories_parent_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicecategories_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_utilizations_id` int(11) NOT NULL DEFAULT '0',
   `brand` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

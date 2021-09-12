@@ -199,13 +199,14 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //do not display called elements per default; they'll be displayed or returned here
       $params['display'] = false;
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0)."</td>\n";
+      echo "<td>".__("Parent")."</br>\n";
+      echo PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0)."</td>\n";
       echo "<td>";
       //$this->category =  is_null($_POST['category'] ? $_POST['category'] : '');
       $rand =  mt_rand();
       $parent_name = 'plugin_openmedis_medicaldevicecategories_parent_id';
       $parent_field_id = Html::cleanId("dropdown_".$parent_name.$rand);
-      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->category ,
+      PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_parent_id"] ,
       'name' => $parent_name,
       'displaywith' => ['code','label'],
       'condition' => [ 'level' => 1],
