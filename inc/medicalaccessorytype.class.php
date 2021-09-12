@@ -34,9 +34,14 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class  PluginOpenmedisMedicalAccessoryType extends CommonDeviceType {
-   static $rightname  = 'plugin_openmedis_medicaldevicetype';
+   static $rightname  = 'plugin_openmedis_medicalaccessory_type';
    static function getTypeName($nb = 0) {
-      return _n('Medical Accessories type', 'Medical Accessories types', $nb);
+      return _n('Medical accessory type', 'Medical accessory types', $nb, 'openmedis');
    }
-
+   static function getIcon() {
+      return "fas fa-screwdriver";
+   }
+   static function getFieldLabel($nb = 0) {
+      return _n('Type', 'Types', $nb);
+   }
 }

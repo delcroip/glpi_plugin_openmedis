@@ -12,18 +12,32 @@ This module enable you to create and manage your Medical device
 
 	download the patch: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/8280.patch
 
+	before 9.5.6 patches
+
+	administrative report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9375.patch
+	other administrative report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9377.patch
+	contract report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9402.patch
+	default report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9403.patch
+
+
+
 	then copy it on glpi/ folder
 
 	then apply it: 
 
 	```
 		patch -p1 < 8280.patch
+		patch -p1 < 9375.patch
+		patch -p1 < 9377.patch
+		patch -p1 < 9402.patch
+		patch -p1 < 9403.patch
 	```
 
 2. Configure project-GLPI:
 
 	*. Location, __Setup > Dropdowns > Common > Locaiton__
 	
+
 	*. Users, __Administration > Users__
 	
 	*. Groups __Administration > Groups__
@@ -40,9 +54,7 @@ This module enable you to create and manage your Medical device
 	
 	*. __Health technologies management > Medical Devices Utilisations__ with the utilisation status you want to have (in use, ....)
 	
-	*. __Health technologies management > Medical Accessories models__ Not used yet
-	
-	*. __Health technologies management > Medical Accessories types__ Not used yet
+	*. __Health technologies management > Medical Accessories types__
 	
 5. Configure the Dropdowns in __Administration > Profiles > Select the profile__ 
 
@@ -58,7 +70,7 @@ This module enable you to create and manage your Medical device
 
 8. Start adding medical consomable type and consomables (if any)
 
-9. to use the custom report, the report module must be installed and the content of the "openmedis/reports" repository must be copied in the report module
+9. to use the custom report, the report module must be installed and access must be givent to the openMedis specific reports (group options available if the report module have the PluginOpenmedisToggleCriteria class)
 
 ## Standard glpi information
 
@@ -82,6 +94,11 @@ This module enable you to create and manage your Medical device
 ## Traduction
 
 https://app.lokalise.com/public/6803907760dcb8c3a08649.77618538/
+
+Once the po files are updated, on Linux system you can execute in the plugin repository
+```
+../../vendor/bin/robo compile_locales
+```
 
 
 

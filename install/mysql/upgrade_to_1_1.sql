@@ -28,7 +28,7 @@ CREATE TABLE `glpi_plugin_openmedis_medicalconsumableitemtypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-### Dump table glpi_plugin_openmedis_medicalconsumable
+### Dump table glpi_plugin_openmedis_medicalconsumables
 
 DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalconsumables`;
 CREATE TABLE `glpi_plugin_openmedis_medicalconsumables` (

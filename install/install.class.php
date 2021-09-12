@@ -66,7 +66,8 @@ class PluginOpenmedisInstall {
    private $upgradeSteps = [
       '1.0'    => '1.1',
       '1.1'    => '1.2',
-      '1.2'    => '1.3'
+      '1.2'    => '1.3',
+      '1.3'    => '1.4'
    ];
 
    /**
@@ -190,7 +191,7 @@ class PluginOpenmedisInstall {
     */
    public function getSchemaVersion() {
       if ($this->isPluginInstalled()) {
-         $config = Config::getConfigurationValues('plugin:openmedis');
+         $config = Config::getConfigurationValues('openmedis');
          if (!isset($config['schema_version'])) {
             return '1.0'; // first schema verison was not saved
          }
@@ -236,7 +237,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDeviceCategory::$rightname => READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisDeviceMedicalAccessory::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalAccessoryType ::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
-        PluginOpenmedisMedicalAccessoryCategory::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
+//        PluginOpenmedisMedicalAccessoryCategory::$rightname =>  READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalConsumable::$rightname => READ | CREATE | UPDATE | DELETE | PURGE,
         PluginOpenmedisMedicalConsumableItem::$rightname => READ | CREATE | UPDATE | DELETE | PURGE| READNOTE | UPDATENOTE,
         PluginOpenmedisMedicalConsumableItemType::$rightname => READ | CREATE | UPDATE | DELETE | PURGE,
@@ -267,7 +268,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDeviceCategory::$rightname =>  READ ,
         PluginOpenmedisDeviceMedicalAccessory::$rightname =>  READ ,
         PluginOpenmedisMedicalAccessoryType ::$rightname => READ ,
-        PluginOpenmedisMedicalAccessoryCategory::$rightname => READ ,
+//        PluginOpenmedisMedicalAccessoryCategory::$rightname => READ ,
         PluginOpenmedisMedicalConsumable::$rightname => READ ,
         PluginOpenmedisMedicalConsumableItem::$rightname => READ ,
         PluginOpenmedisMedicalConsumableItemType::$rightname =>  READ ,
@@ -294,7 +295,7 @@ class PluginOpenmedisInstall {
         PluginOpenmedisMedicalDeviceCategory::$rightname =>  READ ,
         PluginOpenmedisDeviceMedicalAccessory::$rightname =>  READ | CREATE | UPDATE | DELETE,
         PluginOpenmedisMedicalAccessoryType ::$rightname => READ ,
-        PluginOpenmedisMedicalAccessoryCategory::$rightname => READ ,
+  //      PluginOpenmedisMedicalAccessoryCategory::$rightname => READ ,
         PluginOpenmedisMedicalConsumable::$rightname => READ | CREATE | UPDATE | DELETE |  READNOTE | UPDATENOTE, 
         PluginOpenmedisMedicalConsumableItem::$rightname => READ ,
         PluginOpenmedisMedicalConsumableItemType::$rightname =>  READ ,
@@ -376,7 +377,7 @@ class PluginOpenmedisInstall {
    }
 
    protected function createJobs() {
-      CronTask::Register(PluginOpenmedisMedicalConsumableItem::class, 'cronMedicalConsumable', MINUTE_TIMESTAMP,
+      CronTask::Register(PluginOpenmedisMedicalConsumableItem::class, 'MedicalConsumable', MINUTE_TIMESTAMP,
          [
             'comment' => PluginOpenmedisMedicalConsumableItem::cronInfo()['description'],
             'mode'    => CronTask::MODE_EXTERNAL,
@@ -464,6 +465,13 @@ class PluginOpenmedisInstall {
 
       foreach ($tables as $table) {
          $DB->query("DROP TABLE IF EXISTS `$table`");
+      }      // GARBAGE COLLECTOR
+      $result = $DB->query("SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'");
+      if ($result) {
+         if ($DB->numrows($result) > 0) {
+            //$this->migration->displayWarning(" Some of the module tables were not removed,".
+            //" please clean the database: SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'", true);
+         }
       }
 
       $tables_glpi = ["glpi_displaypreferences",
@@ -476,6 +484,7 @@ class PluginOpenmedisInstall {
         foreach ($tables_glpi as $table_glpi) {
         //fixme to be checked
         $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE '%luginOpenmedis%';");
+        $DB->query("ALTER TABLE glpi_states DROP COLUMN is_visible_pluginopenmedismedicaldevice;");
         }
       }
 
@@ -489,7 +498,7 @@ protected function getTables(){
       PluginOpenmedisMedicalDeviceCategory::getTable(),
       PluginOpenmedisDeviceMedicalAccessory::getTable(),
       PluginOpenmedisMedicalAccessoryType::getTable(),
-      PluginOpenmedisMedicalAccessoryCategory::getTable(),
+    //  PluginOpenmedisMedicalAccessoryCategory::getTable(),
       PluginOpenmedisMedicalConsumable::getTable(),
       PluginOpenmedisMedicalConsumableItem::getTable(),
       PluginOpenmedisMedicalConsumableItemType::getTable(),
@@ -522,7 +531,7 @@ protected function getTables(){
         PluginOpenmedisMedicalDeviceCategory::$rightname,
         PluginOpenmedisDeviceMedicalAccessory::$rightname,
         PluginOpenmedisMedicalAccessoryType::$rightname,
-        PluginOpenmedisMedicalAccessoryCategory::$rightname,
+      //  PluginOpenmedisMedicalAccessoryCategory::$rightname,
         PluginOpenmedisMedicalConsumable::$rightname,
         PluginOpenmedisMedicalConsumableItem::$rightname,
         PluginOpenmedisMedicalConsumableItemType::$rightname,
@@ -540,7 +549,7 @@ protected function getTables(){
         PluginOpenmedisMedicalDeviceCategory::class,
         PluginOpenmedisDeviceMedicalAccessory::class,
         PluginOpenmedisMedicalAccessoryType::class,
-        PluginOpenmedisMedicalAccessoryCategory::class,
+        //PluginOpenmedisMedicalAccessoryCategory::class,
         PluginOpenmedisMedicalConsumable::class,
         PluginOpenmedisMedicalConsumableItem::class,
         PluginOpenmedisMedicalConsumableItemType::class,

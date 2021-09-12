@@ -9,7 +9,7 @@ CREATE TABLE  `glpi_plugin_openmedis_devicemedicalaccessories` (
   `plugin_openmedis_medicalaccessorytypes_id` int(11) NOT NULL DEFAULT '0',
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
-  `plugin_openmedis_medicalaccessorycategories_id` int(11) DEFAULT NULL,
+  `plugin_openmedis_medicaldevicecategories_id` int(11) DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   `date_creation` datetime DEFAULT NULL,
   `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE  `glpi_plugin_openmedis_devicemedicalaccessories` (
   KEY `is_recursive` (`is_recursive`),
   KEY `date_mod` (`date_mod`),
   KEY `date_creation` (`date_creation`),
-  KEY `plugin_openmedis_medicalaccessorycategories_id` (`plugin_openmedis_medicalaccessorycategories_id`),
+  KEY `plugin_openmedis_medicaldevicecategories_id` (`plugin_openmedis_medicaldevicecategories_id`),
   KEY `plugin_openmedis_medicalaccessorytypes_id` (`plugin_openmedis_medicalaccessorytypes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -46,27 +46,6 @@ KEY `plugin_openmedis_medicaldevicecategories_id` (`plugin_openmedis_medicaldevi
 KEY `is_recursive` (`is_recursive`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalaccessorycategories`;
-CREATE TABLE `glpi_plugin_openmedis_medicalaccessorycategories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) DEFAULT NULL,
-  `label` varchar(255)  DEFAULT NULL, 
-  `comment` text DEFAULT NULL, 
-  `picture` text DEFAULT NULL, 
-  `plugin_openmedis_medicalaccessorycategories_id` int(11) NOT NULL DEFAULT '0', 
-  `name` text AS (CONCAT(code,' - ',label)), 
-  `completename` text COLLATE utf8_unicode_ci, 
-  `level` int(11) NOT NULL DEFAULT '0',
-  `ancestors_cache` longtext COLLATE utf8_unicode_ci,
-  `sons_cache` longtext COLLATE utf8_unicode_ci,
-  `is_recursive` tinyint NOT NULL DEFAULT '0',
-  `entities_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `unicity` (`plugin_openmedis_medicalaccessorycategories_id`, `code`),
-  KEY `plugin_openmedis_medicalaccessorycategories_id` (`plugin_openmedis_medicalaccessorycategories_id`),
- KEY `entities_id` (`entities_id`),
-KEY `is_recursive` (`is_recursive`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicaldevicemodels`;
 CREATE TABLE `glpi_plugin_openmedis_medicaldevicemodels` (
@@ -140,6 +119,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
   `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locations_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_openmedis_medicaldevicecategories_parent_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicecategories_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_utilizations_id` int(11) NOT NULL DEFAULT '0',
   `brand` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -210,7 +190,7 @@ CREATE TABLE `glpi_plugin_openmedis_medicalconsumableitemtypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-### Dump table glpi_plugin_openmedis_medicalconsumable
+### Dump table glpi_plugin_openmedis_medicalconsumables
 
 DROP TABLE IF EXISTS `glpi_plugin_openmedis_medicalconsumables`;
 CREATE TABLE `glpi_plugin_openmedis_medicalconsumables` (
@@ -265,3 +245,5 @@ CREATE TABLE `glpi_plugin_openmedis_medicalconsumableitems` (
   KEY `date_mod` (`date_mod`),
   KEY `date_creation` (`date_creation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `glpi_states` ADD COLUMN `is_visible_pluginopenmedismedicaldevice` tinyint(1) NOT NULL DEFAULT '1';

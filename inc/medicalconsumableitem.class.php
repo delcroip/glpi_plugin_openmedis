@@ -46,10 +46,10 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    public $dohistory                   = true;
    protected $usenotepad               = true;
 
-   static $rightname                   = 'plugin_openmedis_medicalconsumableitem';
+   static $rightname                   = 'plugin_openmedis_medicalconsumable';
 
    static function getTypeName($nb = 0) {
-      return _n('Medical consumable model', 'Medical consumable models', $nb);
+      return _n('Medical consumable item', 'Medical consumable items', $nb, 'openmedis');
    }
 
 
@@ -275,7 +275,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'id'                 => '4',
          'table'              => 'glpi_plugin_openmedis_medicalconsumableitemtypes',
          'field'              => 'name',
-         'name'               => _n('Type', 'Types', 1),
+         'name'               => __('Type'),
          'datatype'           => 'dropdown'
       ];
 
@@ -291,7 +291,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'id'                 => '9',
          'table'              => $this->getTable(),
          'field'              => '_virtual',
-         'name'               => _n('Medical consumable', 'Medical consumables', Session::getPluralNumber()),
+         'name'               => $this->getTypeName(Session::getPluralNumber()),
          'datatype'           => 'specific',
          'massiveaction'      => false,
          'nosearch'           => true,
@@ -301,9 +301,9 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '17',
-         'table'              => 'glpi_plugin_openmedis_medicalconsumable',
+         'table'              => 'glpi_plugin_openmedis_medicalconsumables',
          'field'              => 'id',
-         'name'               => __('Number of used medical consumables'),
+         'name'               => __('Number of used medical consumables', 'openmedis'),
          'datatype'           => 'count',
          'forcegroupby'       => true,
          'usehaving'          => true,
@@ -317,9 +317,9 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '18',
-         'table'              => 'glpi_plugin_openmedis_medicalconsumable',
+         'table'              => 'glpi_plugin_openmedis_medicalconsumables',
          'field'              => 'id',
-         'name'               => __('Number of worn medical consumables'),
+         'name'               => __('Number of worn medical consumables', 'openmedis'),
          'datatype'           => 'count',
          'forcegroupby'       => true,
          'usehaving'          => true,
@@ -332,9 +332,9 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       $tab[] = [
          'id'                 => '19',
-         'table'              => 'glpi_plugin_openmedis_medicalconsumable',
+         'table'              => 'glpi_plugin_openmedis_medicalconsumables',
          'field'              => 'id',
-         'name'               => __('Number of new medical consumables'),
+         'name'               => __('Number of new medical consumables', 'openmedis'),
          'datatype'           => 'count',
          'forcegroupby'       => true,
          'usehaving'          => true,
@@ -401,7 +401,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'table'              => 'glpi_plugin_openmedis_medicaldevicemodels',
          'field'              => 'name',
          'datatype'           => 'dropdown',
-         'name'               => _n('Medical Device model', 'Medical Device models', Session::getPluralNumber()),
+         'name'               => PluginOpenmedisMedicalDeviceModel::getTypeName(Session::getPluralNumber()),
          'forcegroupby'       => true,
          'massiveaction'      => false,
          'joinparams'         => [
@@ -424,7 +424,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
 
    static function cronInfo() {
-      return ['description' => __('Send alarms on medical consumables')];
+      return ['description' => __('Send alarms on medical consumables', 'openmedis')];
    }
 
 
@@ -486,7 +486,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
             foreach ($result as $medicalconsumable) {
                if (($unused=PluginOpenmedisMedicalConsumable::getUnusedNumber($medicalconsumable["mcID"]))<=$medicalconsumable["threshold"]) {
                   //TRANS: %1$s is the medical consumable name, %2$s its reference, %3$d the remaining number
-                  $message .= sprintf(__('Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d'),
+                  $message .= sprintf(__('Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d', 'openmedis'),
                                       $medicalconsumable["name"], $medicalconsumable["ref"], $unused);
                   $message .='<br>';
 
@@ -529,7 +529,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
                } else {
                   //TRANS: %s is entity name
-                  $msg = sprintf(__('%s: send medical consumable alert failed'), $entityname);
+                  $msg = sprintf(__('%s: send medical consumable alert failed', 'openmedis'), $entityname);
                   if ($task) {
                      $task->log($msg);
                   } else {
@@ -612,7 +612,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
 
    function getEvents() {
-      return ['alert' => __('Send alarms on medical consumable')];
+      return ['alert' => __('Send alarms on medical consumable', 'openmedis')];
    }
 
 

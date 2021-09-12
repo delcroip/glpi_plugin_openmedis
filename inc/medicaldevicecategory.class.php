@@ -44,8 +44,13 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
 
    static function getTypeName($nb = 0) {
-      return _n('Medical device category (e.g. UMDS,GMDN)', 'Medical device categories (e.g. UMDS,GMDN)', $nb);
+      return _n('Medical device category', 'Medical device categories', $nb, 'openmedis');
    }
+
+   static function getFieldLabel($nb = 0) {
+      return _n('Category', 'Categories', $nb, 'openmedis');
+   }
+
 
 
    function getAdditionalFields() {
@@ -60,7 +65,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       'list'      => true],
       
             ['name'      => 'plugin_openmedis_medicaldevicecategories_id',
-                         'label'     => __('Parent'),
+                         'label'     => __('Parent', 'openmedis'),
                          'type'      => 'dropdownValue',
                          'permit_select_parent' => true,
                          'displaywith' => ['code','label']],
@@ -151,7 +156,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
       echo "</tr>\n";
       echo "<tr>\n";
-      echo "<td>".__('Parent')."</td>\n";
+      echo "<td>".__('Parent', 'openmedis')."</td>\n";
       echo "<td>";
 
       PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"],
@@ -201,5 +206,9 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       // define the "name" to generate the "completename"
       $this->updates['name'] = $this->updates['code'].' - '.$this->updates['label'];
       parent::post_updateItem($history);
+   }
+
+   static function getIcon() {
+      return "fas fa-laptop-medical";
    }
 }

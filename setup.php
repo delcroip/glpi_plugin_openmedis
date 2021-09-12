@@ -29,22 +29,24 @@
  --------------------------------------------------------------------------
  */
 // Version of the plugin
-define('PLUGIN_OPENMEDIS_VERSION', '1.0.1.rc5');
+define('PLUGIN_OPENMEDIS_VERSION', '1.0.2');
 // Schema version of this version
-define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.3');
+define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.4');
 // is or is not an official release of the plugin
 define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
 // Minimal GLPI version, inclusive
-define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '9.4');
+define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '9.5.4');
 // Maximum GLPI version, exclusive
-define('PLUGIN_OPENMEDIS_GLPI_MAX_VERSION', '9.5');
+//define('PLUGIN_OPENMEDIS_GLPI_MAX_VERSION', '9.5');
 
 define('PLUGIN_OPENMEDIS_ROOT', GLPI_ROOT . '/plugins/openmedis');
 
 
 function plugin_init_openmedis() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
-
+   //AssetType is a default class
+   $CFG_GLPI['glpitablesitemtype']['PluginOpenmedisMedicalDeviceType'] = 'glpi_plugin_openmedis_medicaldevicecategories';
+   
   $plugin = new Plugin();   
   $CFG_GLPI['devices_in_menu'][]="pluginOpenmedisMedicalDevice"; 
      //$CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessory_Item';
@@ -81,7 +83,8 @@ function plugin_init_openmedis() {
 
 function plugin_openmedis_registerClasses(){
    Plugin::registerClass('PluginOpenmedisDeviceMedicalAccessory', [
-         'device_types' => true
+         'device_types' => true,
+         'infocom_types'        => true,
          ]);
       // add the type in the config so other module could register 
       //$CFG_GLPI['itemPluginOpenmedisMedicalAccessory_types'] = array();
@@ -95,12 +98,13 @@ function plugin_openmedis_registerClasses(){
          'infocom_types'        => true, // suplier, vbuy date ...
          'ticket_types'         => true, // enable to link to ticket (device> ... )
          'contract_types'       => true, // enable^to link contract
-
+         'report_types'          => true,
          'state_types'           => true,
          'linkuser_types'        => true,  // enable device in Mydevice on ticket
          'itemdevices_types' => true,  // enamble the component left menu
          'networkport_types' => true,
          'itemdevicepowersupply_types' => true,
+         'globalsearch_types' => true,
          // (item.$devicetype)._types https://github.com/glpi-project/glpi/blob/ac76869ab88858c047b4a535e08c32a6dd4d1b0f/inc/item_devices.class.php#L234
          //  devicetype is class name https://github.com/glpi-project/glpi/blob/dc9ff8801377a3fb7c3bf3c9a9337b61eb814982/inc/plugin.class.php#L1298
          'pluginopenmedisitemdevicemedicalaccessory_types' => true,
@@ -109,18 +113,19 @@ function plugin_openmedis_registerClasses(){
    ]); 
 
    Plugin::registerClass('PluginOpenmedisMedicalDeviceModel', ['dictionnary_types' => true]);
-   Plugin::registerClass('PluginOpenmedisMedicalDeviceType', ['dictionnary_types' => true]);
-
+   Plugin::registerClass('PluginOpenmedisMedicalDeviceCategory', ['dictionnary_types' => true]);
+   class_alias('PluginOpenmedisMedicalDeviceCategory','PluginOpenmedisMedicalDeviceType');
 
    Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
-   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
+//   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType', ['dictionnary_types' => true]);
 
    Plugin::registerClass('PluginOpenmedisProfile', [
          'addtabon' => 'Profile',
    ]); 
    Plugin::registerClass('PluginOpenmedisMedicalConsumable',[
-      "infocom_types" => true]);
+      "infocom_types" => true,
+      "consumables_types" => true,]);
 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel'); 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem', [
@@ -178,9 +183,8 @@ function plugin_openmedis_addHooks() {
 function plugin_version_openmedis() {
    $author = '<a href="https://github.com/delcroip">Patrick Delcroix</a>';
    
-   $requirements =  ['name'           => _n('Health technologies management',
-                                        'Health technologies management',
-                                        2, 'openmedis'),
+   $requirements =  ['name'           => _n('Health technology management', 'Health technologies management', 1
+                                        , 'openmedis'),
                   'version'        => PLUGIN_OPENMEDIS_VERSION,
                   'license'        => 'GPLv2+',
                   'author'         => $author ,

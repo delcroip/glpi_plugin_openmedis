@@ -40,7 +40,7 @@ class PluginOpenmedisProfile extends Profile
     function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item->getType() == 'Profile') {
-            return __('Health technology');
+            return __('Health technology', 'openmedis');
         }
 
         return '';
@@ -61,16 +61,14 @@ class PluginOpenmedisProfile extends Profile
             $prof = new self();
 
             self::addDefaultProfileInfos($ID,
-                ['plugin_openmedis' => __('Medical Device asset'),
-                'plugin_openmedis_medicaldevicemodel' => __('Medical Device Models'),
-                'plugin_openmedis_medicaldevicecategory' => __('Medical Device Category'),
-                'plugin_openmedis_devicemedicalaccessory' => __('Medical Accessory'),
-                'plugin_openmedis_medicalaccessory_type' => __('Medical Accessory Type'),
-                'plugin_openmedis_medicalaccessorycategorie' => __('Medical Accessory Model'),
-                'plugin_openmedis_openticket' => __('OpenTicket for Medical Device'),
-                'plugin_openmedis_medicalconsumable' => __('Medical Device consumable'),
-                'plugin_openmedis_medicalconsumable_item' => __('Medical Device item'),
-                'plugin_openmedis_medicalconsumable_type' => __('Medical Device consumable type')]);
+                [PluginOpenmedisMedicalDevice::$rightname => PluginOpenmedisMedicalDevice::getTypeName(1),
+                PluginOpenmedisMedicalDeviceModel::$rightname => PluginOpenmedisMedicalDeviceModel::getTypeName(1),
+                PluginOpenmedisMedicalDeviceCategory::$rightname => PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
+                PluginOpenmedisDeviceMedicalAccessory::$rightname => PluginOpenmedisDeviceMedicalAccessory::getTypeName(1),
+                PluginOpenmedisMedicalConsumableItemType::$rightname => PluginOpenmedisMedicalConsumableItemType::getTypeName(1),
+                PluginOpenmedisMedicalAccessoryType::$rightname => PluginOpenmedisMedicalAccessoryType::getTypeName(1),
+                PluginOpenmedisMedicalConsumable::$rightname=> PluginOpenmedisMedicalConsumable::getTypeName(1),
+                ]);
             $prof->showForm($ID);
         }
         return true;
@@ -83,16 +81,13 @@ class PluginOpenmedisProfile extends Profile
     {
         //85
         self::addDefaultProfileInfos($ID,
-        ['plugin_openmedis' => 7,
-        'plugin_openmedis_medicaldevicemodel' => 7,
-        'plugin_openmedis_medicaldevicecategory' => 7,
-        'plugin_openmedis_devicemedicalaccessory' => 7,
-        'plugin_openmedis_medicalaccessory_type' => 7,
-        'plugin_openmedis_medicalaccessorycategory' => 7,
-        'plugin_openmedis_medicalconsumable' => 7,
-        'plugin_openmedis_medicalconsumable_type' => 7,
-        'plugin_openmedis_medicalconsumable_item' => 7,
-        'plugin_openmedis_openticket' => 7], true);
+        [PluginOpenmedisMedicalDevice::$rightname => 7,
+        PluginOpenmedisMedicalDeviceModel::$rightname => 7,
+        PluginOpenmedisMedicalDeviceCategory::$rightname => 7,
+        PluginOpenmedisMedicalAccessoryType::$rightname => 7,
+        PluginOpenmedisMedicalConsumableItemType::$rightname => 7,
+        PluginOpenmedisDeviceMedicalAccessory::$rightname => 7,
+        PluginOpenmedisMedicalConsumable::$rightname => 7]);
     }
 
     /**
@@ -183,38 +178,29 @@ class PluginOpenmedisProfile extends Profile
     {
         $rights = [
                 ['itemtype' => 'PluginOpenmedisMedicalDevice',
-                'label' => __('Medical Device'),
-                'field' => 'plugin_openmedis'],
+                'label' => PluginOpenmedisMedicalDevice::getTypeName(1),
+                'field' => PluginOpenmedisMedicalDevice::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalDeviceCategory',
-                'label' => __('Medical Device Categories '),
-                'field' => 'plugin_openmedis_medicaldevicecategory'],
+                'label' => PluginOpenmedisMedicalDeviceCategory::getTypeName(1),
+                'field' => PluginOpenmedisMedicalDeviceCategory::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalDeviceModel',
-                'label' => __('Medical Device Model'),
-                'field' => 'plugin_openmedis_medicaldevicemodel'],
+                'label' => PluginOpenmedisMedicalDeviceModel::getTypeName(1),
+                'field' => PluginOpenmedisMedicalDeviceModel::$rightname],
                 ['itemtype' => 'PluginOpenmedisDeviceMedicalAccessory',
-                'label' => __('Medical Accessory '),
-                'field' => 'plugin_openmedis_devicemedicalaccessory'],
-                ['itemtype' => 'PluginOpenmedisMedicalAccessoryCategory',
-                'label' => __('Medical Accessory Category'),
-                'field' => 'plugin_openmedis_medicalaccessorycategory'],
-                ['itemtype' => 'PluginOpenmedisMedicalAccessoryType',
-                'label' => __('Medical Accessory Type '),
-                'field' => 'plugin_openmedis_medicalaccessory_type'],
-                ['itemtype' => 'PluginOpenmedisMedicalConsumable',
-                'label' => __('Medical consumable'),
-                'field' => 'plugin_openmedis_medicalconsumable'],
+                'label' => PluginOpenmedisDeviceMedicalAccessory::getTypeName(1),
+                'field' => PluginOpenmedisDeviceMedicalAccessory::$rightname],
                 ['itemtype' => 'PluginOpenmedisMedicalConsumableItemType',
-                'label' => __('Medical consumable Type'),
-                'field' => 'plugin_openmedis_medicalconsumable_type'],
-                ['itemtype' => 'PluginOpenmedisMedicalConsumableItem',
-                'label' => __('Medical consumable item'),
-                'field' => 'plugin_openmedis_medicalconsumable_item']
+                'label' => PluginOpenmedisMedicalConsumableItemType::getTypeName(1),
+                'field' => PluginOpenmedisMedicalConsumableItemType::$rightname],
+                ['itemtype' => 'PluginOpenmedisMedicalAccessoryType',
+                'label' => PluginOpenmedisMedicalAccessoryType::getTypeName(1),
+                'field' => PluginOpenmedisMedicalAccessoryType::$rightname],
+                ['itemtype' => 'PluginOpenmedisMedicalConsumable',
+                'label' => PluginOpenmedisMedicalConsumable::getTypeName(1),
+                'field' => PluginOpenmedisMedicalConsumable::$rightname]
         ];
-        if ($all) {
-            $rights[] = ['itemtype' => 'PluginOpenmedisMedicalDevice',
-                         'label'    =>  __('Associable items to a ticket'),
-                         'field'    => 'plugin_openmedis_openticket'];
-         }
+
+         
         return $rights;
     }
 
@@ -260,7 +246,6 @@ class PluginOpenmedisProfile extends Profile
                              ['id' => $profiles_id]) as $profile_data) {
 
           $matching = ['openmedis'  => 'plugin_openmedis',
-                       'openmedis_openticket' => 'plugin_openmedis_openticket',
                        'openmedis_type' => 'plugin_openmedis_category',
                        'openmedis_model' => 'plugin_openmedis_model'
                     ];

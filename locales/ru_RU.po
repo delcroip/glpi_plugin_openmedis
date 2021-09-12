@@ -3,24 +3,27 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: lokalise.com\n"
+"X-Generator: Poedit 3.0\n"
 "Project-Id-Version: openmedis\n"
-"PO-Revision-Date: 2021-06-30 20:42\n"
-"Last-Translator: lokalise.com\n"
-"Language-Team: lokalise.com\n\n"
-"Language: ru\n"
-
-#, fuzzy
-msgid "Medical Device"
-msgstr "Медицинское оборудование"
+"PO-Revision-Date: 2021-08-16 10:42+0200\n"
+"Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
+"Language-Team: lokalise.com <httu-admin@swisstph.ch>\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? "
+"1 : 2);\n"
+"POT-Creation-Date: \n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #, fuzzy
 msgid "Name"
 msgstr "Имя"
 
 #, fuzzy
-msgid "Health technologies management"
-msgstr "Управление технологиями здравоохранения"
+msgid "Health technology management"
+msgid_plural "Health technologies management"
+msgstr[0] "Управление медицинскими технологиями"
+msgstr[1] "Управления медицинскими технологиями"
+msgstr[2] "Управления медицинскими технологиями"
 
 #, fuzzy
 msgid "%s adds medical consumables"
@@ -67,16 +70,23 @@ msgid "%s sets unitary management"
 msgstr "%s устанавливает унитарное управление"
 
 #, fuzzy
-msgid "Medical Accessory"
-msgstr "Медицинский аксессуар"
+msgid "Medical accessory"
+msgid_plural "Medical accessories"
+msgstr[0] "Медицинский аксессуар"
+msgstr[1] "Медицинские аксессуары"
+msgstr[2] "Медицинские аксессуары"
 
-#, fuzzy
 msgid "Type"
-msgstr "Тип"
+msgid_plural "Types"
+msgstr[0] "Тип"
+msgstr[1] "Типы"
+msgstr[2] "Типы"
 
-#, fuzzy
 msgid "Category"
-msgstr "Категория"
+msgid_plural "Categories"
+msgstr[0] "Категория"
+msgstr[1] "Категории"
+msgstr[2] "Категории"
 
 #, fuzzy
 msgid "Part Number"
@@ -95,10 +105,6 @@ msgid "Date"
 msgstr "Дата"
 
 #, fuzzy
-msgid "Medical accessory category (e.g. UMDS,GMDN)"
-msgstr "Категория медицинских принадлежностей (например, UMDS, GMDN)"
-
-#, fuzzy
 msgid "Code"
 msgstr "Код"
 
@@ -110,13 +116,11 @@ msgstr "Родитель"
 msgid "Comment"
 msgstr "Комментарий"
 
-#, fuzzy
-msgid "Medical Accessories type"
-msgstr "Тип медицинских принадлежностей"
-
-#, fuzzy
 msgid "Medical consumable"
-msgstr "Медицинские расходные материалы"
+msgid_plural "Medical consumables"
+msgstr[0] "Медицинские расходные материалы"
+msgstr[1] "Медицинские расходные материалы"
+msgstr[2] "Медицинские расходные материалы"
 
 #, fuzzy
 msgid "Installing a medicalconsumable"
@@ -134,17 +138,15 @@ msgstr "Деинсталляция медицинского расходного
 msgid "Total"
 msgstr "Всего"
 
-#, fuzzy
 msgid "Total: %1$d (%2$d new, %3$d used, %4$d worn)"
-msgstr "Итого: %1$d (%2$d новых, %3$d использованных, %4$d изношенных)"
+msgstr "Всего: %1$d (%2$d новых, %3$d использованных, %4$d изношенных)"
 
 #, fuzzy
 msgid "No medical consumable"
 msgstr "Отсутствие медицинских расходных материалов"
 
-#, fuzzy
 msgid "No medicalconsumable"
-msgstr "Не подлежит медицинскому страхованию"
+msgstr "Отсутствие медицинских расходных материалов"
 
 #, fuzzy
 msgid "Total: %1$d (%2$d used, %3$d worn)"
@@ -224,9 +226,8 @@ msgstr "x"
 msgid "No medical consumable available"
 msgstr "Отсутствие медицинских расходных материалов"
 
-#, fuzzy
 msgid "End of life"
-msgstr "Конец жизни"
+msgstr "Конец жизненного цикла"
 
 #, fuzzy
 msgid "Update medical device counter"
@@ -241,14 +242,6 @@ msgid "Worn medcial consumable"
 msgstr "Изношенный медицинский расходный материал"
 
 #, fuzzy
-msgid "Medical consumable model"
-msgstr "Модель медицинских расходных материалов"
-
-#, fuzzy
-msgid "Medical consumable type"
-msgstr "Тип медицинского расходного материала"
-
-#, fuzzy
 msgid "Medical consumable usages"
 msgstr "Использование медицинских расходных материалов"
 
@@ -259,17 +252,17 @@ msgstr "%1$s - %2$s"
 msgid "%d month"
 msgstr "%d месяц"
 
-#, fuzzy
 msgid "Average number of  usages"
 msgstr "Среднее количество использований"
 
-#, fuzzy
 msgid "Medical device"
-msgstr "Медицинское оборудование"
+msgid_plural "Medical devices"
+msgstr[0] "Медицинское оборудование"
+msgstr[1] "Медицинское оборудование"
+msgstr[2] "Медицинское оборудование"
 
-#, fuzzy
 msgid "Reference"
-msgstr "Ссылка"
+msgstr "Справочник"
 
 #, fuzzy
 msgid "Technician in charge of the hardware"
@@ -295,29 +288,28 @@ msgstr "Порог предупреждения"
 msgid "Never"
 msgstr "Никогда"
 
-#, fuzzy
 msgid "Number of used medical consumables"
 msgstr "Количество использованных медицинских расходных материалов"
 
-#, fuzzy
 msgid "Number of worn medical consumables"
 msgstr "Количество изношенных медицинских расходных материалов"
 
-#, fuzzy
 msgid "Number of new medical consumables"
 msgstr "Количество новых медицинских расходных материалов"
 
 #, fuzzy
-msgid "Medical Device model"
-msgstr "Модель медицинского оборудования"
+msgid "Medical device model"
+msgid_plural "Medical device models"
+msgstr[0] "Модель медицинского оборудования"
+msgstr[1] "Модели медицинского оборудования"
+msgstr[2] "Модели медицинского оборудования"
 
 #, fuzzy
 msgid "Send alarms on medical consumables"
 msgstr "Отправлять сигналы тревоги о медицинских расходных материалах"
 
-#, fuzzy
 msgid "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
-msgstr "Достигнут порог тревоги для типа медицинского расходного материала: %1$s - Эталон %2$s - Остаток %3$d"
+msgstr "Достигнут порог тревоги для типа медицинского расходного материала: %1$s - Источник %2$s - Остаток %3$d"
 
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -330,20 +322,20 @@ msgstr "%s: отправка предупреждения о медицинск�
 msgid "Send alarms on medical consumable"
 msgstr "Отправлять сигналы тревоги о медицинских расходных материалах"
 
-#, fuzzy
 msgid "Add a compatible medical device model"
-msgstr "Добавить совместимую модель медицинского устройства"
+msgstr "Добавить совместимую модель медицинского оборудования"
 
-#, fuzzy
 msgid "Model"
-msgstr "Модель"
+msgid_plural "Models"
+msgstr[0] "Модель"
+msgstr[1] "Модели"
+msgstr[2] "Модели"
 
-#, fuzzy
 msgid "No item found"
-msgstr "Товар не найден"
+msgstr "Элемент не найден"
 
 msgid "%1$s%2$s"
-msgstr ""
+msgstr "%1$s%2$s"
 
 #, fuzzy
 msgid "Status"
@@ -377,9 +369,11 @@ msgstr "Инвентарный номер"
 msgid "User"
 msgstr "Пользователь"
 
-#, fuzzy
 msgid "Utilization"
-msgstr "Утилизация"
+msgid_plural "Utilizations"
+msgstr[0] "Использование"
+msgstr[1] "Использование"
+msgstr[2] "Использование"
 
 #, fuzzy
 msgid "Group"
@@ -405,113 +399,77 @@ msgstr "Дата создания"
 msgid "Template name"
 msgstr "Имя шаблона"
 
-#, fuzzy
 msgid "Entity"
-msgstr "Сущность"
+msgstr "Учреждение"
 
 #, fuzzy
 msgid "Global management"
 msgstr "Глобальное управление"
 
 #, fuzzy
-msgid "Medical device category (e.g. UMDS,GMDN)"
-msgstr "Категория медицинского изделия (например, UMDS, GMDN)"
+msgid "Medical device category"
+msgid_plural "Medical device categories"
+msgstr[0] "Категория медицинского оборудования (например, UMDS, GMDN)"
+msgstr[1] "Категории медицинского оборудования (например, UMDS, GMDN)"
+msgstr[2] "Категории медицинского оборудования (например, UMDS, GMDN)"
 
-#, fuzzy
 msgid "Health technology"
-msgstr "Технология здравоохранения"
+msgstr "Медицинская технология"
 
 #, fuzzy
 msgid "Medical Device asset"
 msgstr "Актив медицинского оборудования"
 
 #, fuzzy
-msgid "Medical Device Models"
-msgstr "Модели медицинского оборудования"
+msgid "Medical accessory type"
+msgid_plural "Medical accessory types"
+msgstr[0] "Тип медицинских аксессуаров"
+msgstr[1] "Типы медицинских аксессуаров"
+msgstr[2] "Типы медицинских аксессуаров"
 
-#, fuzzy
-msgid "Medical Device Category"
-msgstr "Категория медицинского оборудования"
-
-#, fuzzy
-msgid "Medical Accessory Type"
-msgstr "Тип медицинского аксессуара"
-
-#, fuzzy
-msgid "Medical Accessory Model"
-msgstr "Модель медицинского аксессуара"
-
-#, fuzzy
 msgid "OpenTicket for Medical Device"
-msgstr "OpenTicket для медицинского оборудования"
-
-#, fuzzy
-msgid "Medical Device consumable"
-msgstr "Расходные материалы для медицинского оборудования"
-
-#, fuzzy
-msgid "Medical Device item"
-msgstr "Пункт медицинского оборудования"
-
-#, fuzzy
-msgid "Medical Device consumable type"
-msgstr "Тип расходного материала для медицинского оборудования"
+msgstr "Открытый запрос для медицинского оборудования"
 
 #, fuzzy
 msgid "General"
 msgstr "Общий"
 
 #, fuzzy
-msgid "Medical Device Categories "
-msgstr "Категории медицинского оборудования "
+msgid "Medical consumable type"
+msgid_plural "Medical consumable types"
+msgstr[0] "Тип медицинских расходных материалов"
+msgstr[1] "Типы медицинских расходных материалов"
+msgstr[2] "Типы медицинских расходных материалов"
 
-#, fuzzy
-msgid "Medical Device Model"
-msgstr "Модель медицинского изделия"
-
-#, fuzzy
-msgid "Medical Accessory "
-msgstr "Медицинский аксессуар "
-
-#, fuzzy
-msgid "Medical Accessory Category"
-msgstr "Категория медицинских принадлежностей"
-
-#, fuzzy
-msgid "Medical Accessory Type "
-msgstr "Тип медицинского аксессуара "
-
-#, fuzzy
-msgid "Medical consumable Type"
-msgstr "Тип медицинского расходного материала"
-
-#, fuzzy
-msgid "Medical consumable item"
-msgstr "Медицинский расходный материал"
-
-#, fuzzy
 msgid "Associable items to a ticket"
-msgstr "Ассоциируемые элементы к билету"
+msgstr "Ассоциируемые элементы к запросу"
 
 #, fuzzy
-msgid "Medical Device Utilisation"
-msgstr "Использование медицинского оборудования"
+msgid "Medical device utilization"
+msgid_plural "Medical device utilizations"
+msgstr[0] "Использование медицинского оборудования"
+msgstr[1] "Использования медицинского оборудования"
+msgstr[2] "Использования медицинского оборудования"
 
 #, fuzzy
 msgid "openMedis guest users"
 msgstr "гостевые пользователи openMedis"
 
-#, fuzzy
 msgid "guest openMedis users. Created by openMedis - do NOT modify this comment."
-msgstr "приглашенные пользователи openMedis. Создано openMedis - НЕ изменяйте этот комментарий."
+msgstr "гостевые пользователи openMedis. Создано openMedis - НЕ изменяйте этот комментарий."
 
-#, fuzzy
 msgid "openMedis technician  users"
-msgstr "Пользователи техники openMedis"
+msgstr "Технические пользователи openMedis"
+
+msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
+msgstr "Технические пользователи openMedis. Создано openMedis - НЕ изменяйте этот комментарий."
 
 #, fuzzy
-msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
-msgstr " Технические пользователи openMedis. Создано openMedis - НЕ изменяйте этот комментарий."
-
 msgid "medicaldevicesbyutilisation_report_title"
 msgstr "Медицинские изделия по видам использования"
+
+msgid "Medical accessory category"
+msgid_plural "Medical accessory categories"
+msgstr[0] "Категория медицинских аксессуаров"
+msgstr[1] "Категории медицинских аксессуаров"
+msgstr[2] "Категории медицинских аксессуаров"

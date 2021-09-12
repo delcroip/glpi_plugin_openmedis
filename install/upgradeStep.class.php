@@ -78,6 +78,21 @@ abstract class PluginOpenmedisUpgradeStep{
     }
   }
 
+  protected function removeTableIfExists($oldTable){
+    global $DB;
+    if($DB->tableExists($oldTable)){
+      $sql = "DROP TABLE ".$oldTable;
+      if($DB->query($sql)){
+        return 0;
+      }else{
+        $this->migration->displayWarning("Error in migration $this->migrationStep removeTableIfExists:" . $DB->error(), true);
+        return 1;
+      }
+    }else {
+      $this->migration->displayWarning("Error in migration $this->migrationStep removeTableIfExists: table ".$oldTable.'  don\'t exist' , true);
+      return 1;
+    }
+  }
   protected function renamefieldIfExists($table, $oldfield,$newfield, $fieldOptions, $index = false, $indexName = ''){
     global $DB;
     if($DB->fieldExists($table,$oldfield)){
