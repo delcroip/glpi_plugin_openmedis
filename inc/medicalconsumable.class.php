@@ -91,14 +91,15 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
    function prepareInputForAdd($input) {
 
-      $item = static::getItemFromArray(static::$itemtype, static::$items_id, $input);
-      if ($item === false) {
-         return false;
-      }
 
-      return ["plugin_openmedis_medicalconsumableitems_id" => $item->fields["id"],
-                   "entities_id"       => $item->getEntityID(),
-                   "date_in"           => date("Y-m-d")];
+      $item = new PluginOpenmedisMedicalConsumableItem();
+      if ($item->getFromDB($input["plugin_openmedis_medicalconsumableitems_id"])) {
+         return ["plugin_openmedis_medicalconsumableitems_id" => $item->fields["id"],
+                      "entities_id"        => $item->getEntityID(),
+                      "date_in"            => date("Y-m-d")];
+      }
+      return [];
+
    }
 
 
