@@ -116,7 +116,7 @@ function plugin_openmedis_registerClasses(){
    Plugin::registerClass('PluginOpenmedisMedicalDeviceCategory', ['dictionnary_types' => true]);
    class_alias('PluginOpenmedisMedicalDeviceCategory','PluginOpenmedisMedicalDeviceType');
 
-   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory');
+   Plugin::registerClass('PluginOpenmedisItem_DeviceMedicalAccessory', ['infocom_types'        => true]);
 //   Plugin::registerClass('PluginOpenmedisMedicalAccessoryCategory', ['dictionnary_types' => true]);
    Plugin::registerClass('PluginOpenmedisMedicalAccessoryType', ['dictionnary_types' => true]);
 
@@ -129,6 +129,7 @@ function plugin_openmedis_registerClasses(){
 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel'); 
    Plugin::registerClass('PluginOpenmedisMedicalConsumableItem', [
+      "infocom_types" => true,
       "location_types" => true,
       'contract_types'  => true,
       'link_types'  => true,
