@@ -1,0 +1,548 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: lokalise.com\n"
+"Project-Id-Version: openmedis\n"
+"PO-Revision-Date: 2021-12-13 20:03\n"
+"Last-Translator: lokalise.com\n"
+"Language-Team: lokalise.com\n\n"
+"Language: uk_UA\n"
+
+msgctxt "openmedis"
+msgid "Name"
+msgstr "Назва"
+
+msgctxt "openmedis"
+msgid "Health technology management"
+msgid_plural "Health technologies management"
+msgstr[0] "Управління медичною технологією"
+msgstr[1] "Управління медичними технологіями"
+msgstr[2] "Управління медичними технологіями"
+msgstr[3] "Управління медичними технологіями"
+
+msgctxt "openmedis"
+msgid "%s adds medical consumables"
+msgstr "%s додає медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "%s purges a medical consumable"
+msgstr "%s очищає медичний витратний матеріал"
+
+msgctxt "openmedis"
+msgid "%s installs a medical consumable"
+msgstr "додає медичний витратний матеріал"
+
+msgctxt "openmedis"
+msgid "%s updates a medical consumable"
+msgstr "%s оновлює медичний витратний матеріал"
+
+msgctxt "openmedis"
+msgid "%1$s adds the item %2$s"
+msgstr "%1$s додає елемент %2$s"
+
+msgctxt "openmedis"
+msgid "%s deletes an item"
+msgstr "%s видаляє елемент"
+
+msgctxt "openmedis"
+msgid "%s restores an item"
+msgstr "%s відновлює елемент"
+
+msgctxt "openmedis"
+msgid "%s purges an item"
+msgstr "%s очищає елемент"
+
+msgctxt "openmedis"
+msgid "%s updates an item"
+msgstr "%s оновлює елемент"
+
+msgctxt "openmedis"
+msgid "%s associates a type"
+msgstr "%s асоціює вид"
+
+msgctxt "openmedis"
+msgid "%s sets unitary management"
+msgstr "%s встановлює самостійне управління"
+
+msgctxt "openmedis"
+msgid "Medical accessory"
+msgid_plural "Medical accessories"
+msgstr[0] "Медичний аксесуар"
+msgstr[1] "Медичні аксесуари"
+
+msgctxt "openmedis"
+msgid "Type"
+msgid_plural "Type"
+msgstr[0] "Вид"
+msgstr[1] "Види"
+msgstr[2] "Види"
+msgstr[3] "Види"
+
+msgctxt "openmedis"
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "Категорія"
+msgstr[1] "Категорії"
+
+msgctxt "openmedis"
+msgid "Part Number"
+msgstr "Номер партії"
+
+msgctxt "openmedis"
+msgid "Picture"
+msgstr "Зображення"
+
+msgctxt "openmedis"
+msgid "Manufacturing date"
+msgstr "Дата виготовлення"
+
+msgctxt "openmedis"
+msgid "Date"
+msgstr "Дата"
+
+msgctxt "openmedis"
+msgid "Code"
+msgstr "Код"
+
+msgctxt "openmedis"
+msgid "Parent"
+msgstr "Батько"
+
+msgctxt "openmedis"
+msgid "Comment"
+msgstr "Прокоментуйте"
+
+msgctxt "openmedis"
+msgid "Medical consumable"
+msgid_plural "Medical consumables"
+msgstr[0] "Медичний витратний матеріал"
+msgstr[1] "Медичні витратні матеріали"
+msgstr[2] "Медичні витратні матеріали"
+msgstr[3] "Медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "Installing a medicalconsumable"
+msgstr "Додавання медичного витратного матеріалу"
+
+msgctxt "openmedis"
+msgid "No free medical consumable"
+msgstr "Вільні медичні витратні матеріали відсутні"
+
+msgctxt "openmedis"
+msgid "Uninstalling a medical consumable"
+msgstr "Видалення медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Total"
+msgstr "Всього"
+
+msgctxt "openmedis"
+msgid "Total: %1$d (%2$d new, %3$d used, %4$d worn)"
+msgstr "Всього: %1$d ( %2$d новий, %3$d використаний, %4$d зношений)"
+
+msgctxt "openmedis"
+msgid "No medical consumable"
+msgstr "Медичні витратні матеріали відсутні"
+
+msgctxt "openmedis"
+msgid "No medicalconsumable"
+msgstr "Медичні витратні матеріали відсутні"
+
+msgctxt "openmedis"
+msgid "Total: %1$d (%2$d used, %3$d worn)"
+msgstr "Разом: %1$d ( %2$d використані, %3$d зношені)"
+
+msgctxt "openmedis"
+msgid "Enable the financial and administrative information"
+msgstr "Увімкнути фінансову та адміністративну інформацію"
+
+msgctxt "openmedis"
+msgid "Back to stock"
+msgstr "Назад до складу"
+
+msgctxt "openmedis"
+msgid "Worn medical consumables"
+msgstr "Зношені медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "ID"
+msgstr "Ідентифікаційний номер"
+
+msgctxt "openmedis"
+msgid "Add date"
+msgstr "Додати дату"
+
+msgctxt "openmedis"
+msgid "Use date"
+msgstr "Дата використання"
+
+msgctxt "openmedis"
+msgid "Used on"
+msgstr "Використовується на"
+
+msgctxt "openmedis"
+msgid "End date"
+msgstr "Дата закінчення"
+
+msgctxt "openmedis"
+msgid "Medical device counter"
+msgstr "Лічильник медичного обладнання"
+
+msgctxt "openmedis"
+msgid "Financial and administrative information"
+msgstr "Фінансова та адміністративна інформація"
+
+msgctxt "openmedis"
+msgid "%1$s (%2$s)"
+msgstr "%1$s ( %2$s )"
+
+msgctxt "openmedis"
+msgid "%d usage"
+msgstr "%d використання"
+
+msgctxt "openmedis"
+msgid "Counter error"
+msgstr "Помилка лічильника"
+
+msgctxt "openmedis"
+msgid "Average time in stock"
+msgstr "Середній час перебування на складі"
+
+msgctxt "openmedis"
+msgid "month"
+msgstr "місяць"
+
+msgctxt "openmedis"
+msgid "Average time in use"
+msgstr "Середній час використання"
+
+msgctxt "openmedis"
+msgid "Average number of printed usages"
+msgstr "Середня кількість надрукованих  елементів"
+
+msgctxt "openmedis"
+msgid "x"
+msgstr "x"
+
+msgctxt "openmedis"
+msgid "No medical consumable available"
+msgstr "Медичні витратні матеріали відсутні"
+
+msgctxt "openmedis"
+msgid "End of life"
+msgstr "Кінець життєвого циклу"
+
+msgctxt "openmedis"
+msgid "Update medical device counter"
+msgstr "Оновлення лічильника медичного обладнання"
+
+msgctxt "openmedis"
+msgid "Used medcial consumable"
+msgstr "Використані медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "Worn medcial consumable"
+msgstr "Зношені медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "Medical consumable usages"
+msgstr "Використання медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "%1$s - %2$s"
+msgstr "%1$s - %2$s"
+
+msgctxt "openmedis"
+msgid "%d month"
+msgstr "%d місяць"
+
+msgctxt "openmedis"
+msgid "Average number of  usages"
+msgstr "Середнє використання"
+
+msgctxt "openmedis"
+msgid "Medical device"
+msgid_plural "Medical devices"
+msgstr[0] "Медичне обладнання"
+msgstr[1] "Медичне обладнання"
+msgstr[2] "Медичне обладнання"
+msgstr[3] "Медичне обладнання"
+
+msgctxt "openmedis"
+msgid "Reference"
+msgstr "Довідка"
+
+msgctxt "openmedis"
+msgid "Technician in charge of the hardware"
+msgstr "Технік, що відповідає за обладнання"
+
+msgctxt "openmedis"
+msgid "Comments"
+msgstr "Коментарі"
+
+msgctxt "openmedis"
+msgid "Group in charge of the hardware"
+msgstr "Група, що відповідає за обладнання"
+
+msgctxt "openmedis"
+msgid "Stock location"
+msgstr "Місце знаходження складу"
+
+msgctxt "openmedis"
+msgid "Alert threshold"
+msgstr "Поріг оповіщення"
+
+msgctxt "openmedis"
+msgid "Never"
+msgstr "Ніколи"
+
+msgctxt "openmedis"
+msgid "Number of used medical consumables"
+msgstr "Кількість використаних медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Number of worn medical consumables"
+msgstr "Кількість зношених медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Number of new medical consumables"
+msgstr "Кількість нових медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Medical device model"
+msgid_plural "Medical device models"
+msgstr[0] "Модель медичного обладнання"
+msgstr[1] "Моделі медичного обладнання"
+msgstr[2] "Моделі медичного обладнання"
+msgstr[3] "Моделі медичного обладнання"
+
+msgctxt "openmedis"
+msgid "Send alarms on medical consumables"
+msgstr "Надіслати сповіщення щодо закінчення медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
+msgstr "Досягнуто порогове значення для виду медичних витратних матеріалів: %1$s - Довідка %2$s - Залишок %3$d"
+
+msgctxt "openmedis"
+msgid "%1$s: %2$s"
+msgstr "%1$s : %2$s"
+
+msgctxt "openmedis"
+msgid "%s: send medical consumable alert failed"
+msgstr "%s : не вдалося надіслати сповіщення про закінчення медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Send alarms on medical consumable"
+msgstr "Надіслати сповіщення щодо закінчення медичних витратних матеріалів"
+
+msgctxt "openmedis"
+msgid "Add a compatible medical device model"
+msgstr "Додайте сумісну модель медичного обладнання"
+
+msgctxt "openmedis"
+msgid "Model"
+msgid_plural "Model"
+msgstr[0] "Модель"
+msgstr[1] "Моделі"
+
+msgctxt "openmedis"
+msgid "No item found"
+msgstr "Елемент не знайдено"
+
+msgctxt "openmedis"
+msgid "%1$s%2$s"
+msgstr ""
+
+msgctxt "openmedis"
+msgid "Status"
+msgstr "Статус"
+
+msgctxt "openmedis"
+msgid "Location"
+msgstr "Розташування"
+
+msgctxt "openmedis"
+msgid "Manufacturer"
+msgstr "Виробник"
+
+msgctxt "openmedis"
+msgid "Alternate user contact number"
+msgstr "Контактний номер альтернативного користувача"
+
+msgctxt "openmedis"
+msgid "Serial number"
+msgstr "Серійний номер"
+
+msgctxt "openmedis"
+msgid "Alternate user name"
+msgstr "Ім’я альтернативного користувача"
+
+msgctxt "openmedis"
+msgid "Inventory number"
+msgstr "Інвентарний номер"
+
+msgctxt "openmedis"
+msgid "User"
+msgstr "Користувач"
+
+msgctxt "openmedis"
+msgid "Utilization"
+msgid_plural "Utilizations"
+msgstr[0] "Використання"
+msgstr[1] "Використання"
+msgstr[2] "Використання"
+msgstr[3] "Використання"
+
+msgctxt "openmedis"
+msgid "Group"
+msgstr "Група"
+
+msgctxt "openmedis"
+msgid "Brand"
+msgstr "Бренд"
+
+msgctxt "openmedis"
+msgid "Characteristics"
+msgstr "Характеристики"
+
+msgctxt "openmedis"
+msgid "Last update"
+msgstr "Останнє оновлення"
+
+msgctxt "openmedis"
+msgid "Creation date"
+msgstr "Дата створення"
+
+msgctxt "openmedis"
+msgid "Template name"
+msgstr "Назва шаблону"
+
+msgctxt "openmedis"
+msgid "Entity"
+msgstr "Організація"
+
+msgctxt "openmedis"
+msgid "Global management"
+msgstr "Глобальний менеджмент"
+
+msgctxt "openmedis"
+msgid "Medical device category"
+msgid_plural "Medical device categories"
+msgstr[0] "Категорія медичного обладнання (CND)"
+msgstr[1] "Категорії медичного обладнання"
+msgstr[2] "Категорії медичного обладнання"
+msgstr[3] "Категорії медичного обладнання (CND)"
+
+msgctxt "openmedis"
+msgid "Health technology"
+msgstr "Медична технологія"
+
+msgctxt "openmedis"
+msgid "Medical Device asset"
+msgstr "Актив медичного обладнання"
+
+msgctxt "openmedis"
+msgid "Medical accessory type"
+msgid_plural "Medical accessory types"
+msgstr[0] "Вид медичного аксесуара"
+msgstr[1] "Види медичних аксесуарів"
+msgstr[2] "Види медичних аксесуарів"
+msgstr[3] "Види медичних аксесуарів"
+
+msgctxt "openmedis"
+msgid "OpenTicket for Medical Device"
+msgstr "Відкрита заявка для медичного обладнання"
+
+msgctxt "openmedis"
+msgid "General"
+msgstr "Загальні"
+
+msgctxt "openmedis"
+msgid "Medical consumable type"
+msgid_plural "Medical consumable types"
+msgstr[0] "Вид медичного витратного матеріалу"
+msgstr[1] "Види витратних медичних матеріалів"
+msgstr[2] "Види витратних медичних матеріалів"
+msgstr[3] "Види витратних медичних матеріалів"
+
+msgctxt "openmedis"
+msgid "Associable items to a ticket"
+msgstr "Асоційовані із заявкою елементи"
+
+msgctxt "openmedis"
+msgid "Medical device utilization"
+msgid_plural "Medical device utilizations"
+msgstr[0] "Використання медичного обладнання"
+msgstr[1] "Використання медичного обладнання"
+msgstr[2] "Використання медичного обладнання"
+msgstr[3] "Використання медичного обладнання"
+
+msgctxt "openmedis"
+msgid "openMedis guest users"
+msgstr "гостьові користувачі openMedis"
+
+msgctxt "openmedis"
+msgid "guest openMedis users. Created by openMedis - do NOT modify this comment."
+msgstr "гостьові користувачі openMedis. Створено openMedis - НЕ змінюйте цей коментар."
+
+msgctxt "openmedis"
+msgid "openMedis technician  users"
+msgstr "користувачі openMedis - техніки "
+
+msgctxt "openmedis"
+msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
+msgstr "користувачі openMedis - техніки. Створено openMedis - НЕ змінюйте цей коментар."
+
+msgctxt "openmedis"
+msgid "medicaldevicesbyutilisation_report_title"
+msgstr "Медичне обладнання за рівнем використання"
+
+msgctxt "openmedis"
+msgid "Medical accessory category"
+msgid_plural "Medical accessory categories"
+msgstr[0] "Категорія медичних аксесуарів"
+msgstr[1] "Категорії медичних аксесуарів"
+
+msgctxt "openmedis"
+msgid "Medical consumable item"
+msgid_plural "Medical consumable items"
+msgstr[0] "Медичний витратний матеріал"
+msgstr[1] "Медичні витратні матеріали"
+msgstr[2] "Медичні витратні матеріали"
+msgstr[3] "Медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "Installing a medical consumable"
+msgstr "Установка медичного витратного матеріалу"
+
+msgctxt "openmedis"
+msgid "Average number of usages"
+msgstr "Середня кількість використань"
+
+msgctxt "openmedis"
+msgid "Add medical consumables"
+msgstr "Додані витратні медичні матеріали"
+
+msgctxt "openmedis"
+msgid "Used medical consumable"
+msgstr "Використаний медичний витратний матеріал"
+
+msgctxt "openmedis"
+msgid "Worn medical consumable"
+msgstr "Зношені медичні витратні матеріали"
+
+msgctxt "openmedis"
+msgid "Medical consumable model"
+msgstr "Медичний витратний матеріал"
+
+#, fuzzy
+msgctxt "openmedis"
+msgid "Generic name"
+msgid_plural "Generic names"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
