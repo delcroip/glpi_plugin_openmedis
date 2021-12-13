@@ -47,8 +47,23 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       return _n('Medical device category', 'Medical device categories', $nb, 'openmedis');
    }
 
-   static function getFieldLabel($nb = 0) {
-      return _n('Category', 'Categories', $nb, 'openmedis');
+   static function getFieldLabel($nb = 0, $v = 0) {
+      switch ($v == 0)
+      {
+         case 2:
+            return _n('Code', 'Codes', $nb, 'openmedis');
+            break;
+         case 1:
+            return _n('Generic name', 'Generic names', $nb, 'openmedis');
+            break;
+         default:
+         case 0:
+            return _n('Category', 'Categories', $nb, 'openmedis');
+            break;
+   }
+
+
+         
    }
 
 
@@ -56,11 +71,11 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
    function getAdditionalFields() {
 
       $tab = [['name'      => 'code',
-      'label'     => __('Code'),
+      'label'     => $this->getFieldLabel(0,2),
       'type'      => 'text',
       'list'      => true],
       ['name'      => 'label',
-      'label'     => __('Label'),
+      'label'     => $this->getFieldLabel(0,1),
       'type'      => 'text',
       'list'      => true],
       

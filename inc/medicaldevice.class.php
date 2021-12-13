@@ -199,8 +199,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //do not display called elements per default; they'll be displayed or returned here
       $params['display'] = false;
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Parent")."</br>\n";
-      echo PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0)."</td>\n";
+      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0, 0)."</br>\n";
+      echo PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0, 1)."</td>\n";
       echo "<td>";
       //$this->category =  is_null($_POST['category'] ? $_POST['category'] : '');
       $rand =  mt_rand();
@@ -216,6 +216,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       'permit_select_parent' => true,
       'displaywith' => ['code','label'],
       'parentfieldid'   =>  $parent_field_id ]);
+   
+
       echo "</td>";
       
       
@@ -234,7 +236,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $tplmark = $this->getAutofillMark('name', $options);
       
       //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-      echo "<td>".sprintf(__('%1$s%2$s'), __('Name'), $tplmark);
+      echo "<td>".sprintf(__('%1$s%2$s'), __('Name', 'openmedis'), $tplmark);
       echo "</td>";
       echo "<td>";
       //$this->fields['withtemplate'] = 2 ;
