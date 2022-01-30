@@ -84,9 +84,6 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
                          'type'      => 'dropdownValue',
                          'permit_select_parent' => true,
                          'displaywith' => ['code','label']],
-         ['name'      => 'picture',
-                         'label'     => __('Picture'),
-                         'type'      => 'picture'],
                   ];
 
       if (!Session::haveRightsOr(PluginOpenmedisMedicalDeviceCategory::$rightname, [CREATE, UPDATE, DELETE])) {
@@ -182,29 +179,6 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       : [])]);
       echo "</td></tr>\n";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Picture')."</td>\n";
-      echo "<td>";
-
-      if (!empty($this->fields['picture'])) {
-         echo Html::image(Toolbox::getPictureUrl($this->fields['picture']), [
-            'style' => 'max-width: 300px; max-height: 150px;',
-            'class' => 'picture_square'
-         ]);
-         echo "&nbsp;";
-         echo Html::getCheckbox([
-            'title' => __('Clear'),
-            'name'  => "_blank_picture"
-         ]);
-         echo "&nbsp;".__('Clear');
-
-      } else {
-         echo Html::file([
-            'name'       => 'picture',
-            'onlyimages' => true,
-         ]);
-      }
-      echo "</td></tr>\n";
 
       if (isset($this->fields['is_protected']) && $this->fields['is_protected']) {
          $options['candel'] = false;

@@ -29,26 +29,46 @@
  --------------------------------------------------------------------------
  */
 
+
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
+include_once(PLUGIN_OPENMEDIS_ROOT.'/install/upgradeStep.class.php');
+class PluginOpenmedisUpgradeTo1_5 extends PluginOpenmedisUpgradeStep {
+  var $migration;
 
-use Glpi\Features\AssetImage;
-/// Class PluginOpenmedisMedicalDeviceModel
-class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown  {
+   /**
+    * @param Migration $migration
+    */
+   public function upgrade(Migration $migration) {
+    $this->migration = $migration;
+    global $DB;
+    $this->migrationStep = '1.4 -> 1.5';
+    $err = 0;
+ /*   if (!$DB->tableExists("glpi_plugin_openmedis_medicaldeviceinspections")) {
+      if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_5.sql")){
+          $this->migration->displayWarning("Error in migration ".$this->migrationStep." : ".$DB->error(), true);
+          $err++;
+      }
+  }*/
+   
 
-   static $rightname  = 'plugin_openmedis_medicaldevicemodel';
-   static function getTypeName($nb = 0) {
-      return _n('Medical device model', 'Medical device models', $nb, 'openmedis');
-   }
-   static function getIcon() {
-      return "fas fa-laptop-medical";
-   }
-
-   static function getFieldLabel($nb = 0) {
-      return _n('Model', 'Models', $nb);
-   }
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
+      'barcode', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL", true);
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
+      'picture_rear', "text COLLATE utf8_unicode_ci", true);
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
+      'picture_front', "text COLLATE utf8_unicode_ci", true);
+    $err += $this->removefieldIfExists('glpi_plugin_openmedis_devicemedicalaccessories','`picture`');    
+    //$err +=
+    if ($err > 0){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 
 
 }
-

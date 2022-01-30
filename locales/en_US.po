@@ -89,6 +89,11 @@ msgid_plural "Categories"
 msgstr[0] "Category"
 msgstr[1] "Categories"
 
+msgid "Generic name"
+msgid_plural "Generic names"
+msgstr[0] "Generic name"
+msgstr[1] "Generic names"
+
 #, fuzzy
 msgid "Part Number"
 msgstr "Part Number"

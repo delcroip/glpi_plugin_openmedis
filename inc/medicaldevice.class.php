@@ -348,6 +348,18 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "</tr>\n";
 
+      echo "<tr class='tab_bg_1'>";
+      $tplmark = $this->getAutofillMark('barcode', $options);
+      echo "<td>".sprintf(__('%1$s%2$s'), __('Barcode','openmedis'), $tplmark).
+           "</td>\n";
+      echo "<td>";
+      $objectName = autoName($this->fields["barcode"], "barcode",
+                             (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
+                             $this->getType(), $this->fields["entities_id"]);
+      Html::autocompletionTextField($this, "barcode", ['value' => $objectName]);
+      echo "</td></tr>\n";
+
+
       // Display auto inventory informations
       if (!empty($ID)
          && $this->fields["is_dynamic"]) {
@@ -355,6 +367,37 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          Plugin::doHook("autoinventory_information", $this);
          echo "</td></tr>";
       }
+
+      /* model images*/
+      
+      if($this->fields["plugin_openmedis_medicaldevicemodels_id"] > 0){
+         //error_reporting(E_ALL);
+         $models = new PluginOpenmedisMedicalDeviceModel();
+         $models->getFromDB($this->fields["plugin_openmedis_medicaldevicemodels_id"]);
+         echo "<tr class='tab_bg_1'><td colspan='4'>";
+         if (isset($models->fields['picture_front'])){
+            echo Html::image(Toolbox::getPictureUrl($models->fields['picture_front']), [
+               'alt'   =>"Model front picture",
+               'style' => 'width: 45%;',
+            ]);
+         }
+         
+         //echo $models->getSpecificValueToDisplay('picture_front');
+         //echo "</td><td>";
+         
+         if (isset($models->fields['picture_rear'])){
+            echo Html::image(Toolbox::getPictureUrl($models->fields['picture_rear']), [
+               'alt'   =>"Model rear picture",
+               'style' => 'width: 45%;',
+            ]);
+         }
+         
+         //echo $models->getSpecificValueToDisplay('picture_rear');
+         echo "</td></tr>";
+      } 
+
+      
+
 
       $this->showFormButtons($options);
 
@@ -444,6 +487,14 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'field'              => 'name',
          'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(1),
          'datatype'           => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'                 => '5',
+         'table'              => $this->getTable(),
+         'field'              => 'barcode',
+         'name'               => __('Barcode','openmedis'),
+         'datatype'           => 'string',
       ];
 
       $tab[] = [
