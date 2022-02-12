@@ -7,477 +7,675 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openmedis\n"
 "Report-Msgid-Bugs-To: https://github.com/delcroip/glpi_plugin_openmedis\n"
-"POT-Creation-Date: 2021-08-08 20:09+0000\n"
-"PO-Revision-Date: 2021-08-15 18:56+0100\n"
+"POT-Creation-Date: 2021-12-13 17:51+0100\n"
+"PO-Revision-Date: 2021-12-14 17:29+0100\n"
 "Last-Translator: Patrick Delcroix <patrick@pmpd.eu>\n"
-"Language-Team: httu.admin@swisstph.ch <LL@li.org>\n"
+"Language-Team: SwissTPH SCIH/DHU <httu.admin@swisstph.ch>\n"
+"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
-"Language: English\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-KeywordsList: _n;__\n"
-"X-Poedit-SearchPath-0: ../setup.php\n"
-"X-Poedit-SearchPath-1: ../inc\n"
-"X-Poedit-SearchPath-2: ../front\n"
-"X-Poedit-SearchPath-3: ../reports\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: _n:1,2,4c,4t;__:1,2c,2t\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: inc\n"
+"X-Poedit-SearchPath-2: front\n"
+"X-Poedit-SearchPath-3: report\n"
 
-
+#: setup.php:187
 #, fuzzy
-msgid "Name"
-msgstr "Name"
-
+msgctxt "openmedis"
 msgid "Health technology management"
 msgid_plural "Health technologies management"
 msgstr[0] "Health technology management"
 msgstr[1] "Health technologies management"
 
-#, fuzzy
+#: front/medicalconsumable.form.php:50
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s adds medical consumables"
 msgstr "%s adds medical consumables"
 
-#, fuzzy
+#: front/medicalconsumable.form.php:59
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s purges a medical consumable"
 msgstr "%s purges a medical consumable"
 
-#, fuzzy
+#: front/medicalconsumable.form.php:70
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s installs a medical consumable"
 msgstr "%s installs a medical consumable"
 
-#, fuzzy
+#: front/medicalconsumable.form.php:82
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s updates a medical consumable"
 msgstr "%s updates a medical consumable"
 
-#, fuzzy
+#: front/medicalconsumableitem.form.php:49 front/medicaldevice.form.php:58
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%1$s adds the item %2$s"
 msgstr "%1$s adds the item %2$s"
 
-#, fuzzy
+#: front/medicalconsumableitem.form.php:62 front/medicaldevice.form.php:71
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s deletes an item"
 msgstr "%s deletes an item"
 
-#, fuzzy
+#: front/medicalconsumableitem.form.php:72 front/medicaldevice.form.php:80
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s restores an item"
 msgstr "%s restores an item"
 
-#, fuzzy
+#: front/medicalconsumableitem.form.php:82 front/medicaldevice.form.php:89
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s purges an item"
 msgstr "%s purges an item"
 
-#, fuzzy
+#: front/medicalconsumableitem.form.php:92 front/medicaldevice.form.php:98
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s updates an item"
 msgstr "%s updates an item"
 
-#, fuzzy
-msgid "%s associates a type"
-msgstr "%s associates a type"
-
-#, fuzzy
+#: front/medicaldevice.form.php:107
+#, fuzzy, php-format
+msgctxt "openmedis"
 msgid "%s sets unitary management"
 msgstr "%s sets unitary management"
 
+#: inc/devicemedicalaccessory.class.php:41
+#, fuzzy
+msgctxt "openmedis"
 msgid "Medical accessory"
 msgid_plural "Medical accessories"
 msgstr[0] "Medical accessory"
-msgstr[1] "Medical accessories"
+msgstr[1] "Medical accessory"
 
-msgid "Type"
-msgid_plural "Types"
-msgstr[0] "Type"
-msgstr[1] "Types"
-
-#, fuzzy
-msgid "Category"
-msgstr "Category"
-
-#, fuzzy
-msgid "Part Number"
-msgstr "Part Number"
-
-#, fuzzy
-msgid "Picture"
-msgstr "Picture"
-
-#, fuzzy
-msgid "Manufacturing date"
-msgstr "Manufacturing date"
-
-#, fuzzy
-msgid "Date"
-msgstr "Date"
-
-#, fuzzy
-msgid "Code"
-msgstr "Code"
-
-#, fuzzy
-msgid "Parent"
-msgstr "Parent"
-
-#, fuzzy
-msgid "Comment"
-msgstr "Comment"
-
-msgid "Medical consumable"
-msgid_plural "Medical consumables"
-msgstr[0] "Medical consumable"
-msgstr[1] "Medical consumables"
-
-#, fuzzy
-msgid "Installing a medicalconsumable"
-msgstr "Installing a medicalconsumable"
-
-#, fuzzy
-msgid "No free medical consumable"
-msgstr "No free medical consumable"
-
-#, fuzzy
-msgid "Uninstalling a medical consumable"
-msgstr "Uninstalling a medical consumable"
-
-#, fuzzy
-msgid "Total"
-msgstr "Total"
-
-#, fuzzy
-msgid "Total: %1$d (%2$d new, %3$d used, %4$d worn)"
-msgstr "Total: %1$d (%2$d new, %3$d used, %4$d worn)"
-
-#, fuzzy
-msgid "No medical consumable"
-msgstr "No medical consumable"
-
-#, fuzzy
-msgid "No medicalconsumable"
-msgstr "No medicalconsumable"
-
-#, fuzzy
-msgid "Total: %1$d (%2$d used, %3$d worn)"
-msgstr "Total: %1$d (%2$d used, %3$d worn)"
-
-#, fuzzy
-msgid "Enable the financial and administrative information"
-msgstr "Enable the financial and administrative information"
-
-#, fuzzy
-msgid "Back to stock"
-msgstr "Back to stock"
-
-#, fuzzy
-msgid "Worn medical consumables"
-msgstr "Worn medical consumables"
-
-#, fuzzy
-msgid "ID"
-msgstr "ID"
-
-#, fuzzy
-msgid "Add date"
-msgstr "Add date"
-
-#, fuzzy
-msgid "Use date"
-msgstr "Use date"
-
-#, fuzzy
-msgid "Used on"
-msgstr "Used on"
-
-#, fuzzy
-msgid "End date"
-msgstr "End date"
-
-#, fuzzy
-msgid "Medical device counter"
-msgstr "Medical device counter"
-
-#, fuzzy
-msgid "Financial and administrative information"
-msgstr "Financial and administrative information"
-
-msgid "%1$s (%2$s)"
-msgstr "%1$s (%2$s)"
-
-#, fuzzy
-msgid "%d usage"
-msgstr "%d usage"
-
-#, fuzzy
-msgid "Counter error"
-msgstr "Counter error"
-
-#, fuzzy
-msgid "Average time in stock"
-msgstr "Average time in stock"
-
-#, fuzzy
-msgid "month"
-msgstr "month"
-
-#, fuzzy
-msgid "Average time in use"
-msgstr "Average time in use"
-
-#, fuzzy
-msgid "Average number of printed usages"
-msgstr "Average number of printed usages"
-
-msgid "x"
-msgstr "x"
-
-#, fuzzy
-msgid "No medical consumable available"
-msgstr "No medical consumable available"
-
-#, fuzzy
-msgid "End of life"
-msgstr "End of life"
-
-#, fuzzy
-msgid "Update medical device counter"
-msgstr "Update medical device counter"
-
-#, fuzzy
-msgid "Used medcial consumable"
-msgstr "Used medcial consumable"
-
-#, fuzzy
-msgid "Worn medcial consumable"
-msgstr "Worn medcial consumable"
-
-#, fuzzy
-msgid "Medical consumable usages"
-msgstr "Medical consumable usages"
-
-msgid "%1$s - %2$s"
-msgstr "%1$s - %2$s"
-
-#, fuzzy
-msgid "%d month"
-msgstr "%d month"
-
-#, fuzzy
-msgid "Average number of  usages"
-msgstr "Average number of  usages"
-
-msgid "Medical device"
-msgid_plural "Medical devices"
-msgstr[0] "Medical device"
-msgstr[1] "Medical devices"
-
-#, fuzzy
-msgid "Reference"
-msgstr "Reference"
-
-#, fuzzy
-msgid "Technician in charge of the hardware"
-msgstr "Technician in charge of the hardware"
-
-#, fuzzy
-msgid "Comments"
-msgstr "Comments"
-
-#, fuzzy
-msgid "Group in charge of the hardware"
-msgstr "Group in charge of the hardware"
-
-#, fuzzy
-msgid "Stock location"
-msgstr "Stock location"
-
-#, fuzzy
-msgid "Alert threshold"
-msgstr "Alert threshold"
-
-#, fuzzy
-msgid "Never"
-msgstr "Never"
-
-#, fuzzy
-msgid "Number of used medical consumables"
-msgstr "Number of used medical consumables"
-
-#, fuzzy
-msgid "Number of worn medical consumables"
-msgstr "Number of worn medical consumables"
-
-#, fuzzy
-msgid "Number of new medical consumables"
-msgstr "Number of new medical consumables"
-
-msgid "Medical device model"
-msgid_plural "Medical device models"
-msgstr[0] "Medical device model"
-msgstr[1] "Medical device models"
-
-#, fuzzy
-msgid "Send alarms on medical consumables"
-msgstr "Send alarms on medical consumables"
-
-#, fuzzy
-msgid "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
-msgstr "Threshold of alarm reached for the type of medical consumable: %1$s - Reference %2$s - Remaining %3$d"
-
-msgid "%1$s: %2$s"
-msgstr "%1$s: %2$s"
-
-#, fuzzy
-msgid "%s: send medical consumable alert failed"
-msgstr "%s: send medical consumable alert failed"
-
-#, fuzzy
-msgid "Send alarms on medical consumable"
-msgstr "Send alarms on medical consumable"
-
-#, fuzzy
-msgid "Add a compatible medical device model"
-msgstr "Add a compatible medical device model"
-
-msgid "Model"
-msgid_plural "Models"
-msgstr[0] "Model"
-msgstr[1] "Models"
-
+#: inc/medicalaccessorytype.class.php:39
 #, fuzzy
-msgid "No item found"
-msgstr "No item found"
-
-msgid "%1$s%2$s"
-msgstr "%1$s%2$s"
-
-#, fuzzy
-msgid "Status"
-msgstr "Status"
-
-#, fuzzy
-msgid "Location"
-msgstr "Location"
-
-#, fuzzy
-msgid "Manufacturer"
-msgstr "Manufacturer"
-
-#, fuzzy
-msgid "Alternate user contact number"
-msgstr "Alternate user contact number"
-
-#, fuzzy
-msgid "Serial number"
-msgstr "Serial number"
-
-#, fuzzy
-msgid "Alternate user name"
-msgstr "Alternate user name"
-
-#, fuzzy
-msgid "Inventory number"
-msgstr "Inventory number"
-
-#, fuzzy
-msgid "User"
-msgstr "User"
-
-msgid "Utilization"
-msgid_plural "Utilizations"
-msgstr[0] "Utilization"
-msgstr[1] "Utilizations"
-
-#, fuzzy
-msgid "Group"
-msgstr "Group"
-
-#, fuzzy
-msgid "Brand"
-msgstr "Brand"
-
-#, fuzzy
-msgid "Characteristics"
-msgstr "Characteristics"
-
-#, fuzzy
-msgid "Last update"
-msgstr "Last update"
-
-#, fuzzy
-msgid "Creation date"
-msgstr "Creation date"
-
-#, fuzzy
-msgid "Template name"
-msgstr "Template name"
-
-#, fuzzy
-msgid "Entity"
-msgstr "Entity"
-
-#, fuzzy
-msgid "Global management"
-msgstr "Global management"
-
-msgid "Medical device category"
-msgid_plural "Medical device categories"
-msgstr[0] "Medical device category (CND)"
-msgstr[1] "Medical device categories (CND)"
-
-#, fuzzy
-msgid "Health technology"
-msgstr "Health technology"
-
-#, fuzzy
-msgid "Medical Device asset"
-msgstr "Medical Device asset"
-
+msgctxt "openmedis"
 msgid "Medical accessory type"
 msgid_plural "Medical accessory types"
 msgstr[0] "Medical accessory type"
-msgstr[1] "Medical accessory types"
+msgstr[1] "Medical accessory type"
 
+#: inc/medicalconsumable.class.php:68
 #, fuzzy
-msgid "OpenTicket for Medical Device"
-msgstr "OpenTicket for Medical Device"
+msgctxt "openmedis"
+msgid "Medical consumable"
+msgid_plural "Medical consumables"
+msgstr[0] "Medical consumable"
+msgstr[1] "Medical consumable"
 
+#: inc/medicalconsumable.class.php:264
 #, fuzzy
-msgid "General"
-msgstr "General"
+msgctxt "openmedis"
+msgid "Installing a medical consumable"
+msgstr "Installing a medicalconsumable"
 
+#: inc/medicalconsumable.class.php:271
+#, fuzzy
+msgctxt "openmedis"
+msgid "No free medical consumable"
+msgstr "No free medical consumable"
+
+#: inc/medicalconsumable.class.php:307
+#, fuzzy
+msgctxt "openmedis"
+msgid "Uninstalling a medical consumable"
+msgstr "Uninstalling a medical consumable"
+
+#: inc/medicalconsumable.class.php:357
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid "Total: %1$d (%2$d new, %3$d used, %4$d worn)"
+msgstr "Total: %1$d (%2$d new, %3$d used, %4$d worn)"
+
+#: inc/medicalconsumable.class.php:363 inc/medicalconsumable.class.php:365
+#: inc/medicalconsumable.class.php:413 inc/medicalconsumable.class.php:415
+#, fuzzy
+msgctxt "openmedis"
+msgid "No medical consumable"
+msgstr "No medical consumable"
+
+#: inc/medicalconsumable.class.php:408
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid "Total: %1$d (%2$d used, %3$d worn)"
+msgstr "Total: %1$d (%2$d used, %3$d worn)"
+
+#: inc/medicalconsumable.class.php:687
+#, fuzzy
+msgctxt "openmedis"
+msgid "Worn medical consumables"
+msgstr "Worn medical consumables"
+
+#: inc/medicalconsumable.class.php:709 inc/medicalconsumable.class.php:987
+#: inc/medicalconsumable.class.php:1160
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical device counter"
+msgstr "Medical device counter"
+
+#: inc/medicalconsumable.class.php:740
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid "%1$s (%2$s)"
+msgstr "%1$s (%2$s)"
+
+#: inc/medicalconsumable.class.php:773
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid "%d usage"
+msgid_plural "%d  usages"
+msgstr[0] "%d usage"
+msgstr[1] "%d usage"
+
+#: inc/medicalconsumable.class.php:776
+#, fuzzy
+msgctxt "openmedis"
+msgid "Counter error"
+msgstr "Counter error"
+
+#: inc/medicalconsumable.class.php:798
+#, fuzzy
+msgctxt "openmedis"
+msgid "Average number of usages"
+msgstr "Average number of  usages"
+
+#: inc/medicalconsumable.class.php:839
+#, fuzzy
+msgctxt "openmedis"
+msgid "Add medical consumables"
+msgstr "%s adds medical consumables"
+
+#: inc/medicalconsumable.class.php:921
+#, fuzzy
+msgctxt "openmedis"
+msgid "x"
+msgstr "x"
+
+#: inc/medicalconsumable.class.php:929
+#, fuzzy
+msgctxt "openmedis"
+msgid "No medical consumable available"
+msgstr "No medical consumable available"
+
+#: inc/medicalconsumable.class.php:952
+#, fuzzy
+msgctxt "openmedis"
+msgid "Update medical device counter"
+msgstr "Update medical device counter"
+
+#: inc/medicalconsumable.class.php:966
+#, fuzzy
+msgctxt "openmedis"
+msgid "Used medical consumable"
+msgstr "Used medcial consumable"
+
+#: inc/medicalconsumable.class.php:968
+#, fuzzy
+msgctxt "openmedis"
+msgid "Worn medical consumable"
+msgstr "Worn medical consumables"
+
+#: inc/medicalconsumable.class.php:988
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical consumable usages"
+msgstr "Medical consumable usages"
+
+#: inc/medicalconsumable.class.php:1075 inc/medicalconsumable.class.php:1078
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d month"
+msgstr[1] "%d month"
+
+#: inc/medicalconsumable.class.php:1134
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical consumable model"
+msgstr "Medical consumable"
+
+#: inc/medicalconsumableitem.class.php:52
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical consumable item"
+msgid_plural "Medical consumable items"
+msgstr[0] "Medical consumable type"
+msgstr[1] "Medical consumable type"
+
+#: inc/medicalconsumableitem.class.php:306
+#, fuzzy
+msgctxt "openmedis"
+msgid "Number of used medical consumables"
+msgstr "Number of used medical consumables"
+
+#: inc/medicalconsumableitem.class.php:322
+#, fuzzy
+msgctxt "openmedis"
+msgid "Number of worn medical consumables"
+msgstr "Number of worn medical consumables"
+
+#: inc/medicalconsumableitem.class.php:337
+#, fuzzy
+msgctxt "openmedis"
+msgid "Number of new medical consumables"
+msgstr "Number of new medical consumables"
+
+#: inc/medicalconsumableitem.class.php:427
+#, fuzzy
+msgctxt "openmedis"
+msgid "Send alarms on medical consumables"
+msgstr "Send alarms on medical consumables"
+
+#: inc/medicalconsumableitem.class.php:489
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid ""
+"Threshold of alarm reached for the type of medical consumable: %1$s - "
+"Reference %2$s - Remaining %3$d"
+msgstr ""
+"Threshold of alarm reached for the type of medical consumable: %1$s - "
+"Reference %2$s - Remaining %3$d"
+
+#: inc/medicalconsumableitem.class.php:532
+#, fuzzy, php-format
+msgctxt "openmedis"
+msgid "%s: send medical consumable alert failed"
+msgstr "%s: send medical consumable alert failed"
+
+#: inc/medicalconsumableitem.class.php:615
+#, fuzzy
+msgctxt "openmedis"
+msgid "Send alarms on medical consumable"
+msgstr "Send alarms on medical consumable"
+
+#: inc/medicalconsumableitemtype.class.php:41
+#, fuzzy
+msgctxt "openmedis"
 msgid "Medical consumable type"
 msgid_plural "Medical consumable types"
 msgstr[0] "Medical consumable type"
-msgstr[1] "Medical consumable types"
+msgstr[1] "Medical consumable type"
 
+#: inc/medicalconsumableitem_medicaldevicemodel.class.php:119
 #, fuzzy
-msgid "Associable items to a ticket"
-msgstr "Associable items to a ticket"
+msgctxt "openmedis"
+msgid "Add a compatible medical device model"
+msgstr "Add a compatible medical device model"
 
+#: inc/medicaldevice.class.php:63
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical device"
+msgid_plural "Medical devices"
+msgstr[0] "Medical device"
+msgstr[1] "Medical device"
+
+#: inc/medicaldevice.class.php:239
+#, fuzzy
+msgctxt "openmedis"
+msgid "Name"
+msgstr "Name"
+
+#: inc/medicaldevice.class.php:488
+#, fuzzy
+msgctxt "openmedis"
+msgid "Alternate user name"
+msgstr "Alternate user name"
+
+#: inc/medicaldevice.class.php:497
+#, fuzzy
+msgctxt "openmedis"
+msgid "Alternate user contact number"
+msgstr "Alternate user contact number"
+
+#: inc/medicaldevicecategory.class.php:47
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical device category"
+msgid_plural "Medical device categories"
+msgstr[0] "Medical device category (CND)"
+msgstr[1] "Medical device category (CND)"
+
+#: inc/medicaldevicecategory.class.php:54
+#, fuzzy
+msgctxt "openmedis"
+msgid "Code"
+msgid_plural "Codes"
+msgstr[0] "Code"
+msgstr[1] "Code"
+
+#: inc/medicaldevicecategory.class.php:57
+#, fuzzy
+msgctxt "openmedis"
+msgid "Generic name"
+msgid_plural "Generic names"
+msgstr[0] "Generic name"
+msgstr[1] "Generic name"
+
+#: inc/medicaldevicecategory.class.php:61
+#, fuzzy
+msgctxt "openmedis"
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "Category"
+msgstr[1] "Category"
+
+#: inc/medicaldevicecategory.class.php:83
+#: inc/medicaldevicecategory.class.php:174
+#, fuzzy
+msgctxt "openmedis"
+msgid "Parent"
+msgstr "Parent"
+
+#: inc/medicaldevicemodel.class.php:40
+#, fuzzy
+msgctxt "openmedis"
+msgid "Medical device model"
+msgid_plural "Medical device models"
+msgstr[0] "Medical device model"
+msgstr[1] "Medical device model"
+
+#: inc/profile.class.php:43
+#, fuzzy
+msgctxt "openmedis"
+msgid "Health technology"
+msgstr "Health technology"
+
+#: inc/utilization.class.php:40
+#, fuzzy
+msgctxt "openmedis"
 msgid "Medical device utilization"
 msgid_plural "Medical device utilizations"
 msgstr[0] "Medical device utilisation"
-msgstr[1] "Medical device utilizations"
+msgstr[1] "Medical device utilisation"
 
+#: inc/utilization.class.php:43
 #, fuzzy
+msgctxt "openmedis"
+msgid "Utilization"
+msgid_plural "Utilizations"
+msgstr[0] "Utilization"
+msgstr[1] "Utilization"
+
+#: install/install.class.php:260
+#, fuzzy
+msgctxt "openmedis"
 msgid "openMedis guest users"
 msgstr "openMedis guest users"
 
+#: install/install.class.php:261
 #, fuzzy
-msgid "guest openMedis users. Created by openMedis - do NOT modify this comment."
-msgstr "guest openMedis users. Created by openMedis - do NOT modify this comment."
+msgctxt "openmedis"
+msgid ""
+"guest openMedis users. Created by openMedis - do NOT modify this comment."
+msgstr ""
+"guest openMedis users. Created by openMedis - do NOT modify this comment."
 
+#: install/install.class.php:286
 #, fuzzy
+msgctxt "openmedis"
 msgid "openMedis technician  users"
 msgstr "openMedis technician  users"
 
+#: install/install.class.php:287
 #, fuzzy
-msgid " openMedis technical users. Created by openMedis - do NOT modify this comment."
-msgstr " openMedis technical users. Created by openMedis - do NOT modify this comment."
-
-msgid "medicaldevicesbyutilisation_report_title"
+msgctxt "openmedis"
+msgid ""
+" openMedis technical users. Created by openMedis - do NOT modify this "
+"comment."
 msgstr ""
-"Medical devices by utilz"
-"ation"
+" openMedis technical users. Created by openMedis - do NOT modify this "
+"comment."
 
-msgid "Medical accessory category"
-msgid_plural "Medical accessory categories"
-msgstr[0] "Medical accessory category"
-msgstr[1] "Medical accessory categories"
+#: report/medicaldevicesbyutilisation/medicaldevicesbyutilisation.php:40
+#, fuzzy
+msgctxt "openmedis"
+msgid "medicaldevicesbyutilisation_report_title"
+msgstr "Medical devices by utilzation"
+
+#, fuzzy
+#~ msgid "Type"
+#~ msgstr "Type"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Part Number"
+
+#, fuzzy
+#~ msgid "Picture"
+#~ msgstr "Picture"
+
+#, fuzzy
+#~ msgid "Manufacturing date"
+#~ msgstr "Manufacturing date"
+
+#, fuzzy
+#~ msgid "Date"
+#~ msgstr "Date"
+
+#, fuzzy
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "Enable the financial and administrative information"
+#~ msgstr "Enable the financial and administrative information"
+
+#, fuzzy
+#~ msgid "Back to stock"
+#~ msgstr "Back to stock"
+
+#, fuzzy
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Add date"
+#~ msgstr "Add date"
+
+#, fuzzy
+#~ msgid "Use date"
+#~ msgstr "Use date"
+
+#, fuzzy
+#~ msgid "Used on"
+#~ msgstr "Used on"
+
+#, fuzzy
+#~ msgid "End date"
+#~ msgstr "End date"
+
+#, fuzzy
+#~ msgid "Financial and administrative information"
+#~ msgstr "Financial and administrative information"
+
+#, fuzzy
+#~ msgid "Average time in stock"
+#~ msgstr "Average time in stock"
+
+#, fuzzy
+#~ msgid "Average time in use"
+#~ msgstr "Average time in use"
+
+#, fuzzy
+#~ msgid "End of life"
+#~ msgstr "End of life"
+
+#~ msgid "%1$s - %2$s"
+#~ msgstr "%1$s - %2$s"
+
+#, fuzzy
+#~ msgid "Average number of  usages"
+#~ msgstr "Average number of  usages"
+
+#, fuzzy
+#~ msgid "Reference"
+#~ msgstr "Reference"
+
+#, fuzzy
+#~ msgid "Technician in charge of the hardware"
+#~ msgstr "Technician in charge of the hardware"
+
+#, fuzzy
+#~ msgid "Comments"
+#~ msgstr "Comments"
+
+#, fuzzy
+#~ msgid "Group in charge of the hardware"
+#~ msgstr "Group in charge of the hardware"
+
+#, fuzzy
+#~ msgid "Stock location"
+#~ msgstr "Stock location"
+
+#, fuzzy
+#~ msgid "Alert threshold"
+#~ msgstr "Alert threshold"
+
+#, fuzzy
+#~ msgid "Never"
+#~ msgstr "Never"
+
+#~ msgid "%1$s: %2$s"
+#~ msgstr "%1$s: %2$s"
+
+#, fuzzy
+#~ msgid "Model"
+#~ msgstr "Model"
+
+#, fuzzy
+#~ msgid "No item found"
+#~ msgstr "No item found"
+
+#, fuzzy
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "%1$s%2$s"
+#~ msgstr "%1$s%2$s"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Location"
+
+#, fuzzy
+#~ msgid "Manufacturer"
+#~ msgstr "Manufacturer"
+
+#, fuzzy
+#~ msgid "Alternate username number"
+#~ msgstr "Alternate user contact number"
+
+#, fuzzy
+#~ msgid "Serial number"
+#~ msgstr "Serial number"
+
+#, fuzzy
+#~ msgid "Alternate username"
+#~ msgstr "Alternate user name"
+
+#, fuzzy
+#~ msgid "Inventory number"
+#~ msgstr "Inventory number"
+
+#, fuzzy
+#~ msgid "User"
+#~ msgstr "User"
+
+#, fuzzy
+#~ msgid "Group"
+#~ msgstr "Group"
+
+#, fuzzy
+#~ msgid "Brand"
+#~ msgstr "Brand"
+
+#, fuzzy
+#~ msgid "Characteristics"
+#~ msgstr "Characteristics"
+
+#, fuzzy
+#~ msgid "Last update"
+#~ msgstr "Last update"
+
+#, fuzzy
+#~ msgid "Creation date"
+#~ msgstr "Creation date"
+
+#, fuzzy
+#~ msgid "Template name"
+#~ msgstr "Template name"
+
+#, fuzzy
+#~ msgid "Entity"
+#~ msgstr "Entity"
+
+#, fuzzy
+#~ msgid "Global management"
+#~ msgstr "Global management"
+
+#, fuzzy
+#~ msgid "Code"
+#~ msgstr "Code"
+
+#, fuzzy
+#~ msgid "Comment"
+#~ msgstr "Comment"
+
+#, fuzzy
+#~ msgid "General"
+#~ msgstr "General"
+
+#, fuzzy
+#~ msgid "%s associates a type"
+#~ msgstr "%s associates a type"
+
+#, fuzzy
+#~ msgid "month"
+#~ msgid_plural "months"
+#~ msgstr[0] "month"
+#~ msgstr[1] "month"
+
+#, fuzzy
+#~ msgid "No medicalconsumable"
+#~ msgstr "No medicalconsumable"
+
+#, fuzzy
+#~ msgid "Average number of printed usages"
+#~ msgstr "Average number of printed usages"
+
+#, fuzzy
+#~ msgid "Worn medcial consumable"
+#~ msgstr "Worn medcial consumable"
+
+#, fuzzy
+#~ msgid "Medical Device asset"
+#~ msgstr "Medical Device asset"
+
+#, fuzzy
+#~ msgid "OpenTicket for Medical Device"
+#~ msgstr "OpenTicket for Medical Device"
+
+#, fuzzy
+#~ msgid "Associable items to a ticket"
+#~ msgstr "Associable items to a ticket"
+
+#, fuzzy
+#~ msgid "Medical accessory category"
+#~ msgid_plural "Medical accessory categories"
+#~ msgstr[0] "Medical accessory category"
+#~ msgstr[1] "Medical accessory categories"

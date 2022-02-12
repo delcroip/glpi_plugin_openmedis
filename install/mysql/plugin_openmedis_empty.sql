@@ -31,8 +31,7 @@ CREATE TABLE `glpi_plugin_openmedis_medicaldevicecategories` (
   `label` varchar(255)  DEFAULT '', 
   `name` text AS (CONCAT(code,' - ',label)), 
   `completename` text COLLATE utf8_unicode_ci,
-  `comment` text DEFAULT NULL, 
-  `picture` text DEFAULT NULL, 
+  `comment` text DEFAULT NULL,  
   `plugin_openmedis_medicaldevicecategories_id` int(11) NOT NULL DEFAULT '0', 
   `level` int(11) NOT NULL DEFAULT '0',
   `ancestors_cache` longtext COLLATE utf8_unicode_ci,
@@ -53,6 +52,8 @@ CREATE TABLE `glpi_plugin_openmedis_medicaldevicemodels` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
   `product_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `picture_front` text COLLATE utf8_unicode_ci,
+  `picture_rear` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `product_number` (`product_number`)
@@ -117,6 +118,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
   `comment` text COLLATE utf8_unicode_ci,
   `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `otherserial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `barcode` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locations_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicemodels_id` int(11) NOT NULL DEFAULT '0',
   `plugin_openmedis_medicaldevicecategories_parent_id` int(11) NOT NULL DEFAULT '0',
@@ -157,6 +159,7 @@ CREATE TABLE  `glpi_plugin_openmedis_medicaldevices` (
   KEY `is_dynamic` (`is_dynamic`),
   KEY `serial` (`serial`),
   KEY `otherserial` (`otherserial`),
+  KEY `barcode` (`barcode`),
   KEY `date_creation` (`date_creation`),
   KEY `is_recursive` (`is_recursive`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

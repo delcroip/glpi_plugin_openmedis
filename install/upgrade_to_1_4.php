@@ -63,7 +63,7 @@ class PluginOpenmedisUpgradeTo1_4 extends PluginOpenmedisUpgradeStep {
     
 
     $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
-        'plugin_openmedis_medicaldevicecategories_parent_id', "int(11) NOT NULL DEFAULT '0'", true)
+        'plugin_openmedis_medicaldevicecategories_parent_id', "int(11) NOT NULL DEFAULT '0'", true);
     //$err +=
     if ($err > 0){
       return false;

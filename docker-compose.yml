@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+#Mysql Container
+  mysql:
+    image: mysql:5.7.23
+    container_name: mysql
+    hostname: mysql
+    volumes:
+      - gpli-mysql:/var/lib/mysql
+    env_file:
+      - ./mysql.env
+    restart: always
+
+#GLPI Container
+  glpi:
+    image: diouxx/glpi
+    container_name : glpi
+    hostname: glpi
+    ports:
+      - "80:80"
+    volumes:
+      - G:/dev/docker-glpi/glpi:/var/www/html/glpi
+      - G:/dev/glpi_open_medis:/var/www/html/glpi/plugins/openmedis
+    environment:
+      - TIMEZONE=Europe/Brussels
+      - VERSION_GLPI=9.5.6
+    restart: always
+   
+volumes:
+  gpli-mysql:
