@@ -44,21 +44,17 @@ class PluginOpenmedisUpgradeTo1_2 extends PluginOpenmedisUpgradeStep{
     $this->migrationStep = '1.1 -> 1.2';
     global $DB;
     $err = 0;
-    if (!$DB->tableExists("glpi_plugin_openmedis_medicalconsomables")) {
-        if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_2.sql")){
-            $this->migration->displayWarning("Error in migration 1.1 to 1.2 : " . $DB->error(), true);
-            $err++;
-        }
+    if (!$DB->fieldExists("glpi_plugin_openmedis_medicaldevicecategories",'is_recursive')) {
+    
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicecategories',
+      'entities_id', "int(11) NOT NULL DEFAULT '0'", true);
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicalaccessorycategories',
+      'entities_id', "int(11) NOT NULL DEFAULT '0'", true);
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicalaccessorycategories',
+      'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", true);
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicecategories',
+      'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", true);   
     }
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicecategories',
-    'entities_id', "int(11) NOT NULL DEFAULT '0'", true);
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicalaccessorycategories',
-    'entities_id', "int(11) NOT NULL DEFAULT '0'", true);
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicalaccessorycategories',
-    'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", true);
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicecategories',
-    'is_recursive', "tinyint(1) NOT NULL DEFAULT '0'", true);   
-    $err += $this->migration->displayWarning("table to be created by the migration already existing : " . $DB->error(), true);
     if ($err > 0){
       return false;
     }

@@ -46,24 +46,24 @@ class PluginOpenmedisUpgradeTo1_4 extends PluginOpenmedisUpgradeStep {
     global $DB;
     $this->migrationStep = '1.3 -> 1.4';
     $err = 0;
-    if (!$DB->tableExists("glpi_plugin_openmedis_medicaldeviceinspections")) {
+    /*if (!$DB->tableExists("glpi_plugin_openmedis_medicaldeviceinspections")) {
       if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_4.sql")){
           $this->migration->displayWarning("Error in migration ".$this->migrationStep." : ".$DB->error(), true);
           $err++;
       }
-  }
+  }*/
     // repalce accessorycat by device cat
-    $err += $this->removeTableIfExists('glpi_plugin_openmedis_medicalaccessorycategories');
-    $err += $this->renamefieldIfExists('`plugin_openmedis_medicalaccessorycategories_id`', 
-      'glpi_plugin_openmedis_devicemedicalaccessories', '`plugin_openmedis_medicaldevicecategories_id`', 
-      "int(11) DEFAULT NULL", true );
-    
-    // ADD field to save parent cat
+    if(!$DB->fieldExists('glpi_plugin_openmedis_devicemedicalaccessories', 'plugin_openmedis_medicaldevicecategories_id')){
+      $err += $this->removeTableIfExists('glpi_plugin_openmedis_medicalaccessorycategories');
+      $err += $this->renamefieldIfExists('`plugin_openmedis_medicalaccessorycategories_id`', 
+        'glpi_plugin_openmedis_devicemedicalaccessories', '`plugin_openmedis_medicaldevicecategories_id`', 
+        "int(11) DEFAULT NULL", true );
+      
+      // ADD field to save parent cat
 
-    
-
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
-        'plugin_openmedis_medicaldevicecategories_parent_id', "int(11) NOT NULL DEFAULT '0'", true);
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
+          'plugin_openmedis_medicaldevicecategories_parent_id', "int(11) NOT NULL DEFAULT '0'", true);
+      }
     //$err +=
     if ($err > 0){
       return false;

@@ -53,25 +53,29 @@ class PluginOpenmedisUpgradeTo1_3 extends PluginOpenmedisUpgradeStep {
     }*/
     $this->migrationStep = '1.2 -> 1.3';
     // allow state
-    $err += $this->addfieldIfNotExists('glpi_states',
-    'is_visible_pluginopenmedismedicaldevice', "tinyint(1) NOT NULL DEFAULT '1'", true);
+ 
     //update ca
     $table = 'glpi_plugin_openmedis_medicaldevicecategories';
-    $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicaldevicecategories_id`, `code`");
-    $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
-    $err += $this->removefieldIfExists($table, 'completename');
-    $err += $this->addfieldIfNotExists($table, 'name', "text AS (CONCAT(code,' - ',label))", true );
-    $err += $this->addfieldIfNotExists($table,'completename',"text COLLATE utf8_unicode_ci",true);  
-    // allow update cat
-    $table = 'glpi_plugin_openmedis_medicalaccessorycategories';
-    $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicalaccessorycategories_id`, `code`");
-    $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
-    $err += $this->removefieldIfExists($table, 'completename');
-    $err += $this->addfieldIfNotExists($table, 'name', "text AS (CONCAT(code,' - ',label))", true );
-    $err += $this->addfieldIfNotExists($table,'completename',"text COLLATE utf8_unicode_ci",true);  
-    // reverte mistake in 1.1
-    $err += $this->renameTableifExists('glpi_plugin_openmedis_items_medicalaccessories', 
-      'glpi_plugin_openmedis_items_devicemedicalaccessories');
+    if(!$DB->fieldExists($table, 'label')){
+      $err += $this->addfieldIfNotExists('glpi_states',
+      'is_visible_pluginopenmedismedicaldevice', "tinyint(1) NOT NULL DEFAULT '1'", true);
+      $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicaldevicecategories_id`, `code`");
+      $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
+      $err += $this->removefieldIfExists($table, 'completename');
+      $err += $this->addfieldIfNotExists($table, 'name', "text AS (CONCAT(code,' - ',label))", true );
+      $err += $this->addfieldIfNotExists($table,'completename',"text COLLATE utf8_unicode_ci",true);  
+      // allow update cat
+      $table = 'glpi_plugin_openmedis_medicalaccessorycategories';
+      $err += $this->replaceUnicityIndexIfExists($table, "`plugin_openmedis_medicalaccessorycategories_id`, `code`");
+      $err += $this->renamefieldIfExists($table, 'name','label', "varchar(255)  DEFAULT ''", true );
+      $err += $this->removefieldIfExists($table, 'completename');
+      $err += $this->addfieldIfNotExists($table, 'name', "text AS (CONCAT(code,' - ',label))", true );
+      $err += $this->addfieldIfNotExists($table,'completename',"text COLLATE utf8_unicode_ci",true);  
+      // reverte mistake in 1.1
+      $err += $this->renameTableifExists('glpi_plugin_openmedis_items_medicalaccessories', 
+        'glpi_plugin_openmedis_items_devicemedicalaccessories');
+  
+    }
 
     if ($err > 0){
       return false;

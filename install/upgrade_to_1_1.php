@@ -47,28 +47,27 @@ class PluginOpenmedisUpgradeTo1_1 extends PluginOpenmedisUpgradeStep{
     $this->migrationStep = '1.0 -> 1.1';
     $err = 0;
 
-    if (!$DB->tableExists("glpi_plugin_openmedis_medicalconsomables")) {
+    if (!$DB->tableExists("glpi_plugin_openmedis_devicemedicalaccessories")) {
         if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_1.sql")){
             $this->migration->displayWarning("Error in migration 1.0 to 1.1 : " . $DB->error(), true);
             $err++;
         }
+      $err += $this->addfieldIfNotExists('glpi_states',
+        'is_visible_pluginopenmedismedicaldevice',"tinyint(1) NOT NULL DEFAULT '1'", true);
+      $err += $this->renameTableifExists('glpi_plugin_openmedis_items_devicemedicalaccessories', 
+        'glpi_plugin_openmedis_items_medicalaccessories');
+      $err += $this->renameTableIfExists('glpi_plugin_openmedis_devicemedicalaccessories', 
+        'glpi_plugin_openmedis_devicemedicalaccessories');
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
+        'init_usages_counter','int(11) NOT NULL DEFAULT 0');
+      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
+        'last_usages_counter','int(11) NOT NULL DEFAULT 0');
+      $err += $this->renamefieldIfExists('glpi_plugin_openmedis_items_devicemedicalaccessories',
+      'plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id',
+      'int(11) NOT NULL DEFAULT 0');
+      $err += $this->replaceIndexIfExists('glpi_plugin_openmedis_items_devicemedicalaccessories',
+        'plugin_openmedis_medicaldevice_id', 'plugin_openmedis_medicaldevices_id', 'items_id');
     }
-    $err += $this->addfieldIfNotExists('glpi_states',
-      'is_visible_pluginopenmedismedicaldevice',"tinyint(1) NOT NULL DEFAULT '1'", true);
-    $err += $this->renameTableifExists('glpi_plugin_openmedis_items_devicemedicalaccessories', 
-      'glpi_plugin_openmedis_items_medicalaccessories');
-    $err += $this->renameTableIfExists('glpi_plugin_openmedis_devicemedicalaccessories', 
-      'glpi_plugin_openmedis_devicemedicalaccessories');
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
-      'init_usages_counter','int(11) NOT NULL DEFAULT 0');
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices',
-      'last_usages_counter','int(11) NOT NULL DEFAULT 0');
-    $err += $this->renamefieldIfExists('glpi_plugin_openmedis_items_devicemedicalaccessories',
-     'plugin_openmedis_devicemedicalaccessories_id','plugin_openmedis_devicemedicalaccessories_id',
-     'int(11) NOT NULL DEFAULT 0');
-    $err += $this->replaceIndexIfExists('glpi_plugin_openmedis_items_devicemedicalaccessories',
-      'plugin_openmedis_medicaldevice_id', 'plugin_openmedis_medicaldevices_id', 'items_id');
-    $err += $this->migration->displayWarning("table to be created by the migration already existing : " . $DB->error(), true);
     if ($err > 0){
       return false;
     }
