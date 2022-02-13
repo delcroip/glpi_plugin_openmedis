@@ -47,7 +47,7 @@ if (isset($_POST["add"])) {
    }
    Event::log($_POST["plugin_openmedis_medicalconsumableitems_id"], "plugin_openmedis_medicalconsumableitems", 4, "inventory",
               //TRANS: %s is the user login
-              sprintf(__('%s adds medical consumables'), $_SESSION["glpiname"]));
+              sprintf(__('%s adds medical consumables', 'openmedis'), $_SESSION["glpiname"]));
    Html::back();
 
 } else if (isset($_POST["purge"])) {
@@ -56,7 +56,7 @@ if (isset($_POST["add"])) {
    if ($cart->delete($_POST, 1)) {
       Event::log($_POST["plugin_openmedis_medicalconsumableitems_id"], "plugin_openmedis_medicalconsumableitems", 4, "inventory",
                  //TRANS: %s is the user login
-                 sprintf(__('%s purges a medical consumable'), $_SESSION["glpiname"]));
+                 sprintf(__('%s purges a medical consumable', 'openmedis'), $_SESSION["glpiname"]));
    }
    Html::back();
 
@@ -67,7 +67,7 @@ if (isset($_POST["add"])) {
          if ($cart->install($_POST["plugin_openmedis_medicaldevices_id"], $_POST["plugin_openmedis_medicalconsumableitems_id"])) {
             Event::log($_POST["plugin_openmedis_medicaldevices_id"], "plugin_openmedis_medicaldevices", 5, "inventory",
                        //TRANS: %s is the user login
-                       sprintf(__('%s installs a medical consumable'), $_SESSION["glpiname"]));
+                       sprintf(__('%s installs a medical consumable', 'openmedis'), $_SESSION["glpiname"]));
          }
       }
    }
@@ -79,7 +79,7 @@ if (isset($_POST["add"])) {
    if ($cart->update($_POST)) {
       Event::log($_POST["plugin_openmedis_medicaldevices_id"], "plugin_openmedis_medicaldevices", 4, "inventory",
                  //TRANS: %s is the user login
-                 sprintf(__('%s updates a medical consumable'), $_SESSION["glpiname"]));
+                 sprintf(__('%s updates a medical consumable', 'openmedis'), $_SESSION["glpiname"]));
    }
    Html::back();
 

@@ -92,9 +92,6 @@ msgstr[2] "Категории"
 msgid "Part Number"
 msgstr "Номер детали"
 
-#, fuzzy
-msgid "Picture"
-msgstr "Изображение"
 
 #, fuzzy
 msgid "Manufacturing date"

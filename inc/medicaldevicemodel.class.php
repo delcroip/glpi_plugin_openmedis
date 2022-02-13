@@ -33,8 +33,10 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+use Glpi\Features\AssetImage;
 /// Class PluginOpenmedisMedicalDeviceModel
-class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
+class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown  {
+
    static $rightname  = 'plugin_openmedis_medicaldevicemodel';
    static function getTypeName($nb = 0) {
       return _n('Medical device model', 'Medical device models', $nb, 'openmedis');
@@ -46,6 +48,7 @@ class PluginOpenmedisMedicalDeviceModel extends CommonDCModelDropdown {
    static function getFieldLabel($nb = 0) {
       return _n('Model', 'Models', $nb);
    }
+
 
 }
 

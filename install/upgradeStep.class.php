@@ -45,7 +45,7 @@ abstract class PluginOpenmedisUpgradeStep{
 
   protected function addfieldIfNotExists($table, $field, $fieldOptions, $index = false){
     global $DB;
-    if(!$DB->fieldExists($table, $field)){
+    if($DB->tableExists($table) && !$DB->fieldExists($table, $field)){
       $sql = "ALTER TABLE ".$table;
       $sql .= " ADD `".$field.'` '.$fieldOptions;
       if($index)$sql .= ", ADD KEY `".$field.'` (`'.$field.'`)';
@@ -56,8 +56,8 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration $this->migrationStep addfieldIfNotExists: field ".$field.' exist' , true);
-      return 1;
+      $this->migration->displayWarning("Warning in migration $this->migrationStep addfieldIfNotExists: field ".$field.' exist or table '.$table.'does not exist' , true);
+      return 0;
     }
   }
 
@@ -73,8 +73,8 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration $this->migrationStep renameTableIfExists: table ".$oldTable.'  don\'t exist' , true);
-      return 1;
+      $this->migration->displayWarning("Warning in migration $this->migrationStep renameTableIfExists: table ".$oldTable.'  doesn\'t exist' , true);
+      return 0;
     }
   }
 
@@ -89,13 +89,13 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration $this->migrationStep removeTableIfExists: table ".$oldTable.'  don\'t exist' , true);
-      return 1;
+      $this->migration->displayWarning("Warning in migration $this->migrationStep removeTableIfExists: table ".$oldTable.'  don\'t exist' , true);
+      return 0;
     }
   }
   protected function renamefieldIfExists($table, $oldfield,$newfield, $fieldOptions, $index = false, $indexName = ''){
     global $DB;
-    if($DB->fieldExists($table,$oldfield)){
+    if($DB->tableExists($table) && $DB->fieldExists($table,$oldfield)){
       $sql = "ALTER TABLE ".$table;
       $sql .= " CHANGE ".$oldfield.' '.$newfield.' '.$fieldOptions ;
       if($index){
@@ -109,14 +109,14 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration $this->migrationStep renamefieldIfExists: field ".$oldfield.'  don\'t exist' , true);
-      return 1;
+      $this->migration->displayWarning("Warning in migration $this->migrationStep renamefieldIfExists: field ".$oldfield.'  don\'t exist  or table '.$table.'does not exis' , true);
+      return 0;
     }
   }
 
   protected function removefieldIfExists($table, $oldfield){
     global $DB;
-    if($DB->fieldExists($table,$oldfield)){
+    if($DB->tableExists($table) &&  $DB->fieldExists($table,$oldfield)){
       $sql = "ALTER TABLE ".$table;
       $sql .= " DROP COLUMN ".$oldfield ;
 
@@ -127,8 +127,8 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration $this->migrationStep renamefieldIfExists: field ".$oldfield.'  don\'t exist' , true);
-      return 1;
+      $this->migration->displayWarning("Warning in migration $this->migrationStep renamefieldIfExists: field ".$oldfield.'  don\'t exist' , true);
+      return 0;
     }
   }
   
@@ -154,8 +154,8 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error migration $this->migrationStep replaceIndexIfExists: field ".$oldIndex.'  don\'t exist' , true);
-      return 1;
+      $this->migration->displayWarning("Warning migration $this->migrationStep replaceIndexIfExists: field ".$oldIndex.'  don\'t exist' , true);
+      return 0;
     }
   }
 
@@ -171,8 +171,8 @@ abstract class PluginOpenmedisUpgradeStep{
         return 1;
       }
     }else {
-      $this->migration->displayWarning("Error in migration $this->migrationStep replaceIndexIfExists: field unicity  don\'t exist' ", true);
-      return 1;
+      $this->migration->displayWarning("Warning in migration $this->migrationStep replaceIndexIfExists: field unicity  don\'t exist' ", true);
+      return 0;
     }
   }
 

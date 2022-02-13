@@ -47,8 +47,23 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       return _n('Medical device category', 'Medical device categories', $nb, 'openmedis');
    }
 
-   static function getFieldLabel($nb = 0) {
-      return _n('Category', 'Categories', $nb, 'openmedis');
+   static function getFieldLabel($nb = 0, $v = 0) {
+      switch ($v == 0)
+      {
+         case 2:
+            return _n('Code', 'Codes', $nb, 'openmedis');
+            break;
+         case 1:
+            return _n('Generic name', 'Generic names', $nb, 'openmedis');
+            break;
+         default:
+         case 0:
+            return _n('Category', 'Categories', $nb, 'openmedis');
+            break;
+   }
+
+
+         
    }
 
 
@@ -56,11 +71,11 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
    function getAdditionalFields() {
 
       $tab = [['name'      => 'code',
-      'label'     => __('Code'),
+      'label'     => $this->getFieldLabel(0,2),
       'type'      => 'text',
       'list'      => true],
       ['name'      => 'label',
-      'label'     => __('Label'),
+      'label'     => $this->getFieldLabel(0,1),
       'type'      => 'text',
       'list'      => true],
       
@@ -69,9 +84,6 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
                          'type'      => 'dropdownValue',
                          'permit_select_parent' => true,
                          'displaywith' => ['code','label']],
-         ['name'      => 'picture',
-                         'label'     => __('Picture'),
-                         'type'      => 'picture'],
                   ];
 
       if (!Session::haveRightsOr(PluginOpenmedisMedicalDeviceCategory::$rightname, [CREATE, UPDATE, DELETE])) {
@@ -167,29 +179,6 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       : [])]);
       echo "</td></tr>\n";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Picture')."</td>\n";
-      echo "<td>";
-
-      if (!empty($this->fields['picture'])) {
-         echo Html::image(Toolbox::getPictureUrl($this->fields['picture']), [
-            'style' => 'max-width: 300px; max-height: 150px;',
-            'class' => 'picture_square'
-         ]);
-         echo "&nbsp;";
-         echo Html::getCheckbox([
-            'title' => __('Clear'),
-            'name'  => "_blank_picture"
-         ]);
-         echo "&nbsp;".__('Clear');
-
-      } else {
-         echo Html::file([
-            'name'       => 'picture',
-            'onlyimages' => true,
-         ]);
-      }
-      echo "</td></tr>\n";
 
       if (isset($this->fields['is_protected']) && $this->fields['is_protected']) {
          $options['candel'] = false;

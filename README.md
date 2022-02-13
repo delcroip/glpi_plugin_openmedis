@@ -10,14 +10,21 @@ This module enable you to create and manage your Medical device
 
 	before GLPI 10, a patch need to be applied to make the medical accessories working (without this patch GLPI plugins cannot add component type)
 
-	download the patch: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/8280.patch
+	support medical accessories: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/8280.patch
+	
+	ajax to filter medical device categories based on parent: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9429.patch
 
 	before 9.5.6 patches
 
 	administrative report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9375.patch
+	
 	other administrative report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9377.patch
+	
 	contract report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9402.patch
+	
 	default report: https://patch-diff.githubusercontent.com/raw/glpi-project/glpi/pull/9403.patch
+	
+
 
 
 
@@ -27,6 +34,8 @@ This module enable you to create and manage your Medical device
 
 	```
 		patch -p1 < 8280.patch
+		patch -p1 < 9429.patch
+
 		patch -p1 < 9375.patch
 		patch -p1 < 9377.patch
 		patch -p1 < 9402.patch

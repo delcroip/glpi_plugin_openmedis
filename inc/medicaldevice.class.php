@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 **/
 class PluginOpenmedisMedicalDevice extends CommonDBTM {
    use Glpi\Features\DCBreadcrumb; 
-
+   
    // From CommonDBTM
    public $dohistory                   = true;
    // used to filter the categories
@@ -199,8 +199,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //do not display called elements per default; they'll be displayed or returned here
       $params['display'] = false;
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Parent")."</br>\n";
-      echo PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0)."</td>\n";
+      echo "<td>".PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0, 0)."</br>\n";
+      echo PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0, 1)."</td>\n";
       echo "<td>";
       //$this->category =  is_null($_POST['category'] ? $_POST['category'] : '');
       $rand =  mt_rand();
@@ -216,6 +216,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       'permit_select_parent' => true,
       'displaywith' => ['code','label'],
       'parentfieldid'   =>  $parent_field_id ]);
+   
+
       echo "</td>";
       
       
@@ -234,7 +236,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $tplmark = $this->getAutofillMark('name', $options);
       
       //TRANS: %1$s is a string, %2$s a second one without spaces between them : to change for RTL
-      echo "<td>".sprintf(__('%1$s%2$s'), __('Name'), $tplmark);
+      echo "<td>".sprintf(__('%1$s%2$s'), __('Name', 'openmedis'), $tplmark);
       echo "</td>";
       echo "<td>";
       //$this->fields['withtemplate'] = 2 ;
@@ -317,7 +319,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
                            'entity' => $this->fields["entities_id"],
                            'right'  => 'all']);
       echo "</td>\n";
-      echo "<td>".PluginOpenmedisUtilization::getFieldLabel(0)."</td>\n";
+      echo "<td>".PluginOpenmedisUtilization::getFieldLabel(1)."</td>\n";
       echo "<td>";
 
       PluginOpenmedisUtilization::dropdown(['value' => $this->fields["plugin_openmedis_utilizations_id"]]);
@@ -346,6 +348,18 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "</tr>\n";
 
+      echo "<tr class='tab_bg_1'>";
+      $tplmark = $this->getAutofillMark('barcode', $options);
+      echo "<td>".sprintf(__('%1$s%2$s'), __('Barcode','openmedis'), $tplmark).
+           "</td>\n";
+      echo "<td>";
+      $objectName = autoName($this->fields["barcode"], "barcode",
+                             (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
+                             $this->getType(), $this->fields["entities_id"]);
+      Html::autocompletionTextField($this, "barcode", ['value' => $objectName]);
+      echo "</td></tr>\n";
+
+
       // Display auto inventory informations
       if (!empty($ID)
          && $this->fields["is_dynamic"]) {
@@ -353,6 +367,37 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          Plugin::doHook("autoinventory_information", $this);
          echo "</td></tr>";
       }
+
+      /* model images*/
+      
+      if($this->fields["plugin_openmedis_medicaldevicemodels_id"] > 0){
+         //error_reporting(E_ALL);
+         $models = new PluginOpenmedisMedicalDeviceModel();
+         $models->getFromDB($this->fields["plugin_openmedis_medicaldevicemodels_id"]);
+         echo "<tr class='tab_bg_1'><td colspan='4'>";
+         if (isset($models->fields['picture_front'])){
+            echo Html::image(Toolbox::getPictureUrl($models->fields['picture_front']), [
+               'alt'   =>"Model front picture",
+               'style' => 'width: 45%;',
+            ]);
+         }
+         
+         //echo $models->getSpecificValueToDisplay('picture_front');
+         //echo "</td><td>";
+         
+         if (isset($models->fields['picture_rear'])){
+            echo Html::image(Toolbox::getPictureUrl($models->fields['picture_rear']), [
+               'alt'   =>"Model rear picture",
+               'style' => 'width: 45%;',
+            ]);
+         }
+         
+         //echo $models->getSpecificValueToDisplay('picture_rear');
+         echo "</td></tr>";
+      } 
+
+      
+
 
       $this->showFormButtons($options);
 
@@ -407,12 +452,15 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    }
 
 
-   function rawSearchOptions() {
+   function rawSearchOptionsToAdd(){
       $tab = [];
 
       $tab[] = [
-         'id'                 => 'common',
-         'name'               => __('Characteristics')
+         'id'                 => '4',
+         'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
+         'field'              => 'name',
+         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(1),
+         'datatype'           => 'dropdown'
       ];
 
       $tab[] = [
@@ -426,22 +474,11 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'                 => '2',
+         'id'                 => '5',
          'table'              => $this->getTable(),
-         'field'              => 'id',
-         'name'               => __('ID'),
-         'massiveaction'      => false,
-         'datatype'           => 'number'
-      ];
-
-      $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
-
-      $tab[] = [
-         'id'                 => '4',
-         'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
-         'field'              => 'name',
-         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(0),
-         'datatype'           => 'dropdown'
+         'field'              => 'barcode',
+         'name'               => __('Barcode','openmedis'),
+         'datatype'           => 'string',
       ];
 
       $tab[] = [
@@ -451,6 +488,35 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'name'               => __('Model'),
          'datatype'           => 'dropdown'
       ];
+
+      return $tab;
+
+   }
+
+   function rawSearchOptions() {
+      $tab = [];
+      
+
+
+      $tab[] = [
+         'id'                 => 'common',
+         'name'               => __('Characteristics')
+      ];
+
+
+
+      $tab[] = [
+         'id'                 => '2',
+         'table'              => $this->getTable(),
+         'field'              => 'id',
+         'name'               => __('ID'),
+         'massiveaction'      => false,
+         'datatype'           => 'number'
+      ];
+      $tab = array_merge($tab, $this->rawSearchOptionsToAdd());
+      $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
+
+
 
       $tab[] = [
          'id'                 => '31',
@@ -659,5 +725,22 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
 
    static function getIcon() {
       return "fas fa-laptop-medical";
+   }
+
+   function pre_updateInDB() {
+
+      if ( isset($this->fields['plugin_openmedis_medicaldevicecategories_id'])){
+         // set parent
+         $cat = new PluginOpenmedisMedicalDeviceCategory();
+         $cat->getFromDB($this->fields['plugin_openmedis_medicaldevicecategories_id']);
+         while (isset($cat->fields['plugin_openmedis_medicaldevicecategories_id']) 
+            && $cat->fields['level']>1) {
+            $cat->getFromDB($cat->fields['plugin_openmedis_medicaldevicecategories_id']);
+         }
+         $this->fields['plugin_openmedis_medicaldevicecategories_parent_id'] =
+            $cat->fields['id'];
+      }
+
+      parent::pre_updateInDB();
    }
 }
