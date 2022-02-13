@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 **/
 class PluginOpenmedisMedicalDevice extends CommonDBTM {
    use Glpi\Features\DCBreadcrumb; 
-
+   
    // From CommonDBTM
    public $dohistory                   = true;
    // used to filter the categories
@@ -725,5 +725,22 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
 
    static function getIcon() {
       return "fas fa-laptop-medical";
+   }
+
+   function pre_updateInDB() {
+
+      if ( isset($this->fields['plugin_openmedis_medicaldevicecategories_id'])){
+         // set parent
+         $cat = new PluginOpenmedisMedicalDeviceCategory();
+         $cat->getFromDB($this->fields['plugin_openmedis_medicaldevicecategories_id']);
+         while (isset($cat->fields['plugin_openmedis_medicaldevicecategories_id']) 
+            && $cat->fields['level']>1) {
+            $cat->getFromDB($cat->fields['plugin_openmedis_medicaldevicecategories_id']);
+         }
+         $this->fields['plugin_openmedis_medicaldevicecategories_parent_id'] =
+            $cat->fields['id'];
+      }
+
+      parent::pre_updateInDB();
    }
 }
