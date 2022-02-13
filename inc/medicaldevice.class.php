@@ -452,12 +452,15 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    }
 
 
-   function rawSearchOptions() {
+   function rawSearchOptionsToAdd(){
       $tab = [];
 
       $tab[] = [
-         'id'                 => 'common',
-         'name'               => __('Characteristics')
+         'id'                 => '4',
+         'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
+         'field'              => 'name',
+         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(1),
+         'datatype'           => 'dropdown'
       ];
 
       $tab[] = [
@@ -468,25 +471,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'datatype'           => 'itemlink',
          'massiveaction'      => false,
          'autocomplete'       => true,
-      ];
-
-      $tab[] = [
-         'id'                 => '2',
-         'table'              => $this->getTable(),
-         'field'              => 'id',
-         'name'               => __('ID'),
-         'massiveaction'      => false,
-         'datatype'           => 'number'
-      ];
-
-      $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
-
-      $tab[] = [
-         'id'                 => '4',
-         'table'              => 'glpi_plugin_openmedis_medicaldevicecategories',
-         'field'              => 'name',
-         'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(1),
-         'datatype'           => 'dropdown'
       ];
 
       $tab[] = [
@@ -504,6 +488,35 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'name'               => __('Model'),
          'datatype'           => 'dropdown'
       ];
+
+      return $tab;
+
+   }
+
+   function rawSearchOptions() {
+      $tab = [];
+      
+
+
+      $tab[] = [
+         'id'                 => 'common',
+         'name'               => __('Characteristics')
+      ];
+
+
+
+      $tab[] = [
+         'id'                 => '2',
+         'table'              => $this->getTable(),
+         'field'              => 'id',
+         'name'               => __('ID'),
+         'massiveaction'      => false,
+         'datatype'           => 'number'
+      ];
+      $tab = array_merge($tab, $this->rawSearchOptionsToAdd());
+      $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
+
+
 
       $tab[] = [
          'id'                 => '31',
