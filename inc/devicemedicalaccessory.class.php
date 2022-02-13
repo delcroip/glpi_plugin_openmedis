@@ -60,12 +60,8 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
                'name'   => 'part_number',
                'label'  => __('Part Number'),
                'type'   => 'text'
-            ],
-            [
-               'name'   => 'picture',
-               'label'  => __('Picture'),
-               'type'   => 'picture'
             ]
+
          ]
       );
    }

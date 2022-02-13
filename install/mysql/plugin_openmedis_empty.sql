@@ -12,7 +12,6 @@ CREATE TABLE  `glpi_plugin_openmedis_devicemedicalaccessories` (
   `plugin_openmedis_medicaldevicecategories_id` int(11) DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   `date_creation` datetime DEFAULT NULL,
-  `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `designation` (`designation`),
   KEY `manufacturers_id` (`manufacturers_id`),

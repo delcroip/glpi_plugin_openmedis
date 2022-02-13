@@ -89,9 +89,6 @@ msgctxt "openmedis"
 msgid "Part Number"
 msgstr "Номер партії"
 
-msgctxt "openmedis"
-msgid "Picture"
-msgstr "Зображення"
 
 msgctxt "openmedis"
 msgid "Manufacturing date"

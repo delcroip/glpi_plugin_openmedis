@@ -98,9 +98,7 @@ msgstr[1] "Generic names"
 msgid "Part Number"
 msgstr "Part Number"
 
-#, fuzzy
-msgid "Picture"
-msgstr "Picture"
+
 
 #, fuzzy
 msgid "Manufacturing date"

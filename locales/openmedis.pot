@@ -455,9 +455,6 @@ msgstr "Medical devices by utilzation"
 #~ msgid "Part Number"
 #~ msgstr "Part Number"
 
-#, fuzzy
-#~ msgid "Picture"
-#~ msgstr "Picture"
 
 #, fuzzy
 #~ msgid "Manufacturing date"

@@ -72,9 +72,6 @@ msgstr[1] "Catégories"
 msgid "Part Number"
 msgstr "Numéro de pièce"
 
-msgid "Picture"
-msgstr "Photo"
-
 msgid "Manufacturing date"
 msgstr "Date de fabrication"
 
