@@ -53,10 +53,13 @@ class PluginOpenmedisUpgradeTo1_5 extends PluginOpenmedisUpgradeStep {
       }
   }*/
    
-  if(!$DB->fieldExists('glpi_plugin_openmedis_medicaldevices', 'barcode')){
-      $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevices', 
-        'barcode', "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL", true);
-      $err += $this->removefieldIfExists('glpi_plugin_openmedis_devicemedicalaccessories','`picture`');    
+  if(!$DB->fieldExists('glpi_plugin_openmedis_medicaldevices', 'picture_rear')){
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicemodels', 
+    'picture_rear', "text COLLATE utf8_unicode_ci", true);
+    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicemodels', 
+      'picture_front', "text COLLATE utf8_unicode_ci", true);
+    $err += $this->removefieldIfExists('glpi_plugin_openmedis_medicaldevices','`picture_front`');
+    $err += $this->removefieldIfExists('glpi_plugin_openmedis_medicaldevices','`picture_rear`');  
   }
     if ($err > 0){
       return false;
