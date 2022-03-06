@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 include_once(PLUGIN_OPENMEDIS_ROOT.'/install/upgradeStep.class.php');
-class PluginOpenmedisUpgradeTo1_5 extends PluginOpenmedisUpgradeStep {
+class PluginOpenmedisUpgradeTo1_6 extends PluginOpenmedisUpgradeStep {
   var $migration;
 
    /**
