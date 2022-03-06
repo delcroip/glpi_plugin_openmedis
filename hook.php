@@ -74,6 +74,12 @@ function plugin_openmedis_postinit() {
    if ($plugin->isInstalled('order') && $plugin->isActivated('order')) {
       array_push($ORDER_TYPES, 'PluginOpenmedisMedicalDevice');
    }
+   if ($plugin->isInstalled('fields') && $plugin->isActivated('fields')) {
+      array_push($PLUGIN_HOOKS['plugin_fields'] , 'PluginOpenmedisMedicalDevice');
+      array_push($PLUGIN_HOOKS['plugin_fields'] , 'PluginOpenmedisMedicalConsumableItem');
+      array_push($PLUGIN_HOOKS['plugin_fields'] , 'PluginOpenmedisDeviceMedicalAccessory');
+   }
+   
   
 }
 /**
