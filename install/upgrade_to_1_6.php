@@ -55,9 +55,9 @@ class PluginOpenmedisUpgradeTo1_6 extends PluginOpenmedisUpgradeStep {
    
   if(!$DB->fieldExists('glpi_plugin_openmedis_medicaldevices', 'picture_rear')){
     $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicemodels', 
-    'picture_rear', "text COLLATE utf8_unicode_ci", true);
+    'picture_rear', "text COLLATE utf8_unicode_ci", false);
     $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicemodels', 
-      'picture_front', "text COLLATE utf8_unicode_ci", true);
+      'picture_front', "text COLLATE utf8_unicode_ci", false);
     $err += $this->removefieldIfExists('glpi_plugin_openmedis_medicaldevices','`picture_front`');
     $err += $this->removefieldIfExists('glpi_plugin_openmedis_medicaldevices','`picture_rear`');  
   }

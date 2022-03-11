@@ -52,7 +52,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
                'type'  => 'dropdownValue'
             ],
             [
-               'name'  => 'plugin_openmedis_medicaldevicecategories_id',
+               'name'  => PluginOpenmedisMedicalDeviceCategory::getTable(),
                'label' => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(1),
                'type'  => 'dropdownValue'
             ],
@@ -81,7 +81,7 @@ class  PluginOpenmedisDeviceMedicalAccessory extends CommonDevice {
 
       $tab[] = [
          'id'                 => '12',
-         'table'              => 'glpi_plugin_openmedis_medicalaccessorycategories',
+         'table'              => 'plugin_openmedis_medicaldevicecategories',
          'field'              => 'name',
          'name'               => PluginOpenmedisMedicalDeviceCategory::getFieldLabel(1),
          'datatype'           => 'dropdown'

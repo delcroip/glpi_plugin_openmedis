@@ -287,7 +287,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'datatype'           => 'dropdown'
       ];
 
-      $tab[] = [
+      /*$tab[] = [
          'id'                 => '9',
          'table'              => $this->getTable(),
          'field'              => '_virtual',
@@ -296,7 +296,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'massiveaction'      => false,
          'nosearch'           => true,
          'nosort'             => true,
-         'additionalfields'   => ['alarm_threshold']
+         'additionalfields'   => ['alarm_threshold']*/
       ];
 
       $tab[] = [
