@@ -39,7 +39,8 @@ if (!defined('GLPI_ROOT')) {
 **/
 class PluginOpenmedisMedicalDevice extends CommonDBTM {
    use Glpi\Features\DCBreadcrumb; 
-   
+   //use Glpi\Features\Clonable;
+   use Glpi\Features\Inventoriable;
    // From CommonDBTM
    public $dohistory                   = true;
    // used to filter the categories
@@ -230,7 +231,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       ]);
       echo "</td></tr>\n";
 
-      $this->showDcBreadcrumb();
+
 
       echo "<tr class='tab_bg_1'>";
       $tplmark = $this->getAutofillMark('name', $options);
@@ -243,7 +244,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $objectName = autoName($this->fields["name"], "name",
                              (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
                              $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, "name", ['value' => $objectName]);
+      echo Html::input( "name", ['value' => $objectName]);
       echo "</td>\n";
       echo "<td>".__('Location')."</td>\n";
       echo "<td>";
@@ -289,17 +290,17 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Alternate username number')."</td>\n";
       echo "<td>";
-      Html::autocompletionTextField($this, "contact_num");
+      echo Html::input("contact_num");
       echo "</td>";
       echo "<td>".__('Serial number')."</td>\n";
       echo "<td>";
-      Html::autocompletionTextField($this, "serial");
+      echo Html::input("serial");
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Alternate username')."</td>\n";
       echo "<td>";
-      Html::autocompletionTextField($this, "contact");
+      echo Html::input("contact");
       echo "</td>\n";
 
       $tplmark = $this->getAutofillMark('otherserial', $options);
@@ -309,7 +310,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $objectName = autoName($this->fields["otherserial"], "otherserial",
                              (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
                              $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, "otherserial", ['value' => $objectName]);
+      echo Html::input("otherserial", ['value' => $objectName]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -344,7 +345,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Brand')."</td>\n";
       echo "<td>";
-      Html::autocompletionTextField($this, "brand");
+      echo Html::input("brand");
       echo "</td>\n";
       echo "</tr>\n";
 
@@ -356,7 +357,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $objectName = autoName($this->fields["barcode"], "barcode",
                              (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
                              $this->getType(), $this->fields["entities_id"]);
-      Html::autocompletionTextField($this, "barcode", ['value' => $objectName]);
+      echo Html::input("barcode", ['value' => $objectName]);
       echo "</td></tr>\n";
 
 
@@ -525,15 +526,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'name'               => __('Status'),
          'datatype'           => 'dropdown',
          'condition'          => ['is_visible_medicaldevice' => 1]
-      ];
-
-      $tab[] = [
-         'id'                 => '5',
-         'table'              => $this->getTable(),
-         'field'              => 'serial',
-         'name'               => __('Serial number'),
-         'datatype'           => 'string',
-         'autocomplete'       => true,
       ];
 
       $tab[] = [

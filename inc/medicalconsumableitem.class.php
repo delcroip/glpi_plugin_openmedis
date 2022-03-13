@@ -93,10 +93,10 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
    function post_getEmpty() {
 
-      $this->fields["alarm_threshold"] = Entity::getUsedConfig("plugin_openmedis_medicalconsumables_alert_repeat",
+      /*FIXME $this->fields["alarm_threshold"] = Entity::getUsedConfig("plugin_openmedis_medicalconsumables_alert_repeat",
                                                                $this->fields["entities_id"],
                                                                "plugin_openmedis_default_medicalconsumables_alarm_threshold",
-                                                               10);
+                                                               10);*/
    }
 
 
@@ -185,7 +185,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "name");
+      echo Html::input("name");
       echo "</td>";
       echo "<td>"._n('Type', 'Types', 1)."</td>";
       echo "<td>";
@@ -195,7 +195,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Reference')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "ref");
+      echo Html::input("ref");
       echo "</td>";
       echo "<td>".Manufacturer::getTypeName(1)."</td>";
       echo "<td>";
@@ -296,8 +296,8 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'massiveaction'      => false,
          'nosearch'           => true,
          'nosort'             => true,
-         'additionalfields'   => ['alarm_threshold']*/
-      ];
+         'additionalfields'   => ['alarm_threshold']
+      ];*/
 
       $tab[] = [
          'id'                 => '17',
