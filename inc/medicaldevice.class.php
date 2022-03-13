@@ -216,7 +216,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       PluginOpenmedisMedicalDeviceCategory::dropdown(['value' => $this->fields["plugin_openmedis_medicaldevicecategories_id"],
       'permit_select_parent' => true,
       'displaywith' => ['code','label'],
-      'parentfieldid'   =>  $parent_field_id ]);
+      'parent_id_field'   =>  $parent_field_id ]);
    
 
       echo "</td>";
