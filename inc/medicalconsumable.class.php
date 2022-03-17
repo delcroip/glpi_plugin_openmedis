@@ -245,7 +245,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       ]);
 
       if (count($iterator)) {
-         $result = $iterator->next();
+         $result = $iterator->current();
          $cID = $result['id'];
          // Update medicalconsumable taking care of multiple insertion
          $result = $DB->update(
@@ -433,7 +433,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          'FROM'   => self::getTable(),
          'COUNT'  => 'cpt',
          'WHERE'  => ['plugin_openmedis_medicalconsumableitems_id' => $tID]
-      ])->next();
+      ])->current();
       return $row['cpt'];
    }
 
@@ -454,8 +454,8 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          'FROM'   => self::getTable(),
          'COUNT'  => 'cpt',
          'WHERE'  => ['plugin_openmedis_medicaldevices_id' => $pID]
-      ])->next();
-      return (int)$row['cpt'];
+      ])->current();
+      return $row['cpt'];
    }
 
 
@@ -480,7 +480,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
                'date_use'  => null
             ]
          ]
-      ])->next();
+      ])->current();
       return (int)$row['cpt'];
    }
 
@@ -505,7 +505,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             'date_out'     => null,
             'NOT'          => ['date_use' => null]
          ]
-      ])->next();
+      ])->current();
       return $result['cpt'];
    }
 
@@ -527,7 +527,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             'plugin_openmedis_medicalconsumableitems_id'  => $tID,
             'NOT'                => ['date_out' => null]
          ]
-      ])->next();
+      ])->current();
       return $result['cpt'];
    }
 
@@ -551,7 +551,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             'plugin_openmedis_medicaldevices_id'  => $pID,
             'NOT'          => ['date_out' => null]
          ]
-      ])->next();
+      ])->current();
       return $result['cpt'];
    }
 
@@ -573,7 +573,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             'plugin_openmedis_medicalconsumableitems_id'  => $tID,
             'date_use'           => null
          ]
-      ])->next();
+      ])->current();
       return $result['cpt'];
    }
 
@@ -615,22 +615,22 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       }
       $canedit = $cartitem->can($tID, UPDATE);
 
-      $where = ['glpi_plugin_openmedis_medicalconsumables.plugin_openmedis_medicalconsumableitems_id' => $tID];
+      $where = [self::getTable().'.plugin_openmedis_medicalconsumableitems_id' => $tID];
       $order = [
-         'glpi_plugin_openmedis_medicalconsumables.date_use ASC',
-         'glpi_plugin_openmedis_medicalconsumables.date_out DESC',
-         'glpi_plugin_openmedis_medicalconsumables.date_in'
+         self::getTable().'.date_use ASC',
+         self::getTable().'.date_out DESC',
+         self::getTable().'.date_in'
       ];
 
       if (!$show_old) { // NEW
-         $where['glpi_plugin_openmedis_medicalconsumables.date_out'] = null;
+         $where[self::getTable().'.date_out'] = null;
          $order = [
-            'glpi_plugin_openmedis_medicalconsumables.date_out ASC',
-            'glpi_plugin_openmedis_medicalconsumables.date_use ASC',
-            'glpi_plugin_openmedis_medicalconsumables.date_in'
+            self::getTable().'.date_out ASC',
+            self::getTable().'.date_use ASC',
+            self::getTable().'.date_in'
          ];
       } else { //OLD
-         $where['NOT'] = ['glpi_plugin_openmedis_medicalconsumables.date_out' => null];
+         $where['NOT'] = [self::getTable().'.date_out' => null];
       }
 
       $stock_time       = 0;
@@ -640,10 +640,10 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
 
       $iterator = $DB->request([
          'SELECT' => [
-            'glpi_plugin_openmedis_medicalconsumables.*',
-            'glpi_plugin_openmedis_medicaldevices.id AS printID',
-            'glpi_plugin_openmedis_medicaldevices.name AS printname',
-            'glpi_plugin_openmedis_medicaldevices.init_usages_counter'
+            self::getTable().'.*',
+            PluginOpenmedisMedicalDevice::getTable().'.id AS medicalDeviceId',
+            PluginOpenmedisMedicalDevice::getTable().'.name AS medicaldevicename',
+            PluginOpenmedisMedicalDevice::getTable().'.init_usages_counter'
          ],
          'FROM'   => self::gettable(),
          'LEFT JOIN' => [
@@ -716,7 +716,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $usages = [];
 
       if ($number) {
-         while ($data = $iterator->next()) {
+         foreach ($iterator as $data) {
             $date_in  = Html::convDate($data["date_in"]);
             $date_use = Html::convDate($data["date_use"]);
             $date_out = Html::convDate($data["date_out"]);
@@ -734,12 +734,12 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             echo "<td class='center'>".$date_use."</td>";
             echo "<td class='center'>";
             if (!is_null($date_use)) {
-               if ($data["printID"] > 0) {
-                  $printname = $data["printname"];
-                  if ($_SESSION['glpiis_ids_visible'] || empty($printname)) {
-                     $printname = sprintf(__('%1$s (%2$s)', 'openmedis'), $printname, $data["printID"]);
+               if ($data["medicalDeviceId"] > 0) {
+                  $medicaldevicename = $data["medicaldevicename"];
+                  if ($_SESSION['glpiis_ids_visible'] || empty($medicaldevicename)) {
+                     $medicaldevicename = sprintf(__('%1$s (%2$s)', 'openmedis'), $medicaldevicename, $data["medicalDeviceId"]);
                   }
-                  echo "<a href='".PluginOpenmedisMedicalDevice::getFormURLWithID($data["printID"])."'><span class='b'>".$printname."</span></a>";
+                  echo "<a href='".PluginOpenmedisMedicalDevice::getFormURLWithID($data["medicalDeviceId"])."'><span class='b'>".$medicaldevicename."</span></a>";
                } else {
                   echo NOT_AVAILABLE;
                }
@@ -866,11 +866,11 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $canedit = Session::haveRight(PluginOpenmedisMedicalConsumable::$rightname, UPDATE);
       $rand    = mt_rand();
 
-      $where = ['glpi_plugin_openmedis_medicalconsumables.plugin_openmedis_medicaldevices_id' => $instID];
+      $where = [self::getTable().'.plugin_openmedis_medicaldevices_id' => $instID];
       if ($old) {
-         $where['NOT'] = ['glpi_plugin_openmedis_medicalconsumables.date_out' => null];
+         $where['NOT'] = [self::getTable().'.date_out' => null];
       } else {
-         $where['glpi_plugin_openmedis_medicalconsumables.date_out'] = null;
+         $where[self::getTable().'.date_out'] = null;
       }
       $iterator = $DB->request([
          'SELECT'    => [
@@ -878,11 +878,11 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
             'glpi_plugin_openmedis_medicalconsumableitems.is_deleted',
             'glpi_plugin_openmedis_medicalconsumableitems.ref AS ref',
             'glpi_plugin_openmedis_medicalconsumableitems.name AS type',
-            'glpi_plugin_openmedis_medicalconsumables.id',
-            'glpi_plugin_openmedis_medicalconsumables.usages AS usages',
-            'glpi_plugin_openmedis_medicalconsumables.date_use AS date_use',
-            'glpi_plugin_openmedis_medicalconsumables.date_out AS date_out',
-            'glpi_plugin_openmedis_medicalconsumables.date_in AS date_in',
+            self::getTable().'.id',
+            self::getTable().'.usages AS usages',
+            self::getTable().'.date_use AS date_use',
+            self::getTable().'.date_out AS date_out',
+            self::getTable().'.date_in AS date_in',
             'glpi_plugin_openmedis_medicalconsumableitemtypes.name AS typename'
          ],
          'FROM'      => self::getTable(),
@@ -902,9 +902,9 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          ],
          'WHERE'     => $where,
          'ORDER'     => [
-            'glpi_plugin_openmedis_medicalconsumables.date_out ASC',
-            'glpi_plugin_openmedis_medicalconsumables.date_use DESC',
-            'glpi_plugin_openmedis_medicalconsumables.date_in',
+            self::getTable().'.date_out ASC',
+            self::getTable().'.date_use DESC',
+            self::getTable().'.date_in',
          ]
       ]);
 
@@ -995,7 +995,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $use_done    = 0;
       $nb_use_done = 0;
 
-      while ($data = $iterator->next()) {
+      foreach ($iterator as $data) {
          $cart_id    = $data["id"];
          $typename   = $data["typename"];
          $date_in    = Html::convDate($data["date_in"]);
@@ -1188,7 +1188,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          return $CFG_GLPI['medicalconsumables_alert_repeat'];
 
       } else {
-         $data = $iterator->next();
+         $data = $iterator->current();
          //This entity uses global parameters -> return global config
          if ($data['medicalconsumables_alert_repeat'] == -1) {
             return $CFG_GLPI['medicalconsumables_alert_repeat'];
@@ -1228,7 +1228,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
     */
    static function countForMedicalConsumableItem(PluginOpenmedisMedicalConsumableItem $item) {
 
-      return countElementsInTable(['glpi_plugin_openmedis_medicalconsumables'], ['glpi_plugin_openmedis_medicalconsumables.plugin_openmedis_medicalconsumableitems_id' => $item->getField('id')]);
+      return countElementsInTable(['glpi_plugin_openmedis_medicalconsumables'], [self::getTable().'.plugin_openmedis_medicalconsumableitems_id' => $item->getField('id')]);
    }
 
 
@@ -1239,7 +1239,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
     */
    static function countForMedicalDevice(PluginOpenmedisMedicalDevice $item) {
 
-      return countElementsInTable(['glpi_plugin_openmedis_medicalconsumables'], ['glpi_plugin_openmedis_medicalconsumables.plugin_openmedis_medicaldevices_id' => $item->getField('id')]);
+      return countElementsInTable(['glpi_plugin_openmedis_medicalconsumables'], [self::getTable().'.plugin_openmedis_medicaldevices_id' => $item->getField('id')]);
    }
 
 
