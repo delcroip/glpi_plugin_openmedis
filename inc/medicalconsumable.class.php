@@ -472,7 +472,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $row = $DB->request([
          'SELECT' => ['id'],
          'COUNT'  => 'cpt',
-         'FROM'   => 'glpi_plugin_openmedis_medicalconsumables',
+         'FROM'   => self::getTable(),
          'WHERE'  => [
             'plugin_openmedis_medicalconsumableitems_id'  => $tID,
             'date_out'           => null,
@@ -647,10 +647,10 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          ],
          'FROM'   => self::gettable(),
          'LEFT JOIN' => [
-            'glpi_plugin_openmedis_medicaldevices'   => [
+            PluginOpenmedisMedicalDevice::getTable()   => [
                'FKEY'   => [
                   self::getTable()  => 'plugin_openmedis_medicaldevices_id',
-                  'glpi_plugin_openmedis_medicaldevices'   => 'id'
+                  PluginOpenmedisMedicalDevice::getTable()   => 'id'
                ]
             ]
          ],
@@ -874,29 +874,29 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       }
       $iterator = $DB->request([
          'SELECT'    => [
-            'glpi_plugin_openmedis_medicalconsumableitems.id AS tID',
-            'glpi_plugin_openmedis_medicalconsumableitems.is_deleted',
-            'glpi_plugin_openmedis_medicalconsumableitems.ref AS ref',
-            'glpi_plugin_openmedis_medicalconsumableitems.name AS type',
+            PluginOpenmedisMedicalConsumableItem::getTable().'.id AS tID',
+            PluginOpenmedisMedicalConsumableItem::getTable().'.is_deleted',
+            PluginOpenmedisMedicalConsumableItem::getTable().'.ref AS ref',
+            PluginOpenmedisMedicalConsumableItem::getTable().'.name AS type',
             self::getTable().'.id',
             self::getTable().'.usages AS usages',
             self::getTable().'.date_use AS date_use',
             self::getTable().'.date_out AS date_out',
             self::getTable().'.date_in AS date_in',
-            'glpi_plugin_openmedis_medicalconsumableitemtypes.name AS typename'
+            PluginOpenmedisMedicalConsumableItemType::getTable().'.name AS typename'
          ],
          'FROM'      => self::getTable(),
          'LEFT JOIN' => [
-            'glpi_plugin_openmedis_medicalconsumableitems'      => [
+            PluginOpenmedisMedicalConsumableItem::getTable()      => [
                'FKEY'   => [
                   self::getTable()        => 'plugin_openmedis_medicalconsumableitems_id',
-                  'glpi_plugin_openmedis_medicalconsumableitems'   => 'id'
+                  PluginOpenmedisMedicalConsumableItem::getTable()   => 'id'
                ]
             ],
-            'glpi_plugin_openmedis_medicalconsumableitemtypes'  => [
+            PluginOpenmedisMedicalConsumableItemType::getTable()  => [
                'FKEY'   => [
-                  'glpi_plugin_openmedis_medicalconsumableitems'      => 'plugin_openmedis_medicalconsumableitemtypes_id',
-                  'glpi_plugin_openmedis_medicalconsumableitemtypes'  => 'id'
+                  PluginOpenmedisMedicalConsumableItem::getTable()      => 'plugin_openmedis_medicalconsumableitemtypes_id',
+                  PluginOpenmedisMedicalConsumableItemType::getTable()  => 'id'
                ]
             ]
          ],
@@ -1228,7 +1228,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
     */
    static function countForMedicalConsumableItem(PluginOpenmedisMedicalConsumableItem $item) {
 
-      return countElementsInTable(['glpi_plugin_openmedis_medicalconsumables'], [self::getTable().'.plugin_openmedis_medicalconsumableitems_id' => $item->getField('id')]);
+      return countElementsInTable([self::getTable()], [self::getTable().'.plugin_openmedis_medicalconsumableitems_id' => $item->getField('id')]);
    }
 
 
@@ -1239,7 +1239,7 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
     */
    static function countForMedicalDevice(PluginOpenmedisMedicalDevice $item) {
 
-      return countElementsInTable(['glpi_plugin_openmedis_medicalconsumables'], [self::getTable().'.plugin_openmedis_medicaldevices_id' => $item->getField('id')]);
+      return countElementsInTable([self::getTable()], [self::getTable().'.plugin_openmedis_medicaldevices_id' => $item->getField('id')]);
    }
 
 
