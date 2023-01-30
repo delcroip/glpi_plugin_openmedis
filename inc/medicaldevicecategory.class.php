@@ -103,14 +103,14 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
          'datatype'           => 'itemlink',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
       ];
-      $tab[] = [
+     /* $tab[] = [
          'id'                 => '80',
          'table'              => $this->getTable(),
          'field'              => 'label',
          'name'               => __('Label'),
          'datatype'           => 'text',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
-      ];
+      ];*/
       $tab[] = [
          'id'                 => '100',
          'table'              => $this->getTable(),
