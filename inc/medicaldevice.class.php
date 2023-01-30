@@ -193,7 +193,19 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          //display per default
          $options['display'] = true;
       }
-
+      $rand = $options['rand'] ?? mt_rand();
+      $params_user = [
+         'entity' => $_SESSION["glpiactive_entity"],
+         'right' => 'all',
+         'condition' => ['is_assign' => 1]
+      ];
+      $ldap_methods = getAllDataFromTable('glpi_authldaps', ['is_active' => 1]);
+      if (
+          count($ldap_methods)
+          && Session::haveRight('user', User::IMPORTEXTAUTHUSERS)
+      ) {
+          $params_user['ldap_import'] = true;
+      }
 
 
       $params = $options;
@@ -226,7 +238,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<td>";
       State::dropdown([
          'value'     => $this->fields["states_id"],
-         'entity'    => $this->fields["entities_id"],
+         'entity'    => $_SESSION["glpiactive_entity"],
          'condition' => ['is_visible_pluginopenmedismedicaldevice' => 1]
       ]);
       echo "</td></tr>\n";
@@ -243,13 +255,13 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       //$this->fields['withtemplate'] = 2 ;
       $objectName = autoName($this->fields["name"], "name",
                              (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
-                             $this->getType(), $this->fields["entities_id"]);
+                             $this->getType(), $_SESSION["glpiactive_entity"]);
       echo Html::input( "name", ['value' => $objectName]);
       echo "</td>\n";
       echo "<td>".__('Location')."</td>\n";
       echo "<td>";
       Location::dropdown(['value'  => $this->fields["locations_id"],
-                               'entity' => $this->fields["entities_id"]]);
+                               'entity' => $_SESSION["glpiactive_entity"]]);
       echo "</td>\n";
 
 
@@ -262,10 +274,11 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Technician in charge of the hardware')."</td>\n";
       echo "<td>";
-      User::dropdown(['name'   => 'users_id_tech',
-                           'value'  => $this->fields["users_id_tech"],
-                           'right'  => 'own_ticket',
-                           'entity' => $this->fields["entities_id"]]);
+      
+
+      $params_user['name'] = 'users_id_tech';
+      $params_user['value'] = $this->fields["users_id_tech"];
+      User::dropdown($params_user);
       echo "</td>";
       echo "<td>".__('Manufacturer')."</td>\n";
       echo "<td>";
@@ -275,12 +288,10 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Group in charge of the hardware')."</td>";
       echo "<td>";
-      Group::dropdown([
-         'name'      => 'groups_id_tech',
-         'value'     => $this->fields['groups_id_tech'],
-         'entity'    => $this->fields['entities_id'],
-         'condition' => ['is_assign' => 1]
-      ]);
+
+      $params_user['name'] = 'groups_id_tech';
+      $params_user['value'] = $this->fields["groups_id_tech"];
+      Group::dropdown($params_user);
       echo "</td>";
       echo "<td>".__('Model')."</td>\n";
       echo "<td>";
@@ -309,16 +320,16 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<td>";
       $objectName = autoName($this->fields["otherserial"], "otherserial",
                              (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
-                             $this->getType(), $this->fields["entities_id"]);
+                             $this->getType(), $_SESSION["glpiactive_entity"]);
       echo Html::input("otherserial", ['value' => $objectName]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('User')."</td>\n";
       echo "<td>";
-      User::dropdown(['value'  => $this->fields["users_id"],
-                           'entity' => $this->fields["entities_id"],
-                           'right'  => 'all']);
+      $params_user['name'] = 'users_id';
+      $params_user['value'] = $this->fields["users_id"];
+      User::dropdown($params_user);
       echo "</td>\n";
       echo "<td>".PluginOpenmedisUtilization::getFieldLabel(1)."</td>\n";
       echo "<td>";
@@ -333,7 +344,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<td>";
       Group::dropdown([
          'value'     => $this->fields["groups_id"],
-         'entity'    => $this->fields["entities_id"],
+         'entity'    => $_SESSION["glpiactive_entity"],
          'condition' => ['is_itemgroup' => 1]
       ]);
       echo "</td>\n";
