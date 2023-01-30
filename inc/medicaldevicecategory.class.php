@@ -154,7 +154,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Code')."</td>\n";
       echo "<td>";
-      echo Html::input("code");
+      echo Html::input("code", ['value' => $this->fields["code"]]);
       echo "</td>\n";
       echo "</tr>\n";
 
@@ -162,7 +162,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Label')."</td>\n";
       echo "<td>";
-      echo Html::input("label");
+      echo Html::input("label", ['value' => $this->fields["label"]]);
       echo "</td>\n";
       echo "</tr>\n";
 

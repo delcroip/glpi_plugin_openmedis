@@ -185,7 +185,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."</td>";
       echo "<td>";
-      echo Html::input("name");
+      echo Html::input("name", ['value' => $this->fields["name"]]);
       echo "</td>";
       echo "<td>"._n('Type', 'Types', 1)."</td>";
       echo "<td>";
@@ -195,7 +195,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Reference')."</td>";
       echo "<td>";
-      echo Html::input("ref");
+      echo Html::input("ref", ['value' => $this->fields["ref"]]);
       echo "</td>";
       echo "<td>".Manufacturer::getTypeName(1)."</td>";
       echo "<td>";

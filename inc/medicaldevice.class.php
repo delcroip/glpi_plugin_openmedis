@@ -290,17 +290,17 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Alternate username number')."</td>\n";
       echo "<td>";
-      echo Html::input("contact_num");
+      echo Html::input("contact_num", ['value' => $this->fields["contact_num"]]);
       echo "</td>";
       echo "<td>".__('Serial number')."</td>\n";
       echo "<td>";
-      echo Html::input("serial");
+      echo Html::input("serial", ['value' => $this->fields["serial"]]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Alternate username')."</td>\n";
       echo "<td>";
-      echo Html::input("contact");
+      echo Html::input("contact", ['value' => $this->fields["contact"]]);
       echo "</td>\n";
 
       $tplmark = $this->getAutofillMark('otherserial', $options);
@@ -345,7 +345,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Brand')."</td>\n";
       echo "<td>";
-      echo Html::input("brand");
+      echo Html::input("brand", ['value' => $this->fields["brand"]]);
       echo "</td>\n";
       echo "</tr>\n";
 
@@ -356,8 +356,8 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "<td>";
       $objectName = autoName($this->fields["barcode"], "barcode",
                              (isset($options['withtemplate']) && ($options['withtemplate'] == 2)),
-                             $this->getType(), $this->fields["entities_id"]);
-      echo Html::input("barcode", ['value' => $objectName]);
+                             $this->getType(), $_SESSION["glpiactive_entity"]);
+      echo Html::input("barcode", ['value' => $this->fields["barcode"]]);
       echo "</td></tr>\n";
 
 
