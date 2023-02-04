@@ -49,7 +49,7 @@ function plugin_init_openmedis() {
    
   $plugin = new Plugin();   
   $CFG_GLPI['devices_in_menu'][]="pluginOpenmedisMedicalDevice"; 
-     //$CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessory_Item';
+  $CFG_GLPI["itemdevices"][]='PluginOpenmedisItem_DeviceMedicalAccessory';
    // to check what it means to be CSRF compatible
   $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
 

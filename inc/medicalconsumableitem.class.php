@@ -93,10 +93,10 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
    function post_getEmpty() {
 
-      $this->fields["alarm_threshold"] = Entity::getUsedConfig("plugin_openmedis_medicalconsumables_alert_repeat",
-                                                               $this->fields["entities_id"],
+      /*FIXME $this->fields["alarm_threshold"] = Entity::getUsedConfig("plugin_openmedis_medicalconsumables_alert_repeat",
+                                                               $_SESSION["glpiactive_entity"],
                                                                "plugin_openmedis_default_medicalconsumables_alarm_threshold",
-                                                               10);
+                                                               10);*/
    }
 
 
@@ -185,7 +185,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "name");
+      echo Html::input("name", ['value' => $this->fields["name"]]);
       echo "</td>";
       echo "<td>"._n('Type', 'Types', 1)."</td>";
       echo "<td>";
@@ -195,7 +195,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Reference')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "ref");
+      echo Html::input("ref", ['value' => $this->fields["ref"]]);
       echo "</td>";
       echo "<td>".Manufacturer::getTypeName(1)."</td>";
       echo "<td>";
@@ -205,10 +205,24 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Technician in charge of the hardware')."</td>";
       echo "<td>";
-      User::dropdown(['name'   => 'users_id_tech',
-                           'value'  => $this->fields["users_id_tech"],
-                           'right'  => 'own_ticket',
-                           'entity' => $this->fields["entities_id"]]);
+
+      $rand = $options['rand'] ?? mt_rand();
+      $params_user = [
+         'entity' => $_SESSION["glpiactive_entity"],
+         'name'   => 'users_id_tech',
+         'value'  => $this->fields["users_id_tech"],
+         'right' => 'all',
+         'condition' => ['is_assign' => 1]
+      ];
+      $ldap_methods = getAllDataFromTable('glpi_authldaps', ['is_active' => 1]);
+      if (
+          count($ldap_methods)
+          && Session::haveRight('user', User::IMPORTEXTAUTHUSERS)
+      ) {
+          $params_user['ldap_import'] = true;
+      }
+
+      User::dropdown($params_user);
       echo "</td>";
       echo "<td rowspan='4' class='middle'>".__('Comments')."</td>";
       echo "<td class='middle' rowspan='4'>
@@ -221,7 +235,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       Group::dropdown([
          'name'      => 'groups_id_tech',
          'value'     => $this->fields['groups_id_tech'],
-         'entity'    => $this->fields['entities_id'],
+         'entity'    => $_SESSION["glpiactive_entity"],
          'condition' => ['is_assign' => 1]
       ]);
       echo "</td></tr>\n";
@@ -230,7 +244,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "<td>".__('Stock location')."</td>";
       echo "<td>";
       Location::dropdown(['value'  => $this->fields["locations_id"],
-                               'entity' => $this->fields["entities_id"]]);
+                               'entity' => $_SESSION["glpiactive_entity"]]);
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -296,8 +310,8 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
          'massiveaction'      => false,
          'nosearch'           => true,
          'nosort'             => true,
-         'additionalfields'   => ['alarm_threshold']*/
-      ];
+         'additionalfields'   => ['alarm_threshold']
+      ];*/
 
       $tab[] = [
          'id'                 => '17',
@@ -623,7 +637,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
 
       // see query_alert in cronMedicalConsumable()
       $item = ['mcID'    => $this->fields['id'],
-                    'entity'    => $this->fields['entities_id'],
+                    'entity'    => $_SESSION["glpiactive_entity"],
                     'ref'       => $this->fields['ref'],
                     'name'      => $this->fields['name'],
                     'threshold' => $this->fields['alarm_threshold']];
