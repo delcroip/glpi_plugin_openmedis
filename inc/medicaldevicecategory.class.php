@@ -103,14 +103,14 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
          'datatype'           => 'itemlink',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
       ];
-      $tab[] = [
+     /* $tab[] = [
          'id'                 => '80',
          'table'              => $this->getTable(),
          'field'              => 'label',
          'name'               => __('Label'),
          'datatype'           => 'text',
          'right'              => PluginOpenmedisMedicalDeviceCategory::$rightname
-      ];
+      ];*/
       $tab[] = [
          'id'                 => '100',
          'table'              => $this->getTable(),
@@ -154,7 +154,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Code')."</td>\n";
       echo "<td>";
-      Html::autocompletionTextField($this, "code");
+      echo Html::input("code", ['value' => $this->fields["code"]]);
       echo "</td>\n";
       echo "</tr>\n";
 
@@ -162,7 +162,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Label')."</td>\n";
       echo "<td>";
-      Html::autocompletionTextField($this, "label");
+      echo Html::input("label", ['value' => $this->fields["label"]]);
       echo "</td>\n";
       echo "</tr>\n";
 

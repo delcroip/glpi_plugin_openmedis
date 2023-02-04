@@ -31,7 +31,7 @@
 // Version of the plugin
 define('PLUGIN_OPENMEDIS_VERSION', '1.1.0');
 // Schema version of this version
-define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.5');
+define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.6');
 // is or is not an official release of the plugin
 define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
 // Minimal GLPI version, inclusive
@@ -49,7 +49,7 @@ function plugin_init_openmedis() {
    
   $plugin = new Plugin();   
   $CFG_GLPI['devices_in_menu'][]="pluginOpenmedisMedicalDevice"; 
-     //$CFG_GLPI["itemdevices"][]='PluginOpenmedisMedicalAccessory_Item';
+  $CFG_GLPI["itemdevices"][]='PluginOpenmedisItem_DeviceMedicalAccessory';
    // to check what it means to be CSRF compatible
   $PLUGIN_HOOKS['csrf_compliant']['openmedis']   = true;
 

@@ -73,9 +73,18 @@ function plugin_openmedis_postinit() {
    $plugin = new Plugin();
    if ($plugin->isInstalled('order') && $plugin->isActivated('order')) {
       array_push($ORDER_TYPES, 'PluginOpenmedisMedicalDevice');
+      array_push($ORDER_TYPES , 'PluginOpenmedisMedicalConsumableItem');
+      array_push($ORDER_TYPES , 'PluginOpenmedisDeviceMedicalAccessory');
    }
+   if ($plugin->isInstalled('fields') && $plugin->isActivated('fields')) {
+      array_push($PLUGIN_HOOKS['plugin_fields'] , 'PluginOpenmedisMedicalDevice');
+      array_push($PLUGIN_HOOKS['plugin_fields'] , 'PluginOpenmedisMedicalConsumableItem');
+      array_push($PLUGIN_HOOKS['plugin_fields'] , 'PluginOpenmedisDeviceMedicalAccessory');
+   }
+   
   
 }
+
 /**
  * @param string $type
  * @return array
@@ -173,9 +182,6 @@ function plugin_openmedis_getDropdown() {
    }
 }
 
-
-
-
 function plugin_openmedis_getAddSearchOptions($itemtype) {
    $sopt = [];
 
@@ -227,8 +233,6 @@ function plugin_openmedis_addLeftJoin($type, $ref_table, $new_table,
    }
    return "";
 }
-
-
 
 // Hook done on purge item case
 function plugin_openmedis_item_purge($item) {
