@@ -1,3 +1,5 @@
+For GLPI < version 10
+
 # openMedis GLPI plugin
 
 This module enable you to create and manage your Medical device
