@@ -29,15 +29,15 @@
  --------------------------------------------------------------------------
  */
 // Version of the plugin
-define('PLUGIN_OPENMEDIS_VERSION', '1.1.0');
+define('PLUGIN_OPENMEDIS_VERSION', '1.1.1');
 // Schema version of this version
-define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.6');
+define('PLUGIN_OPENMEDIS_SCHEMA_VERSION', '1.7');
 // is or is not an official release of the plugin
 define('PLUGIN_OPENMEDIS_IS_OFFICIAL_RELEASE', false);
 // Minimal GLPI version, inclusive
-define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '9.5.4');
+define('PLUGIN_OPENMEDIS_GLPI_MIN_VERSION', '11.0');
 // Maximum GLPI version, exclusive
-//define('PLUGIN_OPENMEDIS_GLPI_MAX_VERSION', '9.5');
+//define('PLUGIN_OPENMEDIS_GLPI_MAX_VERSION', '12.0');
 
 define('PLUGIN_OPENMEDIS_ROOT', GLPI_ROOT . '/plugins/openmedis');
 

@@ -1,31 +1,32 @@
-version: "3.2"
-
 services:
-#Mysql Container
-  mysql:
-    image: mysql:5.7.23
-    container_name: mysql
-    hostname: mysql
-    volumes:
-      - gpli-mysql:/var/lib/mysql
-    env_file:
-      - ./mysql.env
-    restart: always
-
-#GLPI Container
   glpi:
-    image: diouxx/glpi
-    container_name : glpi
-    hostname: glpi
+    image: "glpi/glpi:11"
+    restart: "unless-stopped"
+    volumes:
+      #- "./storage/glpi:/var/glpi:rw"
+      - ./:/var/www/glpi/plugins/openmedis
+    env_file: .env # Pass environment variables from .env file to the container
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "80:80"
-    volumes:
-      - G:/dev/docker-glpi/glpi:/var/www/html/glpi
-      - G:/dev/glpi_open_medis:/var/www/html/glpi/plugins/openmedis
+
+  db:
+    image: "mysql"
+    restart: "unless-stopped"
     environment:
-      - TIMEZONE=Europe/Brussels
-      - VERSION_GLPI=9.5.6
-    restart: always
-   
-volumes:
-  gpli-mysql:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: ${GLPI_DB_NAME}
+      MYSQL_USER: ${GLPI_DB_USER}
+      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    expose:
+      - "3306"
+
+      

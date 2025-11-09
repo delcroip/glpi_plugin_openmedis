@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 include_once(PLUGIN_OPENMEDIS_ROOT.'/install/upgradeStep.class.php');
-class PluginOpenmedisUpgradeTo1_6 extends PluginOpenmedisUpgradeStep {
+class PluginOpenmedisUpgradeTo1_7 extends PluginOpenmedisUpgradeStep {
   var $migration;
 
    /**
@@ -44,23 +44,31 @@ class PluginOpenmedisUpgradeTo1_6 extends PluginOpenmedisUpgradeStep {
    public function upgrade(Migration $migration) {
     $this->migration = $migration;
     global $DB;
-    $this->migrationStep = '1.4 -> 1.5';
+    $this->migrationStep = '1.6 -> 1.7';
     $err = 0;
- /*   if (!$DB->tableExists("glpi_plugin_openmedis_medicaldeviceinspections")) {
-      if (!$DB->runFile(__DIR__ ."/mysql/upgrade_to_1_5.sql")){
-          $this->migration->displayWarning("Error in migration ".$this->migrationStep." : ".$DB->error(), true);
-          $err++;
+
+    // Change all id fields from signed to unsigned integers to fix PHP warnings
+    $tables = [
+      'glpi_plugin_openmedis_devicemedicalaccessories',
+      'glpi_plugin_openmedis_medicaldevicecategories',
+      'glpi_plugin_openmedis_medicaldevicemodels',
+      'glpi_plugin_openmedis_utilizations',
+      'glpi_plugin_openmedis_medicalaccessorytypes',
+      'glpi_plugin_openmedis_items_devicemedicalaccessories',
+      'glpi_plugin_openmedis_medicaldevices',
+      'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels',
+      'glpi_plugin_openmedis_medicalconsumableitemtypes',
+      'glpi_plugin_openmedis_medicalconsumables',
+      'glpi_plugin_openmedis_medicalconsumableitems'
+    ];
+
+    foreach ($tables as $table) {
+      if ($DB->tableExists($table)) {
+        // Use GLPI migration system to change column type
+        $this->migration->addPostQuery("ALTER TABLE `$table` MODIFY COLUMN `id` int(11) unsigned NOT NULL AUTO_INCREMENT");
       }
-  }*/
-   
-  if(!$DB->fieldExists('glpi_plugin_openmedis_medicaldevices', 'picture_rear')){
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicemodels', 
-    'picture_rear', "text COLLATE utf8_unicode_ci", false);
-    $err += $this->addfieldIfNotExists('glpi_plugin_openmedis_medicaldevicemodels', 
-      'picture_front', "text COLLATE utf8_unicode_ci", false);
-    $err += $this->removefieldIfExists('glpi_plugin_openmedis_medicaldevices','`picture_front`');
-    $err += $this->removefieldIfExists('glpi_plugin_openmedis_medicaldevices','`picture_rear`');  
-  }
+    }
+
     if ($err > 0){
       return false;
     }

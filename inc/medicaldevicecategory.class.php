@@ -146,7 +146,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
 
       echo "<td rowspan='".($nb+1)."'>". __('Comments')."</td>";
       echo "<td rowspan='".($nb+1)."'>
-            <textarea cols='45' rows='".($nb+2)."' name='comment' >".$this->fields["comment"];
+            <textarea cols='45' rows='".($nb+2)."' name='comment' >".htmlescape($this->fields["comment"]);
       echo "</textarea></td>";
 
 

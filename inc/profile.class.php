@@ -242,8 +242,8 @@ class PluginOpenmedisProfile extends Profile
 
     //Cannot launch migration if there's nothing to migrate...
     if ($DB->tableExists('glpi_plugin_openmedis_profiles')) {
-       foreach ($DB->request('glpi_plugin_openmedis_profiles',
-                             ['id' => $profiles_id]) as $profile_data) {
+       foreach ($DB->request(['FROM' => 'glpi_plugin_openmedis_profiles',
+                              'WHERE' => ['id' => $profiles_id]]) as $profile_data) {
 
           $matching = ['openmedis'  => 'plugin_openmedis',
                        'openmedis_type' => 'plugin_openmedis_category',
@@ -303,4 +303,3 @@ class PluginOpenmedisProfile extends Profile
         }
     }
 }
-

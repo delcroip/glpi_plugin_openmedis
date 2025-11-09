@@ -46,6 +46,44 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
    static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
 
 
+   /**
+    * Get the list of items for the given item
+    * Override to use correct field names for the query
+    *
+    * @param CommonDBTM $item
+    * @param int $start
+    * @param int $limit
+    * @param array $order
+    * @return DBmysqlIterator
+    */
+   static function getListForItem(CommonDBTM $item, $start = 0, $limit = 0, array $order = []) {
+      global $DB;
+
+      $table = static::getTable();
+      $itemId = $item->getID();
+
+      // For this relation, when getting list for a consumable item,
+      // we need to use items_id_2 (the model ID) in the WHERE clause
+      $query = [
+         'SELECT' => "$table.*",
+         'FROM'   => $table,
+         'WHERE'  => [
+            static::$items_id_1 => $itemId
+         ]
+      ];
+
+      if (!empty($order)) {
+         $query['ORDER'] = $order;
+      }
+
+      if ($limit > 0) {
+         $query['START'] = $start;
+         $query['LIMIT'] = $limit;
+      }
+
+      return $DB->request($query);
+   }
+
 
    function getForbiddenStandardMassiveAction() {
 
@@ -61,7 +99,8 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
          case 'PluginOpenmedisMedicalConsumableItem' :
             self::showForMedicalConsumable($item);
             break;
-
+         default:
+            return false;
       }
       return true;
    }
@@ -69,7 +108,7 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-      if (!$withtemplate && PluginOpenmedisMedicalDevice::canView()) {
+      if (!$withtemplate) {
          $nb = 0;
          switch ($item->getType()) {
             case 'PluginOpenmedisMedicalConsumableItem' :
@@ -99,15 +138,51 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
       $canedit = $item->canEdit($instID);
       $rand    = mt_rand();
 
+      // Initialize editor for GLPI 11 compatibility
+      Html::initEditorSystem($item->getType(), $instID, $item);
+
       $iterator = self::getListForItem($item);
-      $number = count($iterator);
 
       $used  = [];
       $datas = [];
+      $number = 0;
+
       while ($data = $iterator->next()) {
-         $used[$data["id"]] = $data["id"];
-         $datas[$data["linkid"]]  = $data;
+         // Debug: Log the raw data
+         error_log("Raw relationship data: " . json_encode($data));
+
+         // The data should contain the medical device model ID
+         // Try different possible field names
+         $modelId = $data[static::$items_id_2] ?? $data['plugin_openmedis_medicaldevicemodels_id'] ?? $data['id'] ?? null;
+
+         if (!$modelId) {
+            error_log("Could not find model ID in data. Available fields: " . implode(', ', array_keys($data)));
+            continue;
+         }
+
+         error_log("Found model ID: $modelId");
+
+         $used[$modelId] = $modelId;
+
+         // Get the medical device model name
+         $model = new PluginOpenmedisMedicalDeviceModel();
+         if ($model->getFromDB($modelId)) {
+            $data["name"] = $model->getName();
+            $data["id"] = $modelId; // Ensure id is set for display
+            error_log("Model name: " . $model->getName());
+         } else {
+            $data["name"] = __('Unknown model');
+            $data["id"] = $modelId;
+            error_log("Model not found in database for ID: $modelId");
+         }
+
+         $linkId = $data['id'] ?? $data[static::getIndexName()] ?? $number;
+         $data['linkid'] = $linkId; // Ensure linkid is set for display
+         $datas[$linkId] = $data;
+         $number++;
       }
+
+      error_log("Total relationships processed: $number");
 
       if ($canedit) {
          echo "<div class='firstbloc'>";

@@ -101,7 +101,9 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["unglobalize"])) {
    $medicaldevice->check($_POST["id"], UPDATE);
 
-   Computer_Item::unglobalizeItem($medicaldevice);
+   // Note: unglobalize functionality removed in GLPI 11 migration
+   // Computer_Item::unglobalizeItem() is deprecated and replaced by Asset_PeripheralAsset
+   // This functionality may need to be reimplemented using the new asset system
    Event::log($_POST["id"], "PluginOpenMedisMedicalDevice", 4, "inventory",
                //TRANS: %s is the user login
                sprintf(__('%s sets unitary management', 'openmedis'), $_SESSION["glpiname"]));

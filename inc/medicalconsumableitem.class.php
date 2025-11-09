@@ -116,6 +116,47 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       return $ong;
    }
 
+   /**
+    * @see CommonGLPI::displayTabContentForItem()
+    **/
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+
+      switch ($item->getType()) {
+         case 'PluginOpenmedisMedicalConsumableItem' :
+            switch ($tabnum) {
+               case 0:
+                  $item->showForm($item->getID(), $withtemplate);
+                  break;
+               case 1:
+                  Impact::displayTabContentForItem($item, $tabnum, $withtemplate);
+                  break;
+               case 2:
+                  PluginOpenmedisMedicalConsumable::showForMedicalConsumableItem($item);
+                  break;
+               case 3:
+                  PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel::displayTabContentForItem($item, $tabnum, $withtemplate);
+                  break;
+               case 4:
+                  Infocom::showForItem($item, $withtemplate);
+                  break;
+               case 5:
+                  Document_Item::showForItem($item, $withtemplate);
+                  break;
+               case 6:
+                  Link::showForItem($item, $withtemplate);
+                  break;
+               case 7:
+                  Notepad::showForItem($item, $withtemplate);
+                  break;
+               case 8:
+                  Log::showForItem($item, $withtemplate);
+                  break;
+            }
+            break;
+      }
+      return true;
+   }
+
 
    ///// SPECIFIC FUNCTIONS
 
@@ -226,7 +267,7 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
       echo "</td>";
       echo "<td rowspan='4' class='middle'>".__('Comments')."</td>";
       echo "<td class='middle' rowspan='4'>
-             <textarea cols='45' rows='9' name='comment'>".$this->fields["comment"]."</textarea>";
+             <textarea cols='45' rows='9' name='comment'>".htmlescape($this->fields["comment"])."</textarea>";
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -569,55 +610,64 @@ class PluginOpenmedisMedicalConsumableItem extends CommonDBTM {
    static function dropdownForMedicalDevice(PluginOpenmedisMedicalDevice $medicaldevice) {
       global $DB;
 
-      $iterator = $DB->request([
-         'SELECT'       => [
-            'COUNT'  => '* AS cpt',
-            'glpi_locations.completename AS location',
-            'glpi_plugin_openmedis_medicalconsumableitems.ref AS ref',
+      // Debug: Check if medical device has a model
+      if (empty($medicaldevice->fields['plugin_openmedis_medicaldevicemodels_id'])) {
+         Toolbox::logDebug("Medical device has no model assigned");
+         return false;
+      }
+
+      // First, get consumable items compatible with the device model
+      $compatible_items = $DB->request([
+         'SELECT' => [
+            'glpi_plugin_openmedis_medicalconsumableitems.id AS tID',
             'glpi_plugin_openmedis_medicalconsumableitems.name AS name',
-            'glpi_plugin_openmedis_medicalconsumableitems.id AS tID'
+            'glpi_plugin_openmedis_medicalconsumableitems.ref AS ref',
+            'glpi_locations.completename AS location'
          ],
-         'FROM'         => self::getTable(),
-         'INNER JOIN'   => [
+         'FROM'   => self::getTable(),
+         'INNER JOIN' => [
             'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels' => [
                'ON' => [
                   'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels' => 'plugin_openmedis_medicalconsumableitems_id',
                   'glpi_plugin_openmedis_medicalconsumableitems'               => 'id'
                ]
-            ],
-            'glpi_plugin_openmedis_medicalconsumables'                   => [
-               'ON' => [
-                  'glpi_plugin_openmedis_medicalconsumableitems'   => 'id',
-                  'glpi_plugin_openmedis_medicalconsumables'       => 'plugin_openmedis_medicalconsumableitems_id', [
-                     'AND' => [
-                        'glpi_plugin_openmedis_medicalconsumables.date_use' => null
-                     ]
-                  ]
-               ]
             ]
          ],
-         'LEFT JOIN'    => [
-            'glpi_locations'                    => [
+         'LEFT JOIN' => [
+            'glpi_locations' => [
                'ON' => [
-                  'glpi_plugin_openmedis_medicalconsumableitems'   => 'locations_id',
+                  'glpi_plugin_openmedis_medicalconsumableitems' => 'locations_id',
                   'glpi_locations'        => 'id'
                ]
             ]
          ],
-         'WHERE'        => [
-            'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels.plugin_openmedis_medicaldevicemodels_id'  => $medicaldevice->fields['plugin_openmedis_medicaldevicemodels_id']
+         'WHERE'  => [
+            'glpi_plugin_openmedis_medicalconsumableitems_medicaldevicemodels.plugin_openmedis_medicaldevicemodels_id' => $medicaldevice->fields['plugin_openmedis_medicaldevicemodels_id']
          ] + getEntitiesRestrictCriteria('glpi_plugin_openmedis_medicalconsumableitems', '', $medicaldevice->fields['entities_id'], true),
-         'GROUPBY'      => 'tID',
-         'ORDERBY'      => ['name', 'ref']
+         'ORDERBY' => ['name', 'ref']
       ]);
 
       $results = [];
-      while ($data = $iterator->next()) {
-         $text = sprintf(__('%1$s - %2$s'), $data["name"], $data["ref"]);
-         $text = sprintf(__('%1$s (%2$s)'), $text, $data["cpt"]);
-         $text = sprintf(__('%1$s - %2$s'), $text, $data["location"]);
-         $results[$data["tID"]] = $text;
+      foreach ($compatible_items as $item) {
+         // Count unused consumables for this item
+         $unused_count = $DB->request([
+            'COUNT' => 'cpt',
+            'FROM'  => 'glpi_plugin_openmedis_medicalconsumables',
+            'WHERE' => [
+               'plugin_openmedis_medicalconsumableitems_id' => $item['tID'],
+               'date_use' => null
+            ]
+         ])->current()['cpt'];
+
+         $text = sprintf(__('%1$s - %2$s'), $item["name"], $item["ref"]);
+         $text = sprintf(__('%1$s (%2$s)'), $text, $unused_count);
+         $text = sprintf(__('%1$s - %2$s'), $text, $item["location"]);
+         $results[$item["tID"]] = $text;
       }
+
+      // Debug: Log query results
+      Toolbox::logDebug("dropdownForMedicalDevice found " . count($results) . " compatible consumable items for medical device model ID: " . $medicaldevice->fields['plugin_openmedis_medicaldevicemodels_id']);
+
       if (count($results)) {
          return Dropdown::showFromArray('plugin_openmedis_medicalconsumableitems_id', $results);
       }

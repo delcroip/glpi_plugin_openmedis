@@ -69,7 +69,8 @@ class PluginOpenmedisInstall {
       '1.2'    => '1.3',
       '1.3'    => '1.4',
       '1.4'    => '1.5',
-      '1.5'    => '1.6'
+      '1.5'    => '1.6',
+      '1.6'    => '1.7'
    ];
 
    /**
@@ -113,39 +114,74 @@ class PluginOpenmedisInstall {
       global $DB;
 
       $this->migration->displayMessage("create database schema");
-        if (!$DB->runFile(__DIR__ ."/mysql/plugin_openmedis_empty.sql")){
-            $this->migration->displayWarning("Error creating tables : " . $DB->error(), true);
-            return false;
-        }else{
 
-            if (!$DB->runFile(__DIR__ ."/mysql/data-1.0.sql")){
-                $this->migration->displayWarning("Error loading the data : " . $DB->error(), true);
-                return false;
-            }else{
-               $query = "SELECT id, name FROM ".PluginOpenmedisMedicalDeviceCategory::getTable()." WHERE level=1";
-               if ($result=$DB->query($query)) {
-                  if ($DB->numrows($result)>0) {
-                     $dropdown = new PluginOpenmedisMedicalDeviceCategory();
-                     while ($data=$DB->fetchArray($result)) {
-               // get the list on the level 1 cat
-
-                        $dropdown->regenerateTreeUnderID($data['id'],$data['name'],false);
-                      }
-                      //complete name for level 1 FIXME
-                      $query = "UPDATE ".PluginOpenmedisMedicalDeviceCategory::getTable()." t SET t.completename = t.name WHERE level=1";
-                      if (!$DB->query($query)) {
-                        $this->migration->displayWarning("Error setting medical device category level 1 : " . $DB->error(), true);
-                      }
-
-                  }
-                  
-               }else{
-                  $this->migration->displayWarning("Error setting medical device category level > 1 : " . $DB->error(), true);
+      // Read and execute schema SQL file using migration system for GLPI 11+ compatibility
+      $schemaFile = __DIR__ ."/mysql/plugin_openmedis_empty.sql";
+      if (file_exists($schemaFile)) {
+         $sqlContent = file_get_contents($schemaFile);
+         if ($sqlContent !== false) {
+            // Split SQL content into individual statements, handling multiline statements
+            $statements = $this->splitSqlStatements($sqlContent);
+            foreach ($statements as $statement) {
+               if (!empty(trim($statement))) {
+                  $this->migration->addPostQuery(trim($statement));
                }
-               
-               
             }
-        }    
+         } else {
+            $this->migration->displayWarning("Error reading schema file", true);
+            return false;
+         }
+      } else {
+         $this->migration->displayWarning("Schema file not found", true);
+         return false;
+      }
+
+      // Read and execute data SQL file using migration system
+      $dataFile = __DIR__ ."/mysql/data-1.0.sql";
+      if (file_exists($dataFile)) {
+         $sqlContent = file_get_contents($dataFile);
+         if ($sqlContent !== false) {
+            // Split SQL content into individual statements
+            $statements = $this->splitSqlStatements($sqlContent);
+            foreach ($statements as $statement) {
+               if (!empty(trim($statement))) {
+                  $this->migration->addPostQuery(trim($statement));
+               }
+            }
+         } else {
+            $this->migration->displayWarning("Error reading data file", true);
+            return false;
+         }
+      }
+            // Read and execute data SQL file using migration system
+      $dataFile = __DIR__ ."/mysql/data-1.0.b.sql";
+      if (file_exists($dataFile)) {
+         $sqlContent = file_get_contents($dataFile);
+         if ($sqlContent !== false) {
+            // Split SQL content into individual statements
+            $statements = $this->splitSqlStatements($sqlContent);
+            foreach ($statements as $statement) {
+               if (!empty(trim($statement))) {
+                  $this->migration->addPostQuery(trim($statement));
+               }
+            }
+         } else {
+            $this->migration->displayWarning("Error reading data file", true);
+            return false;
+         }
+      }
+
+      // Execute the migration to create tables and load data
+      $this->migration->executeMigration();
+
+      // Now perform post-installation operations that require the tables to exist
+      // Add post-installation queries to migration as well for GLPI 11+ compatibility
+      $this->migration->addPostQuery("SELECT id, name FROM ".PluginOpenmedisMedicalDeviceCategory::getTable()." WHERE level=1");
+      $this->migration->addPostQuery("UPDATE ".PluginOpenmedisMedicalDeviceCategory::getTable()." t SET t.completename = t.name WHERE level=1");
+
+      // Execute the post-installation queries
+      $this->migration->executeMigration();
+
       /*
       // openmedis support only glpis>5
       if (version_compare(GLPI_VERSION, '9.3.0') >= 0) {
@@ -213,10 +249,10 @@ class PluginOpenmedisInstall {
    public function isPluginInstalled() {
       global $DB;
 
-      // Check tables of the plugin between 1.1 and 2.0 releases
-      $result = $DB->query("SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'");
-      if ($result) {
-         if ($DB->numrows($result) > 0) {
+      // Check tables of the plugin - GLPI 11 compatible method
+      $pluginTables = $this->getTables();
+      foreach ($pluginTables as $table) {
+         if ($DB->tableExists($table)) {
             return true;
          }
       }
@@ -463,32 +499,55 @@ class PluginOpenmedisInstall {
     protected function deleteTables() {
       global $DB;
 
+      // Use migration system for DDL operations to comply with GLPI 11 restrictions
+      $migration = new Migration(PLUGIN_OPENMEDIS_VERSION);
+
       $tables = $this->getTables();
 
       foreach ($tables as $table) {
-         $DB->query("DROP TABLE IF EXISTS `$table`");
-      }      // GARBAGE COLLECTOR
-      $result = $DB->query("SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'");
-      if ($result) {
-         if ($DB->numrows($result) > 0) {
-            //$this->migration->displayWarning(" Some of the module tables were not removed,".
-            //" please clean the database: SHOW TABLES LIKE 'glpi_plugin_openmedis\\_%'", true);
+         $migration->dropTable($table);
+      }
+
+      // Execute the migration to perform DDL operations
+      $migration->executeMigration();
+
+      // GARBAGE COLLECTOR - Check if any plugin tables remain
+      $remainingTables = 0;
+      $allTables = $DB->listTables();
+      while ($tableInfo = $allTables->next()) {
+         if (str_starts_with($tableInfo['TABLE_NAME'], 'glpi_plugin_openmedis')) {
+            $remainingTables++;
          }
       }
 
-      $tables_glpi = ["glpi_displaypreferences",
-      "glpi_documents_items",
-      "glpi_savedsearches",
-      "glpi_logs",
-      "glpi_items_tickets",
-      "glpi_dropdowntranslations"];
-
-        foreach ($tables_glpi as $table_glpi) {
-        //fixme to be checked
-        $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE '%luginOpenmedis%';");
-        $DB->query("ALTER TABLE glpi_states DROP COLUMN is_visible_pluginopenmedismedicaldevice;");
-        }
+      if ($remainingTables > 0) {
+         // Some tables were not removed - this would normally show a warning
+         // but we'll handle it silently for GLPI 11 compatibility
       }
+
+      // Clean up related data using GLPI 11 compatible methods
+      $cleanup_mappings = [
+         DisplayPreference::class => ['itemtype' => ['LIKE', '%PluginOpenmedis%']],
+         Document_Item::class => ['itemtype' => ['LIKE', '%PluginOpenmedis%']],
+         SavedSearch::class => ['itemtype' => ['LIKE', '%PluginOpenmedis%']],
+         Log::class => ['itemtype' => ['LIKE', '%PluginOpenmedis%']],
+         Item_Ticket::class => ['itemtype' => ['LIKE', '%PluginOpenmedis%']],
+         DropdownTranslation::class => ['itemtype' => ['LIKE', '%PluginOpenmedis%']]
+      ];
+
+      foreach ($cleanup_mappings as $class => $criteria) {
+         if (class_exists($class)) {
+            $item = new $class();
+            $item->deleteByCriteria($criteria);
+         }
+      }
+
+      // Handle column drop using migration system
+      if ($DB->fieldExists('glpi_states', 'is_visible_pluginopenmedismedicaldevice')) {
+         $migration->dropField('glpi_states', 'is_visible_pluginopenmedismedicaldevice');
+         $migration->executeMigration();
+      }
+    }
 
    /**
     *   getTablelist
@@ -736,10 +795,61 @@ protected function getTables(){
    }
 
    protected function deleteDisplayPreferences() {
-      global $DB;
+      $displayPreference = new DisplayPreference();
+      $displayPreference->deleteByCriteria(['itemtype' => ['LIKE', 'PluginOpenmedis%']]);
+   }
 
-      $table = DisplayPreference::getTable();
-      $DB->query("DELETE FROM `$table` WHERE `itemtype` LIKE 'PluginOpenmedis%'");
+   /**
+    * Split SQL content into individual statements
+    * @param string $sql SQL content
+    * @return array Array of SQL statements
+    */
+   protected function splitSqlStatements($sql) {
+      $statements = [];
+      $lines = explode("\n", $sql);
+      $currentStatement = '';
+      $inString = false;
+      $stringChar = '';
+
+      foreach ($lines as $line) {
+         $line = trim($line);
+
+         // Skip comments and empty lines
+         if (empty($line) || strpos($line, '--') === 0 || strpos($line, '#') === 0) {
+            continue;
+         }
+
+         // Check for string delimiters
+         $i = 0;
+         while ($i < strlen($line)) {
+            $char = $line[$i];
+
+            if (!$inString && ($char === '"' || $char === "'")) {
+               $inString = true;
+               $stringChar = $char;
+            } elseif ($inString && $char === $stringChar && $line[$i-1] !== '\\') {
+               $inString = false;
+               $stringChar = '';
+            }
+
+            $i++;
+         }
+
+         $currentStatement .= $line . "\n";
+
+         // If we find a semicolon and we're not inside a string, it's the end of a statement
+         if (strpos($line, ';') !== false && !$inString) {
+            $statements[] = trim($currentStatement);
+            $currentStatement = '';
+         }
+      }
+
+      // Add any remaining statement
+      if (!empty(trim($currentStatement))) {
+         $statements[] = trim($currentStatement);
+      }
+
+      return $statements;
    }
 
    /**

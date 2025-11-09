@@ -866,9 +866,12 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
       $canedit = Session::haveRight(PluginOpenmedisMedicalConsumable::$rightname, UPDATE);
       $rand    = mt_rand();
 
-      $where = [self::getTable().'.plugin_openmedis_medicaldevices_id' => $instID];
+      $where = [
+         self::getTable().'.plugin_openmedis_medicaldevices_id' => $instID,
+         'NOT' => [self::getTable().'.date_use' => null]
+      ];
       if ($old) {
-         $where['NOT'] = [self::getTable().'.date_out' => null];
+         $where['NOT'][self::getTable().'.date_out'] = null;
       } else {
          $where[self::getTable().'.date_out'] = null;
       }
@@ -1031,21 +1034,33 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
          echo "<td class='center' $viewitemjs>".$date_in."</td>";
          echo "<td class='center' $viewitemjs>".$date_use."</td>";
 
-         $tmp_dbeg       = explode("-", $data["date_in"]);
-         $tmp_dend       = explode("-", $data["date_use"]);
+         if (!empty($data["date_in"]) && !empty($data["date_use"])) {
+            $tmp_dbeg       = explode("-", $data["date_in"]);
+            $tmp_dend       = explode("-", $data["date_use"]);
 
-         $stock_time_tmp = mktime(0, 0, 0, $tmp_dend[1], $tmp_dend[2], $tmp_dend[0])
-                           - mktime(0, 0, 0, $tmp_dbeg[1], $tmp_dbeg[2], $tmp_dbeg[0]);
-         $stock_time    += $stock_time_tmp;
+            if (count($tmp_dbeg) >= 3 && count($tmp_dend) >= 3 &&
+                is_numeric($tmp_dbeg[0]) && is_numeric($tmp_dbeg[1]) && is_numeric($tmp_dbeg[2]) &&
+                is_numeric($tmp_dend[0]) && is_numeric($tmp_dend[1]) && is_numeric($tmp_dend[2])) {
+               $stock_time_tmp = mktime(0, 0, 0, (int)$tmp_dend[1], (int)$tmp_dend[2], (int)$tmp_dend[0])
+                                 - mktime(0, 0, 0, (int)$tmp_dbeg[1], (int)$tmp_dbeg[2], (int)$tmp_dbeg[0]);
+               $stock_time    += $stock_time_tmp;
+            }
+         }
          if ($old != 0) {
             echo "<td class='center' $viewitemjs>".$date_out;
 
-            $tmp_dbeg      = explode("-", $data["date_use"]);
-            $tmp_dend      = explode("-", $data["date_out"]);
+            if (!empty($data["date_use"]) && !empty($data["date_out"])) {
+               $tmp_dbeg      = explode("-", $data["date_use"]);
+               $tmp_dend      = explode("-", $data["date_out"]);
 
-            $use_time_tmp  = mktime(0, 0, 0, $tmp_dend[1], $tmp_dend[2], $tmp_dend[0])
-                              - mktime(0, 0, 0, $tmp_dbeg[1], $tmp_dbeg[2], $tmp_dbeg[0]);
-            $use_time     += $use_time_tmp;
+               if (count($tmp_dbeg) >= 3 && count($tmp_dend) >= 3 &&
+                   is_numeric($tmp_dbeg[0]) && is_numeric($tmp_dbeg[1]) && is_numeric($tmp_dbeg[2]) &&
+                   is_numeric($tmp_dend[0]) && is_numeric($tmp_dend[1]) && is_numeric($tmp_dend[2])) {
+                  $use_time_tmp  = mktime(0, 0, 0, (int)$tmp_dend[1], (int)$tmp_dend[2], (int)$tmp_dend[0])
+                                    - mktime(0, 0, 0, (int)$tmp_dbeg[1], (int)$tmp_dbeg[2], (int)$tmp_dbeg[0]);
+                  $use_time     += $use_time_tmp;
+               }
+            }
 
             echo "</td><td class='numeric' $viewitemjs>".$data['usages']."</td>";
             echo "<td class='numeric' $viewitemjs>";

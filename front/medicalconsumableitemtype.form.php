@@ -30,6 +30,12 @@
  */
 
 include ('../../../inc/includes.php');
+
+// Ensure no output before headers
+if (ob_get_level() == 0) {
+   ob_start();
+}
+
 Session::checkRight(PluginOpenmedisMedicalConsumableItemType::$rightname, READ);
 $dropdown = new PluginOpenmedisMedicalConsumableItemType();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");

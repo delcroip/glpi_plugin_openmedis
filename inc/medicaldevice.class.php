@@ -33,6 +33,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+use Glpi\Asset\Asset_PeripheralAsset;
+
 
 /**
  * PluginOpenmedisMedicalDevice Class
@@ -81,7 +83,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    function useDeletedToLockIfDynamic() {
       return false;
    }
-   function redirectToList(){
+   function redirectToList(): void {
       Html::redirect("{$CFG_GLPI['root_doc']}/plugins/openmedis/front/medicaldevice.php");
    }
     /**
@@ -146,7 +148,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          Document_Item::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
 
          // ADD Computers
-         Computer_Item::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
+         Asset_PeripheralAsset::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
 
          //Add KB links
          KnowbaseItem_Item::cloneItem($this->getType(), $this->input["_oldID"], $this->fields['id']);
@@ -159,7 +161,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $this->deleteChildrenAndRelationsFromDb(
          [
             Certificate_Item::class,
-            Computer_Item::class,
             Item_Problem::class,
             Change_Item::class,
             Item_Project::class,
@@ -350,7 +351,7 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       echo "</td>\n";
       echo "<td rowspan='$rowspan'>".__('Comments')."</td>\n";
       echo "<td rowspan='$rowspan'>
-            <textarea cols='45' rows='".($rowspan+3)."' name='comment' >".$this->fields["comment"];
+            <textarea cols='45' rows='".($rowspan+3)."' name='comment' >".htmlescape($this->fields["comment"]);
       echo "</textarea></td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -451,7 +452,9 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       $actions = parent::getSpecificMassiveActions($checkitem);
 
       if (static::canUpdate()) {
-         Computer_Item::getMassiveActionsForItemtype($actions, __CLASS__, 0, $checkitem);
+         if (Asset_PeripheralAsset::canCreate() && Session::haveRight(PluginOpenmedisMedicalDevice::$rightname, UPDATE)) {
+            $actions[__CLASS__ . MassiveAction::CLASS_ACTION_SEPARATOR . 'add_to_computer'] = __('Add to medical device');
+         }
 
          $kb_item = new KnowbaseItem();
          $kb_item->getEmpty();
@@ -461,6 +464,32 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       }
 
       return $actions;
+   }
+
+   /**
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
+      switch ($ma->getAction()) {
+         case 'add_to_computer':
+            $input = $ma->getInput();
+            if (isset($input['computers_id'])) {
+               $peripheral = new Asset_PeripheralAsset();
+               foreach ($ids as $id) {
+                  $input['itemtype'] = $item->getType();
+                  $input['items_id'] = $id;
+                  if ($peripheral->add($input)) {
+                     $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                  } else {
+                     $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                  }
+               }
+            } else {
+               $ma->itemDone($item->getType(), $ids, MassiveAction::ACTION_KO);
+            }
+            return;
+      }
+      parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
    }
 
 
