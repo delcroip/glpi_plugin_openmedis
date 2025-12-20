@@ -70,7 +70,8 @@ class PluginOpenmedisInstall {
       '1.3'    => '1.4',
       '1.4'    => '1.5',
       '1.5'    => '1.6',
-      '1.6'    => '1.7'
+      '1.6'    => '1.7',
+      '1.7'    => '1.8'
    ];
 
    /**
@@ -566,8 +567,9 @@ protected function getTables(){
       PluginOpenmedisUtilization::getTable(),
       PluginOpenmedisItem_DeviceMedicalAccessory::getTable(),
       PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel::getTable(),
+      'glpi_plugin_openmedis_states_items',
     ];
-     
+
 
 }
 

@@ -248,4 +248,13 @@ CREATE TABLE `glpi_plugin_openmedis_medicalconsumableitems` (
   KEY `date_creation` (`date_creation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE `glpi_states` ADD COLUMN `is_visible_pluginopenmedismedicaldevice` tinyint(1) NOT NULL DEFAULT '1';
+-- Relationship table for state visibility per itemtype
+CREATE TABLE `glpi_plugin_openmedis_states_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `states_id` int(11) NOT NULL DEFAULT '0',
+  `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unicity` (`states_id`,`itemtype`),
+  KEY `itemtype` (`itemtype`),
+  KEY `states_id` (`states_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

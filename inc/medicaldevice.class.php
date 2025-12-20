@@ -237,10 +237,12 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       
       echo "<td>".__('Status')."</td>\n";
       echo "<td>";
+      $stateItem = new PluginOpenmedisState_Item();
+      $visibleStates = $stateItem->getVisibleStates('PluginOpenmedisMedicalDevice');
       State::dropdown([
          'value'     => $this->fields["states_id"],
          'entity'    => $_SESSION["glpiactive_entity"],
-         'condition' => ['is_visible_pluginopenmedismedicaldevice' => 1]
+         'condition' => count($visibleStates) > 0 ? ['id' => $visibleStates] : []
       ]);
       echo "</td></tr>\n";
 
@@ -418,31 +420,6 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
    }
 
 
-   /**
-    * Return the linked items (in computers_items)
-    *
-    * @return an array of linked items  like array('Computer' => array(1,2), 'Medical Device' => array(5,6))
-    * @since 0.84.4
-   **/
-  function getLinkedItems() {
-   global $DB;
-
-   $iterator = $DB->request([
-      'SELECT' => 'computers_id',
-      'FROM'   => 'glpi_computers_items',
-      'WHERE'  => [
-         'itemtype'  => $this->getType(),
-         'items_id'  => $this->fields['id']
-      ]
-   ]);
-   $tab = [];
-   while ($data = $iterator->next()) {
-      $tab['Computer'][$data['computers_id']] = $data['computers_id'];
-   }
-   return $tab;
-}
-
-
 
    /**
     * @see CommonDBTM::getSpecificMassiveActions()
@@ -559,13 +536,15 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
 
 
 
+      $stateItem = new PluginOpenmedisState_Item();
+      $visibleStates = $stateItem->getVisibleStates('PluginOpenmedisMedicalDevice');
       $tab[] = [
          'id'                 => '31',
          'table'              => 'glpi_states',
          'field'              => 'completename',
          'name'               => __('Status'),
          'datatype'           => 'dropdown',
-         'condition'          => ['is_visible_medicaldevice' => 1]
+         'condition'          => count($visibleStates) > 0 ? ['id' => $visibleStates] : []
       ];
 
       $tab[] = [
