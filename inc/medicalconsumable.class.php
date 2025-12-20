@@ -51,6 +51,10 @@ class PluginOpenmedisMedicalConsumable extends CommonDBChild {
    static public $itemtype             = 'PluginOpenmedisMedicalConsumableItem';
    static public $items_id             = 'plugin_openmedis_medicalconsumableitems_id';
 
+   function getForeignKeyFields() {
+      return ['plugin_openmedis_medicalconsumableitems_id', 'plugin_openmedis_medicaldevices_id'];
+   }
+
    public function getCloneRelations() :array {
       return [
          Infocom::class

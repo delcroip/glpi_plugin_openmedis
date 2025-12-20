@@ -48,7 +48,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
    }
 
    static function getFieldLabel($nb = 0, $v = 0) {
-      switch ($v == 0)
+      switch ($v)
       {
          case 2:
             return _n('Code', 'Codes', $nb, 'openmedis');
@@ -60,10 +60,7 @@ class PluginOpenmedisMedicalDeviceCategory extends CommonTreeDropdown {
          case 0:
             return _n('Category', 'Categories', $nb, 'openmedis');
             break;
-   }
-
-
-         
+      }
    }
 
 

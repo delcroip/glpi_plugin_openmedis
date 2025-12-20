@@ -31,5 +31,16 @@
 
 include ('../../../inc/includes.php');
 
+Session::checkRight(PluginOpenmedisMedicalDeviceModel::$rightname, READ);
 $dropdown = new PluginOpenmedisMedicalDeviceModel();
-include (GLPI_ROOT . "/front/dropdown.common.form.php");
+
+use Glpi\Controller\DropdownFormController;
+
+$controller = new DropdownFormController();
+$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+$request->attributes->set('class', $dropdown::class);
+$response = $controller($request);
+ob_start();
+$response->send();
+ob_end_flush();
+exit();

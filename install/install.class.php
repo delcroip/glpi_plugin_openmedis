@@ -177,8 +177,7 @@ class PluginOpenmedisInstall {
 
       // Now perform post-installation operations that require the tables to exist
       // Add post-installation queries to migration as well for GLPI 11+ compatibility
-      $this->migration->addPostQuery("SELECT id, name FROM ".PluginOpenmedisMedicalDeviceCategory::getTable()." WHERE level=1");
-      $this->migration->addPostQuery("UPDATE ".PluginOpenmedisMedicalDeviceCategory::getTable()." t SET t.completename = t.name WHERE level=1");
+      $this->migration->addPostQuery("UPDATE ".PluginOpenmedisMedicalDeviceCategory::getTable()." t SET t.completename = t.name");
 
       // Execute the post-installation queries
       $this->migration->executeMigration();

@@ -45,6 +45,10 @@ class PluginOpenmedisMedicalConsumableItem_MedicalDeviceModel extends CommonDBRe
    static public $items_id_2          = 'plugin_openmedis_medicaldevicemodels_id';
    static public $checkItem_2_Rights  = self::DONT_CHECK_ITEM_RIGHTS;
 
+   function getForeignKeyFields() {
+      return ['plugin_openmedis_medicalconsumableitems_id', 'plugin_openmedis_medicaldevicemodels_id'];
+   }
+
    function getForbiddenStandardMassiveAction() {
 
       $forbidden   = parent::getForbiddenStandardMassiveAction();

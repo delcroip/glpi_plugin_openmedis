@@ -119,9 +119,7 @@ function plugin_openmedis_AssignToTicket($types) {
 function plugin_openmedis_getDatabaseRelations() {
    $plugin = new Plugin();
    if ($plugin->isActivated("openmedis")) {
-      return [ "glpi_plugin_openmedis_medicalaccessorycategories"
-                      => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorycategories_id"],
-               "glpi_plugin_openmedis_medicalaccessorytypes"
+      return [ "glpi_plugin_openmedis_medicalaccessorytypes"
                       => ["glpi_plugin_openmedis_devicemedicalaccessories" => "plugin_openmedis_medicalaccessorytypes_id"],
                "glpi_plugin_openmedis_utilizations"
                       => ["glpi_plugin_openmedis_medicaldevices" => "plugin_openmedis_utilizations_id"],
@@ -141,7 +139,7 @@ function plugin_openmedis_getDatabaseRelations() {
                       => ["glpi_plugin_openmedis_medicaldevices" => "groups_id_tech",
                       "glpi_plugin_openmedis_medicaldevices" => "groups_id"],
                "glpi_manufacturers"
-                      => ["glpi_plugin_openmedis_openmedis" => "manufacturers_id",
+                      => ["glpi_plugin_openmedis_medicaldevices" => "manufacturers_id",
                            "glpi_plugin_openmedis_devicemedicalaccessories" => "manufacturers_id"],
                "glpi_entities"
                      => ["glpi_plugin_openmedis_devicemedicalaccessories"         => "entities_id",

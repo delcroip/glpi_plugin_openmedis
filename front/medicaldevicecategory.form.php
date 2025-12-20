@@ -1,4 +1,5 @@
 <?php
+
 /**
  -------------------------------------------------------------------------
   LICENSE
@@ -31,11 +32,16 @@
 
 include ('../../../inc/includes.php');
 
-// Ensure no output before headers
-if (ob_get_level() == 0) {
-   ob_start();
-}
-
 Session::checkRight(PluginOpenmedisMedicalDeviceCategory::$rightname, READ);
 $dropdown = new PluginOpenmedisMedicalDeviceCategory();
-include (GLPI_ROOT . "/front/dropdown.common.form.php");
+
+use Glpi\Controller\DropdownFormController;
+
+$controller = new DropdownFormController();
+$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+$request->attributes->set('class', $dropdown::class);
+$response = $controller($request);
+ob_start();
+$response->send();
+ob_end_flush();
+exit();
