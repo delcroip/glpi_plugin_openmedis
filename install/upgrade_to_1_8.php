@@ -47,6 +47,23 @@ class PluginOpenmedisUpgradeTo1_8 extends PluginOpenmedisUpgradeStep {
     $this->migrationStep = '1.7 -> 1.8';
     $err = 0;
 
+    // Always create the relationship table (will be ignored if it exists)
+    $this->migration->displayMessage("Ensuring states_items relationship table exists");
+
+    if (!$DB->tableExists('glpi_plugin_openmedis_states_items')) {
+       $this->migration->addPostQuery(
+          "CREATE TABLE `glpi_plugin_openmedis_states_items` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `states_id` int(11) NOT NULL DEFAULT '0',
+            `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `unicity` (`states_id`,`itemtype`),
+            KEY `itemtype` (`itemtype`),
+            KEY `states_id` (`states_id`)
+          ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci"
+       );
+    }
+
     // Migrate state visibility from core table column to relationship table
     if ($DB->fieldExists('glpi_states', 'is_visible_pluginopenmedismedicaldevice')) {
        $this->migration->displayMessage("Migrating state visibility data to relationship table");
@@ -61,7 +78,7 @@ class PluginOpenmedisUpgradeTo1_8 extends PluginOpenmedisUpgradeStep {
        // Insert visibility relationships for each state
        foreach ($states_result as $state) {
           $this->migration->addPostQuery(
-             "INSERT INTO `glpi_plugin_openmedis_states_items` (`states_id`, `itemtype`) VALUES (" . $state['id'] . ", 'PluginOpenmedisMedicalDevice')"
+             "INSERT IGNORE INTO `glpi_plugin_openmedis_states_items` (`states_id`, `itemtype`) VALUES (" . $state['id'] . ", 'PluginOpenmedisMedicalDevice')"
           );
        }
 
@@ -69,17 +86,14 @@ class PluginOpenmedisUpgradeTo1_8 extends PluginOpenmedisUpgradeStep {
        $this->migration->dropField('glpi_states', 'is_visible_pluginopenmedismedicaldevice');
     }
 
-    // If no migration was needed but we want to ensure default visibility, create some defaults
-    if ($DB->request(['FROM' => 'glpi_plugin_openmedis_states_items', 'WHERE' => ['itemtype' => 'PluginOpenmedisMedicalDevice']])->count() == 0) {
+    // Always ensure default visibility exists (INSERT IGNORE will handle duplicates)
+    $this->migration->displayMessage("Setting up default state visibility for medical devices");
 
-       $this->migration->displayMessage("Setting up default state visibility for medical devices");
-
-       // Add some default states to make visible by default (states with IDs 1-5)
-       for ($i = 1; $i <= 5; $i++) {
-          $this->migration->addPostQuery(
-             "INSERT IGNORE INTO `glpi_plugin_openmedis_states_items` (`states_id`, `itemtype`) VALUES ($i, 'PluginOpenmedisMedicalDevice')"
-          );
-       }
+    // Add some default states to make visible by default (states with IDs 1-5)
+    for ($i = 1; $i <= 5; $i++) {
+       $this->migration->addPostQuery(
+          "INSERT IGNORE INTO `glpi_plugin_openmedis_states_items` (`states_id`, `itemtype`) VALUES ($i, 'PluginOpenmedisMedicalDevice')"
+       );
     }
 
     if ($err > 0){
