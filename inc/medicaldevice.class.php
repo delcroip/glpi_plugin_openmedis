@@ -573,6 +573,26 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
          'datatype'           => 'string',
          'autocomplete'       => true,
       ];
+      $tab[] = [
+         'id'            => 12,
+         'table'         => $this->getTable(),
+         'field'         => 'serial',
+         'name'          => __('Serial number'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+         'searchable'    => true,
+         'sortable'      => true
+      ];
+      $tab[] = [
+         'id'            => 13,
+         'table'         => $this->getTable(),
+         'field'         => 'other_serial',
+         'name'          => __('Invertory number'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+         'searchable'    => true,
+         'sortable'      => true
+      ];
 
       $tab[] = [
          'id'                 => '70',
