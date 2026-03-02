@@ -575,6 +575,17 @@ class PluginOpenmedisMedicalDevice extends CommonDBTM {
       ];
 
       $tab[] = [
+         'id'            => 12,
+         'table'         => $this->getTable(),
+         'field'         => 'serial',
+         'name'          => __('Serial number'),
+         'datatype'      => 'string',
+         'massiveaction' => false,
+         'searchable'    => true,
+         'sortable'      => true
+      ];
+
+      $tab[] = [
          'id'                 => '70',
          'table'              => 'glpi_users',
          'field'              => 'name',
